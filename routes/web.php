@@ -2,7 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticPageController;
-use App\Http\Controllers\ForwardController;
 use Illuminate\Http\Request;
 
 Route::get('/', function () {
@@ -10,9 +9,14 @@ Route::get('/', function () {
 });
 
 //Static pages
-Route::get('/login', [StaticPageController::class, 'login'])->name('static.login');
-Route::get('/register', [StaticPageController::class, 'register'])->name('static.register');
-Route::get('/', [StaticPageController::class, 'index'])->name('static.index');
+// Route::get('/login', [StaticPageController::class, 'login'])->name('static.login');
+// Route::get('/register', [StaticPageController::class, 'register'])->name('static.register');
+// Route::get('/', [StaticPageController::class, 'index'])->name('static.index');
 
 //Test routes
-Route::post('/test', [ForwardController::class, 'index'])->name('test.index');
+// Route::post('/test', [ForwardController::class, 'index'])->name('test.index');
+
+// Webhook route
+Route::match(['get', 'post'], '/webhook', [StaticPageController::class, 'webhook'])->name('static.webhook');
+
+Route::post('/post-test', [StaticPageController::class, 'post_test'])->name('static.post_test');
