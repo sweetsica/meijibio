@@ -20,3 +20,9 @@ Route::get('/', function () {
 Route::match(['get', 'post'], '/webhook', [StaticPageController::class, 'webhook'])->name('static.webhook');
 
 Route::post('/post-test', [StaticPageController::class, 'post_test'])->name('static.post_test');
+
+
+//html
+Route::get('/dashboard', function () {
+    return view('static.dashboard');
+})->name('dashboard');

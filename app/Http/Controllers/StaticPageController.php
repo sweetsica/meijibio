@@ -26,6 +26,7 @@ class StaticPageController extends Controller
     public function post_test(Request $request)
     {
         $data = $request->all();
+
         $response = Http::post(
             'https://sweetsica-n8n.onrender.com/webhook-test/137838fa-85e0-48d9-9df3-0118c1ef6538',
             $data
