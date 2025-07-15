@@ -9,12 +9,13 @@ class LogController extends Controller
 {
     public function webhook(Request $request)
     {
+        $data = $request->all();
          Log::create([
             'title' => 'Cập nhật',
-            'data' => $request->all()
+            'data' => $data
         ]);
 
-        return response()->json(['status' => 'ok']);
+        return response()->json(['status' => 'ok','data' => $data]);
     }
     public function index(Request $request)
     {

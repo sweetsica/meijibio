@@ -30,5 +30,5 @@ Route::get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
-Route::post('/webhook', [LogController::class, 'webhook']);
+
 
