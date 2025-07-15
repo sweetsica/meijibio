@@ -22,6 +22,7 @@ class LogController extends Controller
 
         return response()->json(['status' => 'ok','data' => $data]);
     }
+
     public function index(Request $request)
     {
         $query = Log::query();

@@ -8,7 +8,7 @@ class Log extends Model
 {
     protected $fillable = ['title', 'data'];
 
-     protected $casts = [
-        'data' => 'array', // để tự động cast json thành array
+    protected $casts = [
+        'data' => 'array',
     ];
 }
