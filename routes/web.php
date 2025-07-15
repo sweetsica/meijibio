@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticPageController;
 use Illuminate\Http\Request;
+use App\Http\Controllers\LogController;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -26,3 +28,7 @@ Route::post('/post-test', [StaticPageController::class, 'post_test'])->name('sta
 Route::get('/dashboard', function () {
     return view('static.dashboard');
 })->name('dashboard');
+
+Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+Route::post('/webhook', [LogController::class, 'webhook']);
+
