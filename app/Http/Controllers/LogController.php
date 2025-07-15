@@ -9,7 +9,8 @@ class LogController extends Controller
 {
     public function webhook(Request $request)
     {
-        $data = $request->all();
+        $noti_data = $request->all();
+        $data = $request
         // $title = $data['body']['event'] ?? 'No Title';
         // return response()->json(['status' => 'ok','data' => $data,'title' => $title]);
 

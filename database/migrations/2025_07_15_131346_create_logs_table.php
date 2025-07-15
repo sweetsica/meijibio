@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('logs', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
+            $table->json('noti_data')->nullable();
             $table->json('data')->nullable();
+
             $table->timestamps();
         });
     }
