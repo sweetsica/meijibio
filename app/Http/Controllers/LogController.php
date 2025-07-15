@@ -28,7 +28,7 @@ class LogController extends Controller
 
         // Lấy logs mới nhất trước, phân trang 50 bản ghi
         $logs = $query->orderBy('created_at', 'desc')->paginate(50);
-
+        // $logs = Log::findorFail('table',15);
         return view('static.logs', compact('logs'));
     }
 }
