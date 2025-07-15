@@ -10,13 +10,17 @@ class LogController extends Controller
     public function webhook(Request $request)
     {
         $data = $request->all();
-        $title = $data[0]['body']['event'] ?? 'No Title';
-         Log::create([
-            'title' => $title,
-            'data' => $data
-        ]);
-
+        dd($data[0]['body']['event']) ?? 'No Title';
         return response()->json(['status' => 'ok','data' => $data]);
+
+
+        // $title = $data[0]['body']['event'] ?? 'No Title';
+        //  Log::create([
+        //     'title' => $title,
+        //     'data' => $data
+        // ]);
+
+        // return response()->json(['status' => 'ok','data' => $data]);
     }
     public function index(Request $request)
     {
