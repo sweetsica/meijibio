@@ -11,8 +11,8 @@ class LogController extends Controller
     {
          // Lấy toàn bộ request
         $allData = $request->all();
-        $notiData = $allData['notiData'] ?? [];
-        $customerData = $allData['customerData'] ?? [];
+        $notiData = $allData['data']['notiData'] ?? [];
+        $customerData = $allData['data']['customerData'] ?? [];
         // $title = $data['body']['event'] ?? 'No Title';
         // return response()->json(['status' => 'ok','data' => $data,'title' => $title]);
 
