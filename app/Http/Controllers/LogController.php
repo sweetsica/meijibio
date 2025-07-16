@@ -13,9 +13,9 @@ class LogController extends Controller
         $allData = $request->all();
         $noti_data = $allData['data']['notiData'] ?? [];
         $customer_data = $allData['data']['customerData'] ?? [];
-        
 
-        return response()->json(['status' => 'ok', 'data' => $allData, 'noti_data' => $notiData, 'customer_data' => $customerData]);
+
+        return response()->json(['status' => 'ok', 'data' => $allData, 'noti_data' => $noti_data, 'customer_data' => $customer_data]);
         // $title = $data['body']['event'] ?? 'No Title';
         // return response()->json(['status' => 'ok','data' => $data,'title' => $title]);
 
@@ -23,7 +23,7 @@ class LogController extends Controller
 
         $title = $notiData['event'] ?? 'No Title';
         // $title = $notiData['body']['event'] ?? 'No Title';
-        
+
         Log::create([
             'title' => $title,
             'notiData' => $notiData,
