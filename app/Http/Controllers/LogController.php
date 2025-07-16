@@ -11,11 +11,11 @@ class LogController extends Controller
     {
          // Lấy toàn bộ request
         $allData = $request->all();
-        return response()->json(['status' => 'ok', 'allData' => $allData]);
+        // return response()->json(['status' => 'ok', 'allData' => $allData]);
 
-        $notiData = $allData['noti_data'] ?? [];
+        $noti_data = $allData['noti_data'] ?? [];
 
-        return response()->json(['status' => 'ok', 'notiData' => $notiData]);
+        return response()->json(['status' => 'ok', 'noti_data' => $noti_data]);
 
         $noti_data = $allData['data']['noti_data'] ?? [];
         $customer_data = $allData['data']['customer_data'] ?? [];
