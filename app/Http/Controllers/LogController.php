@@ -9,10 +9,10 @@ class LogController extends Controller
 {
     public function webhook(Request $request)
     {
-         // Lấy toàn bộ request
+        // Lấy toàn bộ request
         $allData = $request->all();
-        $noti_data = $allData['noti_data'] ?? [];
-        $customer_data = $allData['customer_data'] ?? [];
+        $noti_data = $allData['noti_data'] ?? []; // Lấy dữ liệu cập nhật hành động
+        $customer_data = $allData['customer_data'] ?? []; // Lấy thông tin khách hàng khi hành động xong
         $title = $noti_data['event'] ?? 'No Title';
 
         Log::create([
