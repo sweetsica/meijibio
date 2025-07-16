@@ -27,7 +27,8 @@
             <tr>
                 <th>ID</th>
                 <th>Title</th>
-                <th>Data (JSON)</th>
+                <th>Noti Data (JSON)</th>
+                <th>Customer Data (JSON)</th>
                 <th>Created At</th>
             </tr>
         </thead>
@@ -38,7 +39,12 @@
                 <td>{{ $log->title }}</td>
                 <td>
                     <pre class="bg-light p-2 rounded small mb-0" style="max-height: 200px; overflow:auto;">
-{{ json_encode($log->data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
+{{ json_encode($log->notiData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
+                    </pre>
+                </td>
+                <td>
+                    <pre class="bg-light p-2 rounded small mb-0" style="max-height: 200px; overflow:auto;">
+{{ json_encode($log->customerData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
                     </pre>
                 </td>
                 <td>{{ $log->created_at->format('Y-m-d H:i:s') }}</td>
