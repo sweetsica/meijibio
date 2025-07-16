@@ -6,10 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
-    protected $fillable = ['title', 'noti_data', 'data'];
+    protected $fillable = ['title', 'notiData', 'customerData'];
 
     protected $casts = [
-        'noti_data' => 'array',
-        'data' => 'array',
+        'notiData' => 'array',
+        'customerData' => 'array',
     ];
 }

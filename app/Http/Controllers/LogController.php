@@ -13,6 +13,7 @@ class LogController extends Controller
         $allData = $request->all();
         $notiData = $allData['data']['notiData'] ?? [];
         $customerData = $allData['data']['customerData'] ?? [];
+        
 
         return response()->json(['status' => 'ok', 'data' => $allData, 'notiData' => $notiData, 'customerData' => $customerData]);
         // $title = $data['body']['event'] ?? 'No Title';
