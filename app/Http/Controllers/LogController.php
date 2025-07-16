@@ -9,19 +9,25 @@ class LogController extends Controller
 {
     public function webhook(Request $request)
     {
-        $noti_data = $request->all();
-        $data = $request
+         // Lấy toàn bộ request
+        $allData = $request->all();
+        $notiData = $allData['body'] ?? [];
+        $customerData = $allData['customer'] ?? [];
         // $title = $data['body']['event'] ?? 'No Title';
         // return response()->json(['status' => 'ok','data' => $data,'title' => $title]);
 
 
-        $title = $data['body']['event'] ?? 'No Title';
-         Log::create([
+
+        $title = $notiData['event'] ?? 'No Title';
+        // $title = $notiData['body']['event'] ?? 'No Title';
+        
+        Log::create([
             'title' => $title,
-            'data' => $data
+            'notiData' => $notiData,
+            'customerData' => $customerData,
         ]);
 
-        return response()->json(['status' => 'ok','data' => $data]);
+        return response()->json(['status' => 'ok','title' => $title,'notiData' => $notiData, 'customerData' => $customerData]);
     }
 
     public function index(Request $request)
