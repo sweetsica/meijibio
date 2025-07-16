@@ -27,7 +27,13 @@ class LogController extends Controller
             'customerData' => $customerData,
         ]);
 
-        return response()->json(['status' => 'ok','title' => $title,'notiData' => $notiData, 'customerData' => $customerData]);
+        return response()->json([
+            'status' => 'ok',
+            'title' => $title,
+            'data' => $allData,
+            'notiData' => $notiData,
+            'customerData' => $customerData
+        ]);
     }
 
     public function index(Request $request)
