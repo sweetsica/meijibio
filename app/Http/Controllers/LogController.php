@@ -11,23 +11,21 @@ class LogController extends Controller
     {
          // Lấy toàn bộ request
         $allData = $request->all();
-        $noti_data = $allData['data']['notiData'] ?? [];
-        $customer_data = $allData['data']['customerData'] ?? [];
+        $noti_data = $allData['data']['noti_data'] ?? [];
+        $customer_data = $allData['data']['customer_data'] ?? [];
 
 
         return response()->json(['status' => 'ok', 'data' => $allData, 'noti_data' => $noti_data, 'customer_data' => $customer_data]);
         // $title = $data['body']['event'] ?? 'No Title';
         // return response()->json(['status' => 'ok','data' => $data,'title' => $title]);
 
-
-
-        $title = $notiData['event'] ?? 'No Title';
+        $title = $noti_data['event'] ?? 'No Title';
         // $title = $notiData['body']['event'] ?? 'No Title';
 
         Log::create([
             'title' => $title,
-            'notiData' => $notiData,
-            'customerData' => $customerData,
+            'noti_data' => $noti_data,
+            'customer_data' => $customer_data,
         ]);
 
         return response()->json([
