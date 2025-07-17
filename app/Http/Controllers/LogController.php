@@ -41,7 +41,7 @@ class LogController extends Controller
         }
         // Ghi thêm nội dung
         $logContent = "==== " . now()->toDateTimeString() . " ====\n" .
-                    json_encode($data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) .
+                    json_encode($allData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) .
                     "\n\n";
         File::append($logFile, $logContent);
 
