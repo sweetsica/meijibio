@@ -26,7 +26,7 @@ class LogController extends Controller
 
         // --- Lưu log ra file ---
         $today = now()->format('d-m-Y');
-        $todayFolder = public_path('logs/' . $today);
+        $todayFolder = public_path('webhook_logs/' . $today);
         // Tạo folder nếu chưa có
         if (!File::exists($todayFolder)) {
             File::makeDirectory($todayFolder, 0777, true, true);
