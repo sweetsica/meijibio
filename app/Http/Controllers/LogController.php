@@ -15,10 +15,10 @@ class LogController extends Controller
         // Lấy toàn bộ request
         $allData = $request->all();
 
-        return response()->json([
-            'status' => 'ok',
-            'data' => $allData
-        ]);
+        // return response()->json([
+        //     'status' => 'ok',
+        //     'data' => $allData
+        // ]);
 
         $noti_data = $allData['noti_data'] ?? []; // Lấy dữ liệu cập nhật hành động
         $customer_data = $allData['customer_data'] ?? []; // Lấy thông tin khách hàng khi hành động xong
