@@ -26,8 +26,8 @@ class LogController extends Controller
 
         Log::create([
             'title' => $title,
-            'noti_data' => $noti_data,
-            'customer_data' => $customer_data,
+            'noti_data' => json_encode($noti_data, JSON_UNESCAPED_UNICODE),
+            'customer_data' => json_encode($customer_data, JSON_UNESCAPED_UNICODE),
         ]);
 
         // --- Lưu log ra file ---

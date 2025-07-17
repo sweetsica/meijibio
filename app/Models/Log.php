@@ -9,7 +9,7 @@ class Log extends Model
     protected $fillable = ['title', 'noti_data', 'customer_data'];
 
     protected $casts = [
-        // 'noti_data' => 'array',
-        // 'customer_data' => 'array',
+        'noti_data' => 'array',
+        'customer_data' => 'array',
     ];
 }
