@@ -13,7 +13,9 @@ class LogController extends Controller
     public function webhook(Request $request)
     {
         // Lấy toàn bộ request
-        $allData = $request->all();
+        // $allData = $request->all();
+        $allData = json_decode($request->getContent(), true);
+
 
         // return response()->json([
         //     'status' => 'ok',
@@ -23,8 +25,11 @@ class LogController extends Controller
         // $noti_data = $allData['noti_data'] ?? []; // Lấy dữ liệu cập nhật hành động
         // $customer_data = $allData['customer_data'] ?? []; // Lấy thông tin khách hàng khi hành động xong
 
-        $noti_data = (array) ($request->input('noti_data') ?? []);
-        $customer_data = (array) ($request->input('customer_data') ?? []);
+        // $noti_data = (array) ($request->input('noti_data') ?? []);
+        // $customer_data = (array) ($request->input('customer_data') ?? []);
+        $noti_data = $allData['noti_data'] ?? [];
+        $customer_data = $allData['customer_data'] ?? [];
+        
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
 
         Log::create([
