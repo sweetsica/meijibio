@@ -20,14 +20,19 @@ class LogController extends Controller
         //     'data' => $allData
         // ]);
 
-        $noti_data = $allData['noti_data'] ?? []; // Lấy dữ liệu cập nhật hành động
-        $customer_data = $allData['customer_data'] ?? []; // Lấy thông tin khách hàng khi hành động xong
+        // $noti_data = $allData['noti_data'] ?? []; // Lấy dữ liệu cập nhật hành động
+        // $customer_data = $allData['customer_data'] ?? []; // Lấy thông tin khách hàng khi hành động xong
+
+        $noti_data = (array) ($request->input('noti_data') ?? []);
+        $customer_data = (array) ($request->input('customer_data') ?? []);
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
 
         Log::create([
             'title' => $title,
-            'noti_data' => json_encode($noti_data, JSON_UNESCAPED_UNICODE),
-            'customer_data' => json_encode($customer_data, JSON_UNESCAPED_UNICODE),
+            // 'noti_data' => json_encode($noti_data, JSON_UNESCAPED_UNICODE),
+            // 'customer_data' => json_encode($customer_data, JSON_UNESCAPED_UNICODE),
+            'noti_data' => $noti_data,        
+            'customer_data' => $customer_data 
         ]);
 
         // --- Lưu log ra file ---
