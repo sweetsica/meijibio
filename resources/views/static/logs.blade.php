@@ -35,10 +35,10 @@
         <tbody>
             
             @forelse($logs as $log)
-                @php
+                {{-- @php
                     $notiData = json_decode($log->noti_data, true);
                     $customerData = json_decode($log->customer_data, true);
-                @endphp
+                @endphp --}}
             <tr>
                 <td>{{ $log->id }}</td>
                 <td>{{ $log->title }}</td>
