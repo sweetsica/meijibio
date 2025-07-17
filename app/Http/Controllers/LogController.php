@@ -29,15 +29,15 @@ class LogController extends Controller
         // $customer_data = (array) ($request->input('customer_data') ?? []);
         $noti_data = $allData['noti_data'] ?? [];
         $customer_data = $allData['customer_data'] ?? [];
-        
+
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
 
         Log::create([
             'title' => $title,
             // 'noti_data' => json_encode($noti_data, JSON_UNESCAPED_UNICODE),
             // 'customer_data' => json_encode($customer_data, JSON_UNESCAPED_UNICODE),
-            'noti_data' => $noti_data,        
-            'customer_data' => $customer_data 
+            'noti_data' => json_encode($rawData['noti_data'] ?? [], JSON_UNESCAPED_UNICODE),
+            'customer_data' => json_encode($rawData['customer_data'] ?? [], JSON_UNESCAPED_UNICODE),
         ]);
 
         // --- Lưu log ra file ---
