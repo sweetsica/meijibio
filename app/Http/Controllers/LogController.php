@@ -14,6 +14,12 @@ class LogController extends Controller
     {
         // Lấy toàn bộ request
         $allData = $request->all();
+
+        return response()->json([
+            'status' => 'ok',
+            'data' => $allData
+        ]);
+
         $noti_data = $allData['noti_data'] ?? []; // Lấy dữ liệu cập nhật hành động
         $customer_data = $allData['customer_data'] ?? []; // Lấy thông tin khách hàng khi hành động xong
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
