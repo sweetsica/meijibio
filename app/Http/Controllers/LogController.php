@@ -16,7 +16,6 @@ class LogController extends Controller
 
         $noti_data = $allData['noti_data'] ?? [];
         $customer_data = $allData['customer_data'] ?? [];
-
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
 
         Log::create([
@@ -47,9 +46,6 @@ class LogController extends Controller
                     json_encode($allData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) .
                     "\n\n";
         File::append($logFile, $logContent);
-
-
-
         return response()->json([
             'status' => 'ok',
             'title' => $title,
@@ -66,7 +62,8 @@ class LogController extends Controller
         // Tìm kiếm theo title hoặc trong json (data)
         if ($search = $request->input('search')) {
             $query->where('title', 'like', "%{$search}%")
-                  ->orWhere('data', 'like', "%{$search}%");
+                  ->orWhere('noti_data', 'like', "%{$search}%")
+                  ->orWhere('customer_data', 'like', "%{$search}%");
         }
 
         // Lấy logs mới nhất trước, phân trang 50 bản ghi
