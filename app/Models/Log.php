@@ -6,7 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
-    protected $fillable = ['title', 'noti_data', 'customer_data'];
+    protected $connection = 'pgsql_main';
+    protected $table = 'log'; // Tên bảng trong PostgreSQL
+
+    protected $guarded = [''];
 
     protected $casts = [
         'noti_data' => 'array',

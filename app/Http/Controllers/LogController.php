@@ -5,35 +5,49 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Log;
 use App\Models\Customer;
+use App\Services\CustomerService;
 
 use Illuminate\Support\Facades\File;
 
 
 class LogController extends Controller
 {
-    public function webhook(Request $request)
+    public function webhook(Request $request, CustomerService $customerService)
     {
         $allData = json_decode($request->getContent(), true);
 
         $noti_data = $allData['noti_data'] ?? [];
-        $customer_data = $allData['customer_data'] ?? []; 
+        $customer_data = $allData['customer_data'] ?? [];
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
 
         Log::create([
             'title' => $title,
             // 'noti_data' => json_encode($rawData['noti_data'] ?? [], JSON_UNESCAPED_UNICODE),
             // 'customer_data' => json_encode($rawData['customer_data'] ?? [], JSON_UNESCAPED_UNICODE),
-            'noti_data' => $allData['noti_data'] ?? new \stdClass(), 
+            'noti_data' => $allData['noti_data'] ?? new \stdClass(),
             'customer_data' => $allData['customer_data'] ?? new \stdClass(),
         ]);
 
-         // ✅ Lưu vào PostgreSQL (bảng customers)
-        if (!empty($customer_data)) {
-            Customer::updateOrCreate(
-                // ['account_name' => $customer_data['account_name'] ?? 'No Name'], // Điều kiện update
-                ['customer_data' => $customer_data] // Dữ liệu ghi vào jsonb
-            );
+        if ($title === 'customer.created') {
+            // $customerService->createOrUpdateCustomer($customer_data);
+            $accountCode = $customerData['account_code'] ?? null;
+
+            if (!$accountCode) {
+                return response()->json(['status' => 'error', 'message' => 'account_code missing'], 400);
+            }
+
+            // Kiểm tra tồn tại
+            $customer = Customer::where('account_code', $accountCode)->first();
+
+            if ($customer) {
+                $customerService->checkUpdate($customer, $customerData);
+                return response()->json(['status' => 'updated'], 200);
+            } else {
+                $customerService->createCustomer($customerData);
+                return response()->json(['status' => 'created'], 201);
+            }
         }
+
 
         // --- Lưu log ra file ---
         $today = now()->format('d-m-Y');

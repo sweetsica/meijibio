@@ -11,12 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('logs', function (Blueprint $table) {
+        Schema::create('log', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable();
-            $table->json('noti_data')->nullable();
-            $table->json('customer_data')->nullable();
-
+            $table->string('title')->nullable(); // Thêm cột title
+            $table->jsonb('noti_data')->nullable();
+            $table->jsonb('customer_data')->nullable();
             $table->timestamps();
         });
     }
@@ -26,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('logs');
+        Schema::dropIfExists('log');
     }
 };
