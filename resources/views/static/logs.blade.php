@@ -33,17 +33,13 @@
             </tr>
         </thead>
         <tbody>
-            
+
             @forelse($logs as $log)
-                {{-- @php
-                    $notiData = json_decode($log->noti_data, true);
-                    $customerData = json_decode($log->customer_data, true);
-                @endphp --}}
             <tr>
                 <td>{{ $log->id }}</td>
                 <td>{{ $log->title }}</td>
                 <td style="width: 300px;">
-                    <pre class="bg-light border rounded p-2 small mb-0" 
+                    <pre class="bg-light border rounded p-2 small mb-0"
                         style="max-height: 200px; overflow:auto; white-space: pre-wrap; word-wrap: break-word;">
                 {{ json_encode($log->noti_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
 
@@ -51,7 +47,7 @@
                 </td>
 
                 <td style="width: 300px;">
-                    <pre class="bg-light border rounded p-2 small mb-0" 
+                    <pre class="bg-light border rounded p-2 small mb-0"
                         style="max-height: 200px; overflow:auto; white-space: pre-wrap; word-wrap: break-word;">
                 {{ json_encode($log->customer_data, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE) }}
                     </pre>

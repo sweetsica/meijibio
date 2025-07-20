@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\StaticPageController;
+use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LogController;
 
@@ -31,4 +32,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
+
+//Customer routes
+Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 
