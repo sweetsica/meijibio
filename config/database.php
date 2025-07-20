@@ -97,6 +97,20 @@ return [
             'sslmode' => 'prefer',
         ],
 
+        'pgsql_main' => [
+            'driver' => 'pgsql',
+            'host' => env('PGSQL_MAIN_HOST', '127.0.0.1'),
+            'port' => env('PGSQL_MAIN_PORT', '5432'),
+            'database' => env('PGSQL_MAIN_DATABASE', 'forge'),
+            'username' => env('PGSQL_MAIN_USERNAME', 'forge'),
+            'password' => env('PGSQL_MAIN_PASSWORD', ''),
+            'charset' => 'utf8',
+            'prefix' => '',
+            'prefix_indexes' => true,
+            'search_path' => 'public',
+            'sslmode' => 'prefer',
+        ],
+        
         'sqlsrv' => [
             'driver' => 'sqlsrv',
             'url' => env('DB_URL'),

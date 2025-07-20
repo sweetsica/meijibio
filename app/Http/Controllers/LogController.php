@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Log;
+use App\Models\Customer;
 
 use Illuminate\Support\Facades\File;
 
@@ -15,7 +16,7 @@ class LogController extends Controller
         $allData = json_decode($request->getContent(), true);
 
         $noti_data = $allData['noti_data'] ?? [];
-        $customer_data = $allData['customer_data'] ?? [];
+        $customer_data = $allData['customer_data'] ?? []; 
         $title = $noti_data['event'] ?? 'No Title'; // Lấy tiêu đề từ event webhook
 
         Log::create([
@@ -25,6 +26,14 @@ class LogController extends Controller
             'noti_data' => $allData['noti_data'] ?? new \stdClass(), 
             'customer_data' => $allData['customer_data'] ?? new \stdClass(),
         ]);
+
+         // ✅ Lưu vào PostgreSQL (bảng customers)
+        if (!empty($customer_data)) {
+            Customer::updateOrCreate(
+                // ['account_name' => $customer_data['account_name'] ?? 'No Name'], // Điều kiện update
+                ['customer_data' => $customer_data] // Dữ liệu ghi vào jsonb
+            );
+        }
 
         // --- Lưu log ra file ---
         $today = now()->format('d-m-Y');
