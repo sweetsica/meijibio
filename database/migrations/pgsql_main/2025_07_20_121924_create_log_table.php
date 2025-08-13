@@ -13,11 +13,12 @@ return new class extends Migration
     {
         Schema::create('log', function (Blueprint $table) {
             $table->id();
-            $table->string('title')->nullable(); // Thêm cột title
-            $table->jsonb('noti_data')->nullable();
-            $table->jsonb('customer_data')->nullable();
+            $table->string('title')->nullable();
+            $table->json('noti_data')->nullable();       // Dùng json
+            $table->json('customer_data')->nullable();   // Dùng json
             $table->timestamps();
         });
+        
     }
 
     /**

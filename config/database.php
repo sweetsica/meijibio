@@ -94,7 +94,6 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => 'prefer',
         ],
 
         'pgsql_main' => [
@@ -108,7 +107,8 @@ return [
             'prefix' => '',
             'prefix_indexes' => true,
             'search_path' => 'public',
-            'sslmode' => 'prefer',
+            // 'sslmode' => 'prefer',
+            'sslmode' => env('PGSQL_MAIN_SSLMODE', 'disable'), // <-- dòng này quan trọng
         ],
         
         'sqlsrv' => [
