@@ -7,10 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="keyword" content="">
-    <meta name="author" content="WRAPCODERS">
+    <meta name="author" content="Lucif" />
     <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
     <!--! BEGIN: Apps Title-->
-    <title>Duralux || Login Minimal</title>
+    <title>Login || Meijibio S</title>
     <!--! END:  Apps Title-->
     <!--! BEGIN: Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.ico')}}">
@@ -46,7 +46,7 @@
                     <div class="card-body p-sm-5">
                         <h2 class="fs-20 fw-bolder mb-4">Login</h2>
                         <h4 class="fs-13 fw-bold mb-2">Login to your account</h4>
-                        <p class="fs-12 fw-medium text-muted">Thank you for get back <strong>Nelel</strong> web applications, let's access our the best recommendation for you.</p>
+                        <p class="fs-12 fw-medium text-muted">Thank you for access Meijibio S - Made by Lucif</p>
                         <form action="{{ route('login.check') }}" method="post" class="w-100 mt-4 pt-2">
                             @csrf
                             <div class="mb-4">
@@ -63,7 +63,7 @@
                                     </div>
                                 </div>
                                 <div>
-                                    <a href="auth-reset-minimal.html" class="fs-11 text-primary">Forget password?</a>
+                                    <a href="#" class="fs-11 text-primary">Forget password?</a>
                                 </div>
                             </div>
                             <div class="mt-5">
@@ -86,7 +86,7 @@
                         </div>
                         <div class="mt-5 text-muted">
                             <span> Don't have an account?</span>
-                            <a href="auth-register-minimal.html" class="fw-bold">Create an Account</a>
+                            <a href="#" class="fw-bold">Create an Account</a>
                         </div>
                     </div>
                 </div>
