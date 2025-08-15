@@ -5,6 +5,7 @@ use App\Http\Controllers\StaticPageController;
 use App\Http\Controllers\CustomerController;
 use Illuminate\Http\Request;
 use App\Http\Controllers\LogController;
+use App\Http\Controllers\AuthenticateController;
 
 
 Route::get('/', function () {
@@ -32,6 +33,10 @@ Route::get('/blank', function () {
 
 //logs function
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
+
+//login route
+Route::get('/login', [AuthenticateController::class, 'index'])->name('login');
+Route::post('/logincheck', [AuthenticateController::class, 'logincheck'])->name('login.check');
 
 //Dashboard function
 Route::get('/dashboard/crm', function () {
