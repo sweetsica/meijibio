@@ -9,7 +9,7 @@
     <meta name="author" content="Lucif" />
     <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
     <!--! BEGIN: Apps Title-->
-    <title>Customers Dashboard || Meijibio S</title>
+    <title>Leads Dashboard || Meijibio S</title>
     <!--! END:  Apps Title-->
     <!--! BEGIN: Favicon-->
     <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.ico')}}">
@@ -505,7 +505,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md">
                                                             <img src="./../assets/images/avatar/1.png" alt="" class="img-fluid">
                                                         </div>
@@ -541,7 +541,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -602,7 +602,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md bg-warning text-white">N</div>
                                                         <div>
                                                             <span class="text-truncate-1-line">Nancy Elliot</span>
@@ -636,7 +636,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -697,7 +697,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md">
                                                             <img src="./../assets/images/avatar/2.png" alt="" class="img-fluid">
                                                         </div>
@@ -733,7 +733,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -794,7 +794,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md bg-teal text-white">H</div>
                                                         <div>
                                                             <span class="text-truncate-1-line">Henry Leach</span>
@@ -828,7 +828,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -889,7 +889,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md">
                                                             <img src="./../assets/images/avatar/3.png" alt="" class="img-fluid">
                                                         </div>
@@ -925,7 +925,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -986,7 +986,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md bg-warning text-white">N</div>
                                                         <div>
                                                             <span class="text-truncate-1-line">Nancy Elliot</span>
@@ -1020,7 +1020,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -1081,7 +1081,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md">
                                                             <img src="./../assets/images/avatar/4.png" alt="" class="img-fluid">
                                                         </div>
@@ -1117,7 +1117,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -1178,7 +1178,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md bg-success text-white">H</div>
                                                         <div>
                                                             <span class="text-truncate-1-line">Leach Henry</span>
@@ -1212,7 +1212,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -1273,7 +1273,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md">
                                                             <img src="./../assets/images/avatar/5.png" alt="" class="img-fluid">
                                                         </div>
@@ -1309,7 +1309,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -1370,7 +1370,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view') }}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md bg-primary text-white">E</div>
                                                         <div>
                                                             <span class="text-truncate-1-line">Elliot Nancy</span>
@@ -1404,7 +1404,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view') }}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
@@ -1649,7 +1649,7 @@
     <!--! END: Vendors JS !-->
     <!--! BEGIN: Apps Init  !-->
     <script src="{{asset('assets/js/common-init.min.js')}}"></script>
-    <script src="{{asset('assets/js/customers-init.min.js')}}"></script>
+    <script src="{{asset('assets/js/leads-init.min.js')}}"></script>
     <!--! END: Apps Init !-->
     <!--! BEGIN: Theme Customizer  !-->
     <script src="{{asset('assets/js/theme-customizer-init.min.js')}}"></script>

@@ -10,10 +10,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <meta name="description" content="" />
         <meta name="keyword" content="" />
-        <meta name="author" content="WRAPCODERS" />
+        <meta name="author" content="Lucif" />
         <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
         <!--! BEGIN: Apps Title-->
-        <title>Duralux || Dashboard</title>
+        <title>Dashboard || Meijibio S</title>
         <!--! END:  Apps Title-->
         <!--! BEGIN: Favicon-->
         <link rel="shortcut icon" type="image/x-icon" href="{{asset('assets/images/favicon.ico')}}" />
@@ -42,12 +42,12 @@
     <!--! [Start] Navigation Manu !-->
     <!--! ================================================================ !-->
     @hasSection('template.sidebarTemplate')
-        @include('template.sidebarTemplate')
+        @yield('template.sidebarTemplate')
     @else
         <nav class="nxl-navigation">
             <div class="navbar-wrapper">
                 <div class="m-header">
-                    <a href="index.html" class="b-brand">
+                    <a href="{{ route('dashboard.crm') }}" class="b-brand">
                         <!-- ========   change your logo hear   ============ -->
                         <img src="{{asset('assets/images/logo-full.png')}}" alt="" class="logo logo-lg" />
                         <img src="{{asset('assets/images/logo-abbr.png')}}" alt="" class="logo logo-sm" />
@@ -268,8 +268,8 @@
                         <div class="card-body">
                             <i class="feather-sunrise fs-4 text-dark"></i>
                             <h6 class="mt-4 text-dark fw-bolder">Downloading Center</h6>
-                            <p class="fs-11 my-3 text-dark">Duralux is a production ready CRM to get started up and running easily.</p>
-                            <a href="javascript:void(0);" class="btn btn-primary text-dark w-100">Download Now</a>
+                            <p class="fs-11 my-3 text-dark">Meijibio S is a production ready CRM to get started up and running easily.</p>
+                            <a href="javascript:void(0);" class="btn btn-primary text-dark w-100">Join Us Now</a>
                         </div>
                     </div>
                 </div>
@@ -285,7 +285,7 @@
     <!--! ================================================================ !-->
 
     @hasSection('template.menutopTemplate')
-        @include('template.menutopTemplate')
+        @yield('template.menutopTemplate')
     @else
         <header class="nxl-header">
             <div class="header-wrapper">

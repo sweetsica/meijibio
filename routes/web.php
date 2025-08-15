@@ -39,10 +39,19 @@ Route::get('/login', [AuthenticateController::class, 'index'])->name('login');
 Route::post('/logincheck', [AuthenticateController::class, 'logincheck'])->name('login.check');
 
 //Dashboard function
+// Route::get('/dashboard/crm', function () {
+//     return view('static.index');
+// })->name('dashboard.crm');
 Route::get('/dashboard/crm', function () {
-    return view('static.index');
+    return view('dashboard.crm');
 })->name('dashboard.crm');
 
 //Customer routes
 Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
+Route::get('/customers/view', [CustomerController::class, 'view'])->name('customer.view');
+Route::get('/customers/create', [CustomerController::class, 'create'])->name('customer.create');
 
+//Lead routes
+Route::get('/leads', [CustomerController::class, 'indexLead'])->name('lead.index');
+Route::get('/leads/view', [CustomerController::class, 'viewLead'])->name('lead.view');
+Route::get('/leads/create', [CustomerController::class, 'createLead'])->name('lead.create');
