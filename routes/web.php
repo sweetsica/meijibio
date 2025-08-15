@@ -8,9 +8,9 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\AuthenticateController;
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 //Static pages
 // Route::get('/login', [StaticPageController::class, 'login'])->name('static.login');
@@ -35,7 +35,7 @@ Route::get('/blank', function () {
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
 //login route
-Route::get('/login', [AuthenticateController::class, 'index'])->name('login');
+Route::get('/', [AuthenticateController::class, 'index'])->name('login');
 Route::post('/logincheck', [AuthenticateController::class, 'logincheck'])->name('login.check');
 
 //Dashboard function
