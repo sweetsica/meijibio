@@ -55,6 +55,10 @@ class LogController extends Controller
             "\n\n";
         File::append($logFile, $logContent);
 
+
+        $customer_data = Customer::mapGetflyDataToCustomer($allData['customer_data']);
+
+
         // --- Xử lý tạo/cập nhật Customer ---
         if ($title === 'customer.created') {
             if (empty($customer_data['getfly_id'])) {
