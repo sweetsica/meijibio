@@ -25,13 +25,18 @@ Route::match(['get', 'post'], '/webhook', [StaticPageController::class, 'webhook
 Route::post('/post-test', [StaticPageController::class, 'post_test'])->name('static.post_test');
 
 
-//html
-Route::get('/dashboard', function () {
+//html template
+Route::get('/blank', function () {
     return view('static.dashboard');
-})->name('dashboard');
+})->name('blank');
 
+//logs function
 Route::get('/logs', [LogController::class, 'index'])->name('logs.index');
 
+//Dashboard function
+Route::get('/dashboard/crm', function () {
+    return view('static.index');
+})->name('dashboard.crm');
 
 //Customer routes
 Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
