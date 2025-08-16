@@ -333,40 +333,7 @@
                 </div>
             </div>
             <!-- [ page-header ] end -->
-            <div class="bg-white py-3 border-bottom rounded-0 p-md-0 mb-0">
-                <div class="d-md-none d-flex">
-                    <a href="javascript:void(0)" class="page-content-left-open-toggle">
-                        <i class="feather-align-left fs-20"></i>
-                    </a>
-                </div>
-                <div class="d-flex align-items-center justify-content-between">
-                    <div class="nav-tabs-wrapper page-content-left-sidebar-wrapper">
-                        <div class="d-flex d-md-none">
-                            <a href="javascript:void(0)" class="page-content-left-close-toggle">
-                                <i class="feather-arrow-left me-2"></i>
-                                <span>Back</span>
-                            </a>
-                        </div>
-                        <ul class="nav nav-tabs nav-tabs-custom-style" id="myTab" role="tablist">
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#profileTab">Profile</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#proposalTab">Proposal</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tasksTab">Tasks</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#notesTab">Notes</button>
-                            </li>
-                            <li class="nav-item" role="presentation">
-                                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#commentTab">Comments</button>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            
             <!-- [ Main Content ] start -->
             <div class="main-content">
                 <div class="tab-content">
