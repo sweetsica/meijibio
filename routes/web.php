@@ -42,7 +42,7 @@ Route::get('/clear',function(){
     Auth::logout();
     Session::flush();
     return redirect('/testlogin');
-});
+})->name('clear');
 
 ##########################################################################################################################################
 // Webhook route

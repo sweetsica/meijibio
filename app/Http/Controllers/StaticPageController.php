@@ -36,6 +36,7 @@ class StaticPageController extends Controller
         return $response->body();
     }
 
+    //START TEST LOGIN FUNCTION
     public function testlogin(){
         return view('static.login-test');
     }
@@ -107,6 +108,5 @@ class StaticPageController extends Controller
         ]);
     }
 
-
-   
+    //END TEST LOGIN FUNCTION
 }
