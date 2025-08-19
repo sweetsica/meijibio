@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
+            $table->integer('getfly_id')->nullable();
             $table->string('area')->default(0);
             $table->string('name');
             $table->string('code')->nullable();
