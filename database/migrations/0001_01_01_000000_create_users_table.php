@@ -15,7 +15,12 @@ return new class extends Migration
             $table->id();
             $table->integer('getfly_id')->nullable();
             $table->string('area')->default(0);
-            $table->string('name');
+            $table->string('username')->unique()->nullable();
+            $table->string('name')->nullable();
+            $table->string('department')->nullable()->default(0);
+            $table->string('department_id')->nullable()->default(0);
+            $table->string('team')->nullable();
+            $table->string('team_id')->nullable();
             $table->string('code')->nullable();
             $table->string('email')->unique();
             $table->integer('phone')->nullable();
