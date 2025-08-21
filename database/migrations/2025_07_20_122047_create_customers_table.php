@@ -110,6 +110,7 @@ return new class extends Migration
             $table->decimal('total_revenue', 15, 2)->nullable()->comment('Tổng doanh thu');
             $table->integer('count_order')->nullable()->comment('Số đơn hàng');
             $table->string('thumbnail_logo')->nullable()->comment('Logo');
+            
             // $table->decimal('latitude', 10, 7)->nullable()->comment('Vĩ độ');
             // $table->decimal('longitude', 10, 7)->nullable()->comment('Kinh độ');
             // $table->string('phone_fax')->nullable()->comment('Fax');

@@ -161,10 +161,10 @@ class Customer extends Model
         'total_revenue'          => $flt($raw['total_revenue'] ?? null),
         'count_order'            => $int($raw['count_order'] ?? null),
         'thumbnail_logo'         => $str($raw['logo'] ?? ($raw['thumbnail_logo'] ?? null)),
-        'latitude'               => $flt($raw['latitude'] ?? null),
-        'longitude'              => $flt($raw['longitude'] ?? null),
-        'phone_fax'              => $str($raw['phone_fax'] ?? null),
-        'data_dau_vao'           => $str($cf['data_dau_vao'] ?? $dcf['data_dau_vao'] ?? null),
+        // 'latitude'               => $flt($raw['latitude'] ?? null),
+        // 'longitude'              => $flt($raw['longitude'] ?? null),
+        // 'phone_fax'              => $str($raw['phone_fax'] ?? null),
+        // 'data_dau_vao'           => $str($cf['data_dau_vao'] ?? $dcf['data_dau_vao'] ?? null),
 
         // 2 field này là string trong migration → join nếu là mảng, hoặc lấy id-list từ *_details
         'account_type'           => $csv($raw['account_type'] ?? ($idsCsv($raw['account_type_details'] ?? []) ?? null)),

@@ -3,92 +3,62 @@
 namespace App\Imports;
 
 use App\Models\Customer;
-use App\Models\User;
 use Maatwebsite\Excel\Concerns\ToModel;
-use Illuminate\Support\Collection;
-use Maatwebsite\Excel\Concerns\ToCollection;
-use Illuminate\Support\Facades\Log;
+use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\SkipsEmptyRows;
+use Maatwebsite\Excel\Concerns\WithChunkReading;
 
-class CustomersImport implements ToModel
+class CustomersImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithChunkReading
 {
-    /**
-    * @param array $row
-    *
-    * @return \Illuminate\Database\Eloquent\Model|null
-    */
-    public function collection(Collection $rows)
+    public function startRow(): int
     {
-        // Bỏ qua header (dòng 1)
-        $rows->skip(1)->each(function ($row) {
-            try {
-                // Map dữ liệu
-                $data = [
-                    'account_code' => $row[0] ?? null,
-                    'account_name' => $row[1] ?? null,
-                    'description' => $row[2] ?? null,
-                    'billing_address_street' => $row[3] ?? null,
-                    'phone_office' => $row[4] ?? null,
-                    'email' => $row[5] ?? null,
-                    'mgr_email' => $row[6] ?? null,
-                    'mgr_display_name' => $row[7] ?? null,
-                    'website' => $row[8] ?? null,
-                    'logo' => $row[9] ?? null,
-                    'birthday' => $row[10] ?? null,
-                    'sic_code' => $row[11] ?? null,
-                    'relation_id' => $row[15] ?? null,
-                    'relation_name' => $row[16] ?? null,
-                    'gender' => $row[17] ?? null,
-                    'total_revenue' => $row[18] ?? 0,
-                    'country_name' => $row[19] ?? null,
-                    'country_code' => $row[20] ?? null,
-                    'country_id' => $row[21] ?? null,
-                    'province_id' => $row[22] ?? null,
-                    'district_id' => $row[23] ?? null,
-                    'ward_id' => $row[24] ?? null,
-                    'industry' => $row[25] ?? null,
-                    'account_manager' => $row[26] ?? null,
-                    'total_point_bonus' => $row[27] ?? 0,
-                    'total_cash_bonus' => $row[28] ?? 0,
-                    'error' => $row[39] ?? null,
-                ];
+        return 2; // bỏ qua header
+    }
+    
 
-                // Các trường JSON cần parse (nếu Excel chứa chuỗi JSON hoặc mảng)
-                $jsonFields = [
-                    29 => 'detail_custom_fields',
-                    30 => 'custom_fields',
-                    31 => 'contacts',
-                    32 => 'accessible_user_ids',
-                    33 => 'account_type_details',
-                    34 => 'account_source_details',
-                    35 => 'industry_details',
-                    36 => 'account_relation_detail',
-                    37 => 'gender_detail',
-                    38 => 'country_detail',
-                    40 => 'province_detail',
-                    41 => 'district_detail',
-                    42 => 'ward_detail',
-                ];
+    public function model(array $row)
+    {   
+        if (!empty($row['error'])) 
+        {
+            return null; 
+        }
+        return new Customer([
+            'getfly_id' => $row['id'] ?? null,
+            'account_code' => $row['account_code'] ?? null,
+            'account_name' => $row['account_name'] ?? null,
+            'description' => $row['description'] ?? null,
+            'billing_address_street' => $row['billing_address_street'] ?? null,
+            'phone_office' => $row['phone_office'] ?? null,
+            'email' => $row['email'] ?? null,
+            'mgr_email' => $row['mgr_email'] ?? null,
+            'mgr_display_name' => $row['mgr_display_name'] ?? null,
+            'website' => $row['website'] ?? null,
+            'logo' => $row['logo'] ?? null,
+            'birthday' => $row['birthday'] ?? null,
+            'sic_code' => $row['sic_code'] ?? null,
+            'account_manager' => $row['account_manager'] ?? null,
+            'total_point_bonus' => $row['total_point_bonus'] ?? 0,
+            'total_cash_bonus' => $row['total_cash_bonus'] ?? 0,
+            'detail_custom_fields' => $row['detail_custom_fields'] ?? null,
+            'custom_fields' => $row['custom_fields'] ?? null,
+            'contacts' => $row['contacts'] ?? null,
+            'accessible_user_ids' => $row['accessible_user_ids'] ?? null,
+            'relation_id' => $row['relation_id'] ?? null,
+            'relation_name' => $row['relation_name'] ?? null,
+            'gender' => $row['gender'] ?? null,
+            'total_revenue' => $row['total_revenue'] ?? null,
+            'country_name' => $row['country_name'] ?? null,
+            'country_code' => $row['country_code'] ?? null,
+            'country_id' => $row['country_id'] ?? null,
+            'province_id' => $row['province_id'] ?? null,
+            'district_id' => $row['district_id'] ?? null,
+            'ward_id' => $row['ward_id'] ?? null,
+            'industry' => $row['industry'] ?? null,
+        ]);
+    }
 
-                foreach ($jsonFields as $index => $field) {
-                    if (!empty($row[$index])) {
-                        // Nếu là chuỗi JSON thì decode
-                        $parsed = json_decode($row[$index], true);
-                        $data[$field] = $parsed ? $parsed : [$row[$index]];
-                    } else {
-                        $data[$field] = null;
-                    }
-                }
-
-                // Lưu DB (cập nhật nếu đã có account_code)
-                User::updateOrCreate(
-                    ['account_code' => $data['account_code']],
-                    $data
-                );
-            } catch (\Exception $e) {
-                Log::error("Import error: " . $e->getMessage(), [
-                    'row' => $row->toArray()
-                ]);
-            }
-        });
+    public function chunkSize(): int
+    {
+        return 100; // đọc 100 dòng/lần
     }
 }

@@ -84,6 +84,8 @@ Route::get('/dashboard/crm', function () {
 Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 Route::get('/customers/view', [CustomerController::class, 'view'])->name('customer.view');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customer.create');
+    
+
 
 //Lead routes
 Route::get('/leads', [CustomerController::class, 'indexLead'])->name('lead.index');

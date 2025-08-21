@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use Maatwebsite\Excel\Facades\Excel;
+use App\Imports\CustomersImport;
+use Maatwebsite\Excel\Excel as ExcelType;
+
 class CustomerController extends Controller
 {
     public function index()
@@ -36,5 +40,23 @@ class CustomerController extends Controller
     {
         // Logic to retrieve and display customers
         return view('lead.create');
+    }
+
+    public function import(Request $request)
+    {
+        // // Logic to import customers
+        // Excel::import(new CustomersImport, $request->file('customers'));
+        // return redirect()->route('customer.index')->with('success', 'Customers imported successfully');
+
+        $file = $request->file('file');
+
+        if (!$file) {
+            return response()->json(['error' => 'No file uploaded'], 400);
+        }
+
+        // Ép ReaderType = XLSX
+        Excel::import(new CustomersImport, $file, null, ExcelType::XLSX);
+
+        return response()->json(['message' => 'Import thành công']);
     }
 }
