@@ -52,4 +52,12 @@ class User extends Authenticatable
         return $this->belongsToMany(Department::class, 'department_user', 'user_id', 'department_id')
                     ->withTimestamps();
     }
+
+
+    public function getCurrentUserRoleAttribute()
+    {
+        return $this->role;
+    }
+
+    // $user->current_user_role
 }

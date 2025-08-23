@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('department_id')->nullable()->default(0);
             $table->string('team')->nullable();
             $table->string('team_id')->nullable();
+            $table->string('role')->default('user')->nullable();
             $table->string('code')->nullable();
             $table->string('email')->unique();
             $table->integer('phone')->nullable();

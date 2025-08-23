@@ -10,9 +10,15 @@ use Maatwebsite\Excel\Excel as ExcelType;
 use App\Models\Customer;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Support\RoleFieldResolver;
 
 class CustomerController extends Controller
 {
+    // public function __construct()
+    // {
+    //     $this->middleware('auth'); // đảm bảo luôn có Auth::user()
+    // }
+
     public function index()
     {
 
@@ -44,9 +50,13 @@ class CustomerController extends Controller
         // get list of users
         $users = User::all();
 
+        // Lấy danh sách field có thể edit theo role của user hiện tại
+        $editableFields = RoleFieldResolver::forUser(Auth::user());
+
 
         // Logic to retrieve and display customers
-        return view('customer.view', compact('customer', 'users'));
+        // return view('customer.view', compact('customer', 'users'));
+        return view('customer.view', compact('customer', 'users', 'editableFields'));
     }
 
     public function create()

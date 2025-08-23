@@ -8,6 +8,9 @@ use App\Http\Controllers\LogController;
 use App\Http\Controllers\AuthenticateController;
 use Illuminate\Support\Facades\Session;
 
+use App\Http\Controllers\RoleController;
+use App\Http\Controllers\UserRoleController;
+
 
 
 ##########################################################################################################################################
@@ -91,6 +94,23 @@ Route::get('/customers/create', [CustomerController::class, 'create'])->name('cu
 Route::get('/leads', [CustomerController::class, 'indexLead'])->name('lead.index');
 Route::get('/leads/view', [CustomerController::class, 'viewLead'])->name('lead.view');
 Route::get('/leads/create', [CustomerController::class, 'createLead'])->name('lead.create');
+
+
+##########################################################################################################################################
+
+// Role CRUD
+Route::resource('roles', RoleController::class)->only(['index', 'create', 'store', 'destroy']);
+
+// Gán role cho user
+Route::get('/users/{id}/role', [UserRoleController::class, 'edit'])->name('users.editRole');
+Route::put('/users/{id}/role', [UserRoleController::class, 'update'])->name('users.updateRole');
+
+
+
+##########################################################################################################################################
+
+
+
 
 
 ##########################################################################################################################################
