@@ -186,5 +186,4 @@ class Customer extends Model
 
         return self::create($data);
     }
-
 }

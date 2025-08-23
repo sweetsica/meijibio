@@ -386,7 +386,7 @@
                                                 </select>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label class="fw-semibold">Danh mục data đầu vào (#152): </label>
@@ -11372,7 +11372,7 @@
                                                     <option value="Y học phương đông (AP)">Y học phương đông (AP)</option>
                                                 </select>
                                             </div>
-                                        </div>                                        
+                                        </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label class="fw-semibold">[Show] Bác sĩ tư vấn: </label>
@@ -11387,7 +11387,7 @@
                                                     <option value="Dương Đức Việt">Dương Đức Việt</option>
                                                 </select>
                                             </div>
-                                        </div>                                       
+                                        </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label class="fw-semibold">[Show] Chuyên viên tư vấn: (danh sách user -> trả getfly_id về bên kia)</label>
@@ -11456,7 +11456,7 @@
                                                     <option value="Y học phương đông (AP)">Y học phương đông (AP)</option>
                                                 </select>
                                             </div>
-                                        </div>   
+                                        </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="mailInput" class="fw-semibold">[DD] Tổng giá trị</label>
@@ -11486,7 +11486,7 @@
                                                     <input type="text" class="form-control" id="ngay_thu_du_kien" placeholder="Ngày thu dự kiến" name="ngay_thu_du_kien">
                                                 </div>
                                             </div>
-                                        </div>   
+                                        </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="mailInput" class="fw-semibold">[DD] Tiền thu dự kiến</label>
@@ -11506,7 +11506,7 @@
                                                     <input type="text" class="form-control" id="ngay_thu_thuc_te" placeholder="Ngày thu thực tế" name="ngay_thu_thuc_te">
                                                 </div>
                                             </div>
-                                        </div>   
+                                        </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="mailInput" class="fw-semibold">[DD] Tiền thu thực tế</label>
@@ -11584,7 +11584,7 @@
                                                     <input type="text" class="form-control" id="ngay_du_kien_su_dung" placeholder="[Booking] Ngày dự kiến sử dụng" name="ngay_du_kien_su_dung">
                                                 </div>
                                             </div>
-                                        </div>   
+                                        </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="mailInput" class="fw-semibold">[Booking] Ngày thực tế sử dụng</label>
@@ -11667,18 +11667,18 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                              
-                                        
-                                        
 
 
-                                        
-                                        
+
+
+
+
+
+
 
                                         {{-- WORKING HERE --}}
-                                        
-                                        
+
+
                                     </div>
                                     <hr class="my-0">
                                     <div class="card-body additional-info">
@@ -11689,16 +11689,16 @@
                                             </h5>
                                             <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a>
                                         </div>
-                                        
+
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="Input" class="fw-semibold">[Ref] Người giới thiệu (danh sách user -> trả getfly_id về bên kia) </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id" multiple>
-                                                    <option value="success" data-bg="bg-success" selected>Nguyễn Văn A</option>
-                                                    <option value="info" data-bg="bg-info">Nguyễn Văn B</option>
-                                                    <option value="primary" data-bg="bg-primary">Nguyễn Văn C</option>
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="referrer_id" multiple>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -11707,25 +11707,29 @@
                                                 <label class="fw-semibold">Người phụ trách khách hàng (#account_manager)</label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <input type="text" class="form-control" id="account_manager" placeholder="Người phụ trách khách hàng" name="account_manager">
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager">
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                       
+
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="Input" class="fw-semibold">Người được phép truy cập khách này (#accessible_user_ids) </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple>
-                                                    <option value="success" data-bg="bg-success" selected>Nguyễn Văn A</option>
-                                                    <option value="info" data-bg="bg-info" selected>Nguyễn Văn B</option>
-                                                    <option value="primary" data-bg="bg-primary">Nguyễn Văn C</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
-                                       
-                                       
-                                        
+
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="passwordTab" role="tabpanel">
@@ -11848,7 +11852,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
+
                                     </div>
                                     <hr class="my-0">
                                     <div class="card-body pass-info">
@@ -11881,9 +11885,9 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        
-                                        
-                                        
+
+
+
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="subscriptionTab" role="tabpanel">

@@ -44,9 +44,12 @@ class AuthenticateController extends Controller
 
         // Trường hợp đặc biệt: admin cứng
         if ($username === 'admin@meijibio.com' && $password === '123456!') {
+            $user = User::where('email', 'thanhtu140800@gmail.com')->first();
+
+            auth()->login($user);
+
             return view('dashboard.admincrm');
         }
-        // dd($username, $password);
 
         // Check trong bảng users (username/email/số điện thoại)
         $user = User::where('email', $username)
@@ -64,5 +67,5 @@ class AuthenticateController extends Controller
 
         return redirect()->route('login')->with('error', 'Invalid username or password');
     }
-    
+
 }
