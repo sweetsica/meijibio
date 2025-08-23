@@ -68,6 +68,11 @@ return new class extends Migration
             $table->date('ngay_thu_thuc_te')->nullable()->comment('Ngày thu thực tế');
             $table->decimal('tien_thu_thuc_te', 15, 2)->nullable()->comment('Tiền thu thực tế');
 
+            // --- Custom Fields ---
+            $table->json('custom_fields')->nullable()->comment('Custom fields');
+            $table->json('contacts')->nullable()->comment('Contacts');
+            $table->json('accessible_user_ids')->nullable()->comment('Accessible user IDs');
+
             // --- AF ---
             $table->string('phan_loai')->nullable()->comment('Phân loại');
             $table->string('dich_vu_af')->nullable()->comment('Dịch vụ (AF)');

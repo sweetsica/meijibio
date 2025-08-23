@@ -57,6 +57,7 @@ class AuthenticateController extends Controller
         if ($user && Hash::check($password, $user->password)) {
             // Có thể set session cho user nếu cần
             auth()->login($user);
+            // dd(auth()->user()->getfly_id);
 
             return view('dashboard.crm');
         }
