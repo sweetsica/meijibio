@@ -17,3 +17,5 @@ Route::post('/webhook', [LogController::class, 'webhook']);
 Route::post('/customers/import', [CustomerController::class, 'import'])->name('customer.import');
 
 Route::post('/customers/{id}/update', [CustomerController::class, 'updateCustomer']);
+
+Route::post('/customers/sync-customer', [CustomerController::class, 'syncCustomer']);

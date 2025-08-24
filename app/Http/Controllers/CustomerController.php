@@ -22,6 +22,13 @@ class CustomerController extends Controller
 
     public function index()
     {
+        if (!Auth::user()) {
+            return redirect()->route('login');
+        }
+
+        if (Auth::user()->role == 'admin') {
+            $customers = Customer::all();
+        }
 
         $authUserGetFlyId = Auth::user()->getfly_id;
 
@@ -30,7 +37,7 @@ class CustomerController extends Controller
         ->orWhereJsonContains('accessible_user_ids', $authUserGetFlyId)
         ->get();
 
-        if(Auth::user()->role == 'admin'){
+        if (Auth::user()->role == 'admin') {
             $customers = Customer::all();
         }
 
@@ -129,8 +136,12 @@ class CustomerController extends Controller
             }
         }
 
+        $crmAPIKey = env('GETFLY_CRM_API_KEY');
+
         // Call api to push $dataToSync to another service meijibio
-        $response = Http::post('https://meijibio.getflycrm.com/api/v6/accounts', $dataToSync);
+        $response = Http::withHeaders([
+            'X-API-KEY' => $crmAPIKey
+        ])->post('https://meijibio.getflycrm.com/api/v6/accounts', $dataToSync);
 
         if ($response->successful()) {
             return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
@@ -157,7 +168,7 @@ class CustomerController extends Controller
         // Check toàn bộ các field request gửi lên và phân biệt xem có được update hay không
         // Nếu được update thì là field custom hay default
         foreach ($requestFields as $field => $value) {
-            if(!in_array($field, $rolePermission)){
+            if (!in_array($field, $rolePermission)) {
                 continue;
             }
 
@@ -172,13 +183,73 @@ class CustomerController extends Controller
         }
         $dataToSync['accessible_user_ids'] = [];
 
+        $crmAPIKey = env('GETFLY_CRM_API_KEY');
+
         // Call api to push $dataToSync to another service meijibio
-        $response = Http::post('https://meijibio.getflycrm.com/api/v6/accounts/'.$id, $dataToSync);
+        $response = Http::withHeaders([
+            'X-API-KEY' => $crmAPIKey
+        ])->post('https://meijibio.getflycrm.com/api/v6/accounts/'.$id, $dataToSync);
 
         if ($response->successful()) {
             return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
         } else {
             return response()->json(['message' => 'Sync thất bại', 'data' => $dataToSync], 500);
+        }
+    }
+
+    public function syncCustomer()
+    {
+        try {
+            $crmAPIKey = env('GETFLY_CRM_API_KEY');
+            $defaultFields = FieldDefine::defaultListFields;
+
+            // Convert default fields array to comma-separated string
+            $defaultFieldsString = implode(',', $defaultFields);
+            $fieldsRequests = $defaultFieldsString;
+
+            $limit = 1000000000; // 1 billion records
+
+            $url = 'https://meijibio.getflycrm.com/api/v6/accounts?limit=' . $limit . '&fields=' . $fieldsRequests;
+
+            $response = Http::withHeaders([
+                'X-API-KEY' => $crmAPIKey
+            ])->get($url);
+
+
+            // Get first item of response
+            $data = json_decode($response->body(), true);
+            $firstItem = $data['data'][0];
+
+
+            // sync data with our database
+            $customer = Customer::where('getfly_id', $firstItem['id'])->first();
+
+
+            $customerData = [
+                'getfly_id' => $firstItem['id'],
+            ];
+
+            $defaultFields = FieldDefine::defaultFields;
+
+            foreach ($defaultFields as $field) {
+                $customerData[$field] = $firstItem[$field];
+            }
+
+            if ($customer) {
+                $customer->update($customerData);
+            } else {
+                $customer = Customer::create($customerData);
+            }
+
+
+            if ($response->successful()) {
+                return response()->json(['message' => 'Sync success', 'data' => $firstItem]);
+            } else {
+
+                return response()->json(['message' => 'Sync failed', 'data' => $response->body()], 500);
+            }
+        } catch (\Exception $e) {
+            return response()->json(['message' => 'Sync failed', 'data' => $e], 500);
         }
     }
 }
