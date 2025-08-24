@@ -58,7 +58,8 @@ return [
         'link_mxh',
         // new fields
         'account_manager',
-        'accessible_user_ids'
+        'accessible_user_ids',
+        'currency'
     ],
     'user' => [
         'danh_muc_data_dau_vao',

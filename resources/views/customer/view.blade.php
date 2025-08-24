@@ -586,7 +586,7 @@
                                                 <label class="fw-semibold">Quốc gia: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="currency" disabled>
+                                                <select class="form-control" data-select2-selector="currency" @if(!in_array('currency', $editableFields)) disabled @endif>
                                                     <option data-currency="vn" selected>VND - Vietnamese</option>
                                                 </select>
                                             </div>
@@ -596,7 +596,7 @@
                                                 <label class="fw-semibold">Tỉnh/Thành phố: (#21) </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="province" name="province_id" @if(!in_array('province_id', $editableFields)) disabled @endif>
+                                                <select class="form-control" data-select2-selector="province_id" name="province_id" @if(!in_array('province_id', $editableFields)) disabled @endif>
                                                     <option value="1" {{ $customer->province_id == '1' ? 'selected' : '' }}>HÀ NỘI</option>
                                                     <option value="2" {{ $customer->province_id == '2' ? 'selected' : '' }}>HỒ CHÍ MINH</option>
                                                     <option value="3" {{ $customer->province_id == '3' ? 'selected' : '' }}>HẢI PHÒNG</option>
@@ -669,7 +669,7 @@
                                               <label class="fw-semibold">Quận/Huyện: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="district_id" @if(!in_array('district_id', $editableFields)) disabled @endif>
+                                                <select class="form-control"  data-select2-selector="district_id" name="district_id" @if(!in_array('district_id', $editableFields)) disabled @endif>
                                                     <option value="1" {{ $customer->district_id == '1' ? 'selected' : '' }}>Quận Ba Đình</option>
                                                     <option value="2" {{ $customer->district_id == '2' ? 'selected' : '' }}>Quận Hoàn Kiếm</option>
                                                     <option value="3" {{ $customer->district_id == '3' ? 'selected' : '' }}>Quận Hai Bà Trưng</option>
@@ -1381,7 +1381,7 @@
                                               <label class="fw-semibold">Phường/Xã: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="ward_id" @if(!in_array('ward_id', $editableFields)) disabled @endif>
+                                                <select class="form-control" name="ward_id" data-select2-selector="ward_id" @if(!in_array('ward_id', $editableFields)) disabled @endif>
                                                     <option value="1" {{ $customer->ward_id == '1' ? 'selected' : '' }}>Phường Phúc Xá</option>
                                                     <option value="2" {{ $customer->ward_id == '2' ? 'selected' : '' }}>Phường Trúc Bạch</option>
                                                     <option value="3" {{ $customer->ward_id == '3' ? 'selected' : '' }}>Phường Vĩnh Phúc</option>
