@@ -12601,6 +12601,7 @@
     <!-- vendors.min.js {always must need to be top} -->
     <script src="{{asset('assets/vendors/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/select2-active.min.js')}}"></script>
+    <script src="{{asset('assets/js/custom-select2-init.js')}}"></script>
     <script src="{{asset('assets/vendors/js/datepicker.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/lslstrength.min.js')}}"></script>
     <!--! END: Vendors JS !-->

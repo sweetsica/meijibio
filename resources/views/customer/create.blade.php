@@ -594,7 +594,7 @@
                                                 <label class="fw-semibold">Tỉnh/Thành phố: (#21) </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="province" name="province_id">
+                                                <select class="form-control" data-select2-selector="province_id" name="province_id">
                                                     <option value="1">HÀ NỘI</option>
                                                     <option value="2">HỒ CHÍ MINH</option>
                                                     <option value="3">HẢI PHÒNG</option>
@@ -667,7 +667,7 @@
                                               <label class="fw-semibold">Quận/Huyện: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="district_id">
+                                                <select class="form-control" data-select2-selector="district_id" name="district_id">
                                                     <option value="1">Quận Ba Đình</option>
                                                     <option value="2">Quận Hoàn Kiếm</option>
                                                     <option value="3">Quận Hai Bà Trưng</option>
@@ -1379,7 +1379,7 @@
                                               <label class="fw-semibold">Phường/Xã: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="ward_id">
+                                                <select class="form-control" data-select2-selector="ward_id" name="ward_id">
                                                     <option value="1">Phường Phúc Xá</option>
                                                     <option value="2">Phường Trúc Bạch</option>
                                                     <option value="3">Phường Vĩnh Phúc</option>
@@ -12595,6 +12595,7 @@
     <!-- vendors.min.js {always must need to be top} -->
     <script src="{{asset('assets/vendors/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/select2-active.min.js')}}"></script>
+    <script src="{{asset('assets/js/custom-select2-init.js')}}"></script>
     <script src="{{asset('assets/vendors/js/datepicker.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/lslstrength.min.js')}}"></script>
     <!--! END: Vendors JS !-->
