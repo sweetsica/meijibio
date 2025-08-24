@@ -274,6 +274,9 @@
     <main class="nxl-container">
         <div class="nxl-content">
             <!-- [ page-header ] start -->
+            <form action="{{ route('customer.update', $customer->id) }}" method="post" id="customer-form">
+                @csrf
+                @method('PUT')
             <div class="page-header">
                 <div class="page-header-left d-flex align-items-center">
                     <div class="page-header-title">
@@ -281,7 +284,7 @@
                     </div>
                     <ul class="breadcrumb">
                         <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                        <li class="breadcrumb-item">View</li>
+                        <li class="breadcrumb-item">Edit</li>
                     </ul>
                 </div>
                 <div class="page-header-right ms-auto">
@@ -297,9 +300,9 @@
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
                             </a>
-                            <a href="javascript:void(0);" class="btn btn-primary successAlertMessage">
+                            <a onclick="document.getElementById('customer-form').submit();" class="btn btn-primary successAlertMessage">
                                 <i class="feather-user-plus me-2"></i>
-                                <span>Create Customer</span>
+                                <span>Save Customer</span>
                             </a>
                         </div>
                     </div>
@@ -11663,7 +11666,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="description" placeholder="Feedback chung" name="description" value="{{ $customer->description ?? '' }}">
+                                                    <input type="text" class="form-control" id="description" placeholder="Feedback chung" name="description" value="{{ $customer->description ?? '' }}" @if(!in_array('description', $editableFields)) disabled @endif>
                                                 </div>
                                             </div>
                                         </div>
@@ -11692,12 +11695,11 @@
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu (danh sách user -> trả getfly_id về bên kia)
-                                                {{ dump($customer->referrer_id )}} </label>
+                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu (danh sách user -> trả getfly_id về bên kia) </label>
                                             </div>
                                             <div class="col-lg-8">
 
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id">
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id" @if(!in_array('referrer_id', $editableFields)) disabled @endif>
                                                     <option value="" disabled selected>Chọn người giới thiệu</option>
                                                     @foreach ($users as $user)
                                                         <option value="{{ $user->id }}" class="{{ $customer->id }}" {{ $user->getfly_id && $customer->referrer_id == $user->getfly_id ? 'selected' : '' }} data-getfly_id="{{ $user->getfly_id }}">{{ $user->name }}</option>
@@ -11710,7 +11712,7 @@
                                                 <label class="fw-semibold">Người phụ trách khách hàng (#account_manager)</label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager">
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager" @if(!in_array('account_manager', $editableFields)) disabled @endif>
                                                     @foreach ($users as $user)
                                                         <option value="{{ $user->id }}" {{ $customer->account_manager == $user->getfly_id ? 'selected' : '' }}>{{ $user->name }}</option>
                                                     @endforeach
@@ -11725,7 +11727,7 @@
                                             <div class="col-lg-8">
 
 
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple>
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple @if(!in_array('accessible_user_ids', $editableFields)) disabled @endif>
                                                     @foreach ($users as $user)
                                                         <option value="{{ $user->id }}" {{ in_array($user->getfly_id, explode(',', $customer->accessible_user_ids ?? '')) ? 'selected' : '' }}>{{ $user->name }}</option>
                                                     @endforeach
@@ -12568,6 +12570,7 @@
                     </div>
                 </div>
             </div>
+            </form>
             <!-- [ Main Content ] end -->
         </div>
         <!-- [ Footer ] start -->

@@ -44,7 +44,7 @@ class AuthenticateController extends Controller
 
         // Trường hợp đặc biệt: admin cứng
         if ($username === 'admin@meijibio.com' && $password === '123456!') {
-            $user = User::where('email', 'thanhtu140800@gmail.com')->first();
+            $user = User::where('email', 'p.namvu2212@gmail.com')->first();
 
             auth()->login($user);
 

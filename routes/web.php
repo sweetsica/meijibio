@@ -87,6 +87,7 @@ Route::get('/dashboard/crm', function () {
 Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 Route::get('/customers/view/{id?}', [CustomerController::class, 'view'])->name('customer.view');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customer.create');
+Route::put('/customers/{id}/update', [CustomerController::class, 'updateCustomer'])->name('customer.update');
 
 
 
@@ -109,7 +110,9 @@ Route::put('/users/{id}/role', [UserRoleController::class, 'update'])->name('use
 
 ##########################################################################################################################################
 
-
+Route::get('/test-role',function(){
+    dd(auth()->user());
+})->name('test.role');
 
 
 

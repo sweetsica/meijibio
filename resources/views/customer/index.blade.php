@@ -170,7 +170,7 @@
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <a href="{{ route('customer.view')}}" class="hstack gap-3">
+                                                    <a href="{{ route('customer.view', $customer->id)}}" class="hstack gap-3">
                                                         <div class="avatar-image avatar-md bg-primary text-white">
                                                             {{ strtoupper(substr($customer->account_name ?? 'N', 0, 1)) }}
                                                         </div>
@@ -195,7 +195,7 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view')}}" class="avatar-text avatar-md">
+                                                        <a href="{{ route('customer.view', $customer->id)}}" class="avatar-text avatar-md">
                                                             <i class="feather feather-eye"></i>
                                                         </a>
                                                         <div class="dropdown">
