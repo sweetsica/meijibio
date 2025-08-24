@@ -75,10 +75,10 @@ class CustomerController extends Controller
     public function create()
     {
         // get list of users
-        // $users = User::all();
+        $users = User::all();
         // Logic to retrieve and display customers
-        // return view('customer.create', compact('users'));
-        return view('customer.create');
+        return view('customer.create', compact('users'));
+        // return view('customer.create');
     }
 
 
@@ -147,6 +147,7 @@ class CustomerController extends Controller
         ])->post('https://meijibio.getflycrm.com/api/v6/accounts', $dataToSync);
 
         if ($response->successful()) {
+            $customer = Customer::create($dataToSync);
             return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
         } else {
             return response()->json(['message' => 'Sync thất bại', 'data' => $dataToSync], 500);
@@ -188,13 +189,16 @@ class CustomerController extends Controller
 
         $crmAPIKey = env('GETFLY_CRM_API_KEY');
 
+        $customer = Customer::find($id);
+
         // Call api to push $dataToSync to another service meijibio
         $response = Http::withHeaders([
             'X-API-KEY' => $crmAPIKey
         ])->post('https://meijibio.getflycrm.com/api/v6/accounts/'.$id, $dataToSync);
 
         if ($response->successful()) {
-            
+            $customer->update($dataToSync);
+
             return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
         } else {
             return response()->json(['message' => 'Sync thất bại', 'data' => $dataToSync], 500);
