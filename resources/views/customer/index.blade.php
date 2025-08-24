@@ -69,7 +69,7 @@
                             <li class="nxl-item" {{ request()->routeIs('customer.create') ? 'active' : '' }}><a class="nxl-link" href="{{ route('customer.create') }}">Customers Create</a></li>
                         </ul>
                     </li>
-                    <li class="nxl-item nxl-hasmenu">
+                    {{-- <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-alert-circle"></i></span>
                             <span class="nxl-mtext">Leads</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -79,7 +79,7 @@
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.view') }}">Leads View</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.create') }}">Leads Create</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                 </ul>
                 <div class="card text-center" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
                     <div class="card-body">
@@ -209,37 +209,42 @@
                                                                         <span>Edit</span>
                                                                     </a>
                                                                 </li>
-                                                                <li>
+                                                                {{-- <li>
                                                                     <a class="dropdown-item printBTN" href="javascript:void(0)">
                                                                         <i class="feather feather-printer me-3"></i>
                                                                         <span>Print</span>
                                                                     </a>
-                                                                </li>
-                                                                <li>
+                                                                </li> --}}
+                                                                {{-- <li>
                                                                     <a class="dropdown-item" href="javascript:void(0)">
                                                                         <i class="feather feather-clock me-3"></i>
                                                                         <span>Remind</span>
                                                                     </a>
-                                                                </li>
+                                                                </li> --}}
                                                                 <li class="dropdown-divider"></li>
-                                                                <li>
+                                                                {{-- <li>
                                                                     <a class="dropdown-item" href="javascript:void(0)">
                                                                         <i class="feather feather-archive me-3"></i>
                                                                         <span>Archive</span>
                                                                     </a>
-                                                                </li>
-                                                                <li>
+                                                                </li> --}}
+                                                                {{-- <li>
                                                                     <a class="dropdown-item" href="javascript:void(0)">
                                                                         <i class="feather feather-alert-octagon me-3"></i>
                                                                         <span>Report Spam</span>
                                                                     </a>
-                                                                </li>
+                                                                </li> --}}
                                                                 <li class="dropdown-divider"></li>
                                                                 <li>
-                                                                    <a class="dropdown-item" href="javascript:void(0)">
-                                                                        <i class="feather feather-trash-2 me-3"></i>
-                                                                        <span>Delete</span>
-                                                                    </a>
+                                                                    <form action="{{ route('customer.delete', $customer->id) }}" method="POST" 
+                                                                          onsubmit="return confirm('Bạn có chắc muốn xoá khách hàng này không?')" style="display:inline;">
+                                                                        @csrf
+                                                                        @method('DELETE')
+                                                                        <button type="submit" class="dropdown-item" style="border:none; background:none; cursor:pointer;">
+                                                                            <i class="feather feather-trash-2 me-3"></i>
+                                                                            <span>Delete</span>
+                                                                        </button>
+                                                                    </form>
                                                                 </li>
                                                             </ul>
                                                         </div>
@@ -247,13 +252,17 @@
                                                 </td>
                                             </tr>
                                             @empty
-                                            <tr>
+                                            <tr class="single-item">
                                                 <td colspan="5" class="text-center py-4">
                                                     <div class="text-muted">
                                                         <i class="feather-users fs-1 mb-3"></i>
                                                         <p class="mb-0">No customers found</p>
                                                     </div>
                                                 </td>
+                                                <td style="display: none;"></td>
+                                                <td style="display: none;"></td>
+                                                <td style="display: none;"></td>
+                                                <td style="display: none;"></td>
                                             </tr>
                                             @endforelse
                                         </tbody>
@@ -288,6 +297,9 @@
 @endsection
 
 @section('footer')
+    <!-- Delete customer -->
+        
+        
     <!--! Footer Script !-->
     <!--! ================================================================ !-->
     <!--! BEGIN: Vendors JS !-->

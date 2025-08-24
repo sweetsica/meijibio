@@ -75,28 +75,30 @@ class CustomerController extends Controller
     public function create()
     {
         // get list of users
-        $users = User::all();
+        // $users = User::all();
         // Logic to retrieve and display customers
-        return view('customer.create', compact('users'));
+        // return view('customer.create', compact('users'));
+        return view('customer.create');
     }
 
-    public function indexLead()
-    {
-        // Logic to retrieve and display customers
-        return view('lead.index');
-    }
 
-    public function viewLead()
-    {
-        // Logic to retrieve and display customers
-        return view('lead.view');
-    }
+    // public function indexLead()
+    // {
+    //     // Logic to retrieve and display customers
+    //     return view('lead.index');
+    // }
 
-    public function createLead()
-    {
-        // Logic to retrieve and display customers
-        return view('lead.create');
-    }
+    // public function viewLead()
+    // {
+    //     // Logic to retrieve and display customers
+    //     return view('lead.view');
+    // }
+
+    // public function createLead()
+    // {
+    //     // Logic to retrieve and display customers
+    //     return view('lead.create');
+    // }
 
     public function import(Request $request)
     {
@@ -192,12 +194,47 @@ class CustomerController extends Controller
         ])->post('https://meijibio.getflycrm.com/api/v6/accounts/'.$id, $dataToSync);
 
         if ($response->successful()) {
+            
             return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
         } else {
             return response()->json(['message' => 'Sync thất bại', 'data' => $dataToSync], 500);
         }
     }
 
+    public function deleteCustomer($id = null)
+    {
+        if (!$id) {
+            return redirect()->route('customer.index')->with('error', 'Customer not found');
+        }
+        
+        $customer = Customer::find($id);
+
+        if (!$customer) {
+            return redirect()->route('customer.index')->with('error', 'Customer not found');
+        }
+        try{
+            $crmAPIKey = env('GETFLY_CRM_API_KEY');
+            $response = Http::withHeaders([
+                'X-API-KEY' => $crmAPIKey
+            ])->delete("https://meijibio.getflycrm.com/api/v6/accounts/{$customer->getfly_id}");
+
+            // dd($response->body());
+            if ($response->successful()) {
+                $customer->delete();
+
+                return redirect()->route('customer.index')->with('success', 'Customer deleted successfully');
+            } else {
+                return redirect()->route('customer.index')->with('error', 'Customer not found');
+            }
+        } catch (\Exception $e) {
+            dd($e);
+            return redirect()->route('customer.index')->with('error', 'Customer not found');
+        }
+        
+    }
+
+
+    // Sync customer from getfly to database
     public function syncCustomer()
     {
         try {

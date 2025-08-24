@@ -92,7 +92,12 @@ Route::get('/dashboard/crm', function () {
 Route::get('/customers', [CustomerController::class, 'index'])->name('customer.index');
 Route::get('/customers/view/{id?}', [CustomerController::class, 'view'])->name('customer.view');
 Route::get('/customers/create', [CustomerController::class, 'create'])->name('customer.create');
+Route::post('/customers/store', [CustomerController::class, 'createCustomer'])->name('customer.store');
 Route::put('/customers/{id}/update', [CustomerController::class, 'updateCustomer'])->name('customer.update');
+Route::delete('/customers/{id}', [CustomerController::class, 'deleteCustomer'])->name('customer.delete');
+
+
+
 
 
 

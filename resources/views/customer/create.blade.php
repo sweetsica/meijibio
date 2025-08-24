@@ -39,7 +39,6 @@
         <div class="navbar-wrapper">
             <div class="m-header">
                 <a href="{{ route('dashboard.crm') }}" class="b-brand">
-                    <!-- ========   change your logo hear   ============ -->
                     <img src="{{asset('assets/images/logo-full.png')}}" alt="" class="logo logo-lg" />
                     <img src="{{asset('assets/images/logo-abbr.png')}}" alt="" class="logo logo-sm" />
                 </a>
@@ -274,6 +273,8 @@
     <main class="nxl-container">
         <div class="nxl-content">
             <!-- [ page-header ] start -->
+            <form action="{{ route('customer.store') }}" method="post" id="customer-form">
+                @csrf
             <div class="page-header">
                 <div class="page-header-left d-flex align-items-center">
                     <div class="page-header-title">
@@ -293,10 +294,10 @@
                             </a>
                         </div>
                         <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                            <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
+                            {{-- <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
-                            </a>
+                            </a> --}}
                             <a href="javascript:void(0);" class="btn btn-primary successAlertMessage">
                                 <i class="feather-user-plus me-2"></i>
                                 <span>Create Customer</span>
@@ -344,10 +345,10 @@
                                     <div class="card-body personal-info">
                                         <div class="mb-4 d-flex align-items-center justify-content-between">
                                             <h5 class="fw-bold mb-0 me-4">
-                                                <span class="d-block mb-2">Personal Information:</span>
+                                                <span class="d-block mb-2">Thông tin cơ bản:</span>
                                                 {{-- <span class="fs-12 fw-normal text-muted text-truncate-1-line">Following information is publicly displayed, be careful! </span> --}}
                                             </h5>
-                                            <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a>
+                                            {{-- <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a> --}}
                                         </div>
                                         {{-- <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
@@ -12563,6 +12564,7 @@
                     </div>
                 </div>
             </div>
+            </form>
             <!-- [ Main Content ] end -->
         </div>
         <!-- [ Footer ] start -->
