@@ -255,7 +255,7 @@
                         </ul>
                     </li> --}}
                 </ul>
-                <div class="card text-center">
+                <div class="card text-center" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
                     <div class="card-body">
                         <i class="feather-sunrise fs-4 text-dark"></i>
                         <h6 class="mt-4 text-dark fw-bolder">Downloading Center</h6>
