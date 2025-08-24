@@ -23,7 +23,7 @@ return new class extends Migration
             $table->string('team_id')->nullable();
             $table->string('role')->default('user')->nullable();
             $table->string('code')->nullable();
-            $table->string('email')->unique();
+            $table->string('email')->unique()->nullable();
             $table->integer('phone')->nullable();
             $table->string('title')->nullable();
             $table->tinyInteger('status')->default(1);

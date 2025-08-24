@@ -264,7 +264,7 @@
                             </ul>
                         </li>
                     </ul>
-                    <div class="card text-center">
+                    <div class="card text-center" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
                         <div class="card-body">
                             <i class="feather-sunrise fs-4 text-dark"></i>
                             <h6 class="mt-4 text-dark fw-bolder">Downloading Center</h6>
@@ -1239,7 +1239,7 @@
                                     <span>Account Settings</span>
                                 </a>
                                 <div class="dropdown-divider"></div>
-                                <a href="./auth-login-minimal.html" class="dropdown-item">
+                                <a href="{{ route('logout') }}" class="dropdown-item">
                                     <i class="feather-log-out"></i>
                                     <span>Logout</span>
                                 </a>
@@ -1269,7 +1269,7 @@
     <!--! ================================================================ !-->
     <!--! BEGIN: Theme Customizer !-->
     <!--! ================================================================ !-->
-    <div class="theme-customizer">
+    <div class="theme-customizer" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
         <div class="customizer-handle">
             <a href="javascript:void(0);" class="cutomizer-open-trigger bg-primary">
                 <i class="feather-settings"></i>

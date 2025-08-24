@@ -20,12 +20,18 @@ class UserRoleSeeder extends Seeder
         // Tạo role
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
         $userRole = Role::firstOrCreate(['name' => 'user']);
+        $mktRole = Role::firstOrCreate(['name' => 'mkt']);
+        $saleRole = Role::firstOrCreate(['name' => 'sale']);
+        $ketoanRole = Role::firstOrCreate(['name' => 'ketoan']);
+        $cskhRole = Role::firstOrCreate(['name' => 'cskh']);
 
         // Tạo user admin
         $admin = User::firstOrCreate(
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Admin',
+                'role' => 'admin',
+                'getfly_id' => '1',
                 'password' => Hash::make('tieuhoa195'),
             ]
         );
@@ -40,5 +46,66 @@ class UserRoleSeeder extends Seeder
             ]
         );
         $user->assignRole($userRole);
+
+        // Tạo admin getfly
+        $adminGetfly = User::firstOrCreate(
+            ['email' => 'it@meijibio.com'],
+            [
+                'name' => 'Admin Getfly',
+                'role' => 'admin',
+                'getfly_id' => '1',
+                'password' => Hash::make('Meijibio21tp@#*!'),
+            ]
+        );
+        $admin->assignRole($adminRole);
+
+        // Tạo mkt getfly
+        $mkt = User::firstOrCreate(
+            ['username' => 'mkt'],
+            [
+                'name' => 'MKT Admin Getfly',
+                'role' => 'mkt',
+                'getfly_id' => '1',
+                'password' => Hash::make('Meijibio21tp@#*!'),
+            ]
+        );
+        $mkt->assignRole($mktRole);
+
+
+        // Tạo sale getfly
+        $sale = User::firstOrCreate(
+            ['username' => 'sale'],
+            [
+                'name' => 'Sale Admin Getfly',
+                'role' => 'sale',
+                'getfly_id' => '1',
+                'password' => Hash::make('Meijibio21tp@#*!'),
+            ]
+        );
+        $sale->assignRole($saleRole);
+
+        // Tạo ketoan getfly
+        $ketoan = User::firstOrCreate(
+            ['username' => 'ketoan'],
+            [
+                'name' => 'Ketoan Admin Getfly',
+                'role' => 'ketoan',
+                'getfly_id' => '1',
+                'password' => Hash::make('Meijibio21tp@#*!'),
+            ]
+        );
+        $ketoan->assignRole($ketoanRole);
+
+        // Tạo cskh getfly
+        $cskh = User::firstOrCreate(
+            ['username' => 'cskh'],
+            [
+                'name' => 'CSKH Admin Getfly',
+                'role' => 'cskh',
+                'getfly_id' => '1',
+                'password' => Hash::make('Meijibio21tp@#*!'),
+            ]
+        );
+        $cskh->assignRole($cskhRole);
     }
 }

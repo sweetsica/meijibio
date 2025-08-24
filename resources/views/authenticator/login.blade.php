@@ -50,10 +50,10 @@
                         <form action="{{ route('login.check') }}" method="post" class="w-100 mt-4 pt-2">
                             @csrf
                             <div class="mb-4">
-                                <input type="email" name="username" class="form-control" placeholder="Username" value="admin@meijibio.com" required>
+                                <input type="text" name="username" class="form-control" placeholder="Username" required>
                             </div>
                             <div class="mb-3">
-                                <input type="password" name="password" class="form-control" placeholder="Password" value="123456!" required>
+                                <input type="password" name="password" class="form-control" placeholder="Password" required>
                             </div>
                             <div class="d-flex align-items-center justify-content-between">
                                 <div>
@@ -62,9 +62,9 @@
                                         <label class="custom-control-label c-pointer" for="rememberMe">Remember Me</label>
                                     </div>
                                 </div>
-                                <div>
+                                {{-- <div>
                                     <a href="#" class="fs-11 text-primary">Forget password?</a>
-                                </div>
+                                </div> --}}
                             </div>
                             <div class="mt-5">
                                 <button type="submit" class="btn btn-lg btn-primary w-100">Login</button>
@@ -84,10 +84,10 @@
                                 </a>
                             </div>
                         </div>
-                        <div class="mt-5 text-muted">
+                        {{-- <div class="mt-5 text-muted">
                             <span> Don't have an account?</span>
                             <a href="#" class="fw-bold">Create an Account</a>
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
             </div>
