@@ -8,6 +8,12 @@ class Customer extends Model
 {
     protected $guarded = [''];
 
+    protected $casts = [
+        'custom_fields' => 'array',
+        'contacts' => 'array',
+        'accessible_user_ids' => 'array',
+    ];
+
     public static function mapGetflyDataToCustomer(array $raw): array
 {
     $cf  = $raw['custom_fields'] ?? [];

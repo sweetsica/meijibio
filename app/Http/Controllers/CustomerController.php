@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Support\RoleFieldResolver;
 use Illuminate\Support\Facades\Http;
 use App\Enum\FieldDefine;
+use Illuminate\Support\Facades\Log;
 
 class CustomerController extends Controller
 {
@@ -227,16 +228,47 @@ class CustomerController extends Controller
                     'getfly_id' => $item['id'],
                 ];
 
-                $defaultFields = FieldDefine::defaultFields;
+                                // Fields that exist in migration and should be saved directly
+                $directFields = [
+                    'account_code', 'account_name', 'description', 'phone_office', 'email',
+                    'website', 'birthday', 'sic_code', 'gender', 'total_revenue', 'account_manager'
+                ];
 
-                foreach ($defaultFields as $field) {
-                    $customerData[$field] = $item[$field];
+                // JSON fields that should be saved as arrays (not JSON strings)
+                $jsonFields = ['contacts', 'accessible_user_ids'];
+
+                // Handle direct fields
+                foreach ($directFields as $field) {
+                    if (isset($item[$field])) {
+                        $customerData[$field] = $item[$field];
+                    }
                 }
 
-                if ($customer) {
-                    $customer->update($customerData);
-                } else {
-                    $customer = Customer::create($customerData);
+                // Handle JSON fields properly
+                foreach ($jsonFields as $field) {
+                    if (isset($item[$field]) && is_array($item[$field])) {
+                        $customerData[$field] = $item[$field]; // Laravel will auto-cast to JSON
+                    }
+                }
+
+                // Handle custom_fields
+                if (isset($item['custom_fields']) && is_array($item['custom_fields'])) {
+                    $customerData['custom_fields'] = $item['custom_fields']; // Laravel will auto-cast to JSON
+                }
+
+                // Handle address field mapping
+                if (isset($item['billing_address_street'])) {
+                    $customerData['billing_address_street'] = $item['billing_address_street'];
+                }
+
+                try {
+                    if ($customer) {
+                        $customer->update($customerData);
+                    } else {
+                        $customer = Customer::create($customerData);
+                    }
+                } catch (\Exception $e) {
+                    Log::error('Error syncing customer ' . $item['id'] . ': ' . $e->getMessage());
                 }
             }
 
@@ -244,9 +276,11 @@ class CustomerController extends Controller
             if ($response->successful()) {
                 return response()->json(['message' => 'Sync success']);
             } else {
+                dd($response->body());
                 return response()->json(['message' => 'Sync failed'], 500);
             }
         } catch (\Exception $e) {
+            dd($e);
             return response()->json(['message' => 'Sync failed'], 500);
         }
     }
