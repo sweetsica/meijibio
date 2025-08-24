@@ -112,10 +112,7 @@ return [
         'chinh_sach_ref',
         'dich_vu_ref',
         'gia_tri_ref',
-        'description',
-        // new fields
-        'account_manager',
-        'accessible_user_ids'
+        'description'
     ],
     'cskh' => [
         'birthday',
@@ -125,5 +122,46 @@ return [
     'mkt'  => [
         'camp',
         'link_mxh'
+    ],
+    'ketoan' => [
+        'cong_no',
+    ],
+    'sale_manager' => [
+        'thong_tin_chung',
+        'phan_loai_bo_sung',
+        'benh_ly',
+        'dich_vu_quan_tam',
+        'tai_chinh',
+        'ngay_booking_du_kien',
+        'booking',
+        'cham_diem',
+        'dich_vu_thuc_hien',
+        'bac_si_tu_van',
+        'chuyen_vien_tu_van',
+        'phan_loai_show',
+        'lich_su_tu_van',
+        'hop_dong',
+        'dich_vu',
+        'ngay_thu_du_kien',
+        'tien_thu_du_kien',
+        'ngay_thu_thuc_te',
+        'tien_thu_thuc_te',
+        'phan_loai',
+        'dich_vu_af',
+        'lich_su_tu_van_af',
+        'dich_vu_booking',
+        'so_luong_booking',
+        'ngay_du_kien_su_dung',
+        'ngay_thuc_te_su_dung',
+        'dia_diem_su_dung',
+        'nguoi_thuc_hien',
+        'feedback_booking',
+        'chinh_sach_ref',
+        'dich_vu_ref',
+        'gia_tri_ref',
+        'description',
+        // new fields
+        'account_manager',
+        'accessible_user_ids'
     ],
 ];

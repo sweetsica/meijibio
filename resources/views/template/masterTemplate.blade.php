@@ -912,9 +912,9 @@
                         </div>
                         <div class="dropdown nxl-h-item nxl-header-language d-none d-sm-flex">
                             <a href="javascript:void(0);" class="nxl-head-link me-0 nxl-language-link" data-bs-toggle="dropdown" data-bs-auto-close="outside">
-                                <img src="./../assets/vendors/img/flags/4x3/us.svg" alt="" class="img-fluid wd-20" />
+                                <img src="./../assets/vendors/img/flags/4x3/vn.svg" alt="" class="img-fluid wd-20" />
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-language-dropdown">
+                            {{-- <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-language-dropdown">
                                 <div class="dropdown-divider mt-0"></div>
                                 <div class="language-items-wrapper">
                                     <div class="select-language px-4 py-2 hstack justify-content-between gap-4">
@@ -1002,7 +1002,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="nxl-h-item d-none d-sm-flex">
                             <div class="full-screen-switcher">
@@ -1023,12 +1023,12 @@
                         <div class="dropdown nxl-h-item">
                             <a href="javascript:void(0);" class="nxl-head-link me-0" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">
                                 <i class="feather-clock"></i>
-                                <span class="badge bg-success nxl-h-badge">2</span>
+                                {{-- <span class="badge bg-success nxl-h-badge">2</span> --}}
                             </a>
                             <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-timesheets-menu">
                                 <div class="d-flex justify-content-between align-items-center timesheets-head">
                                     <h6 class="fw-bold text-dark mb-0">Timesheets</h6>
-                                    <a href="javascript:void(0);" class="fs-11 text-success text-end ms-auto" data-bs-toggle="tooltip" title="Upcomming Timers">
+                                    <a href="#" class="fs-11 text-success text-end ms-auto" data-bs-toggle="tooltip" title="Upcomming Timers">
                                         <i class="feather-clock"></i>
                                         <span>3 Upcomming</span>
                                     </a>
@@ -1036,19 +1036,19 @@
                                 <div class="d-flex justify-content-between align-items-center flex-column timesheets-body">
                                     <i class="feather-clock fs-1 mb-4"></i>
                                     <p class="text-muted">No started timers found yes!</p>
-                                    <a href="javascript:void(0);" class="btn btn-sm btn-primary">Started Timer</a>
+                                    <a href="#" class="btn btn-sm btn-primary">Started Timer</a>
                                 </div>
                                 <div class="text-center timesheets-footer">
-                                    <a href="javascript:void(0);" class="fs-13 fw-semibold text-dark">Alls Timesheets</a>
+                                    <a href="#" class="fs-13 fw-semibold text-dark">Alls Timesheets</a>
                                 </div>
                             </div>
                         </div>
                         <div class="dropdown nxl-h-item">
                             <a class="nxl-head-link me-3" data-bs-toggle="dropdown" href="#" role="button" data-bs-auto-close="outside">
                                 <i class="feather-bell"></i>
-                                <span class="badge bg-danger nxl-h-badge">3</span>
+                                {{-- <span class="badge bg-danger nxl-h-badge">3</span> --}}
                             </a>
-                            <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-notifications-menu">
+                            {{-- <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-notifications-menu">
                                 <div class="d-flex justify-content-between align-items-center notifications-head">
                                     <h6 class="fw-bold text-dark mb-0">Notifications</h6>
                                     <a href="javascript:void(0);" class="fs-11 text-success text-end ms-auto" data-bs-toggle="tooltip" title="Make as Read">
@@ -1104,7 +1104,7 @@
                                 <div class="text-center notifications-footer">
                                     <a href="javascript:void(0);" class="fs-13 fw-semibold text-dark">Alls Notifications</a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <div class="dropdown nxl-h-item">
                             <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">
@@ -1115,8 +1115,8 @@
                                     <div class="d-flex align-items-center">
                                         <img src="./../assets/images/avatar/1.png" alt="user-image" class="img-fluid user-avtar" />
                                         <div>
-                                            <h6 class="text-dark mb-0">Alexandra Della <span class="badge bg-soft-success text-success ms-1">PRO</span></h6>
-                                            <span class="fs-12 fw-medium text-muted">alex.della@outlook.com</span>
+                                            <h6 class="text-dark mb-0">{{ auth()->user()->name }} <span class="badge bg-soft-success text-success ms-1">PRO</span></h6>
+                                            <span class="fs-12 fw-medium text-muted">{{ auth()->user()->email }}</span>
                                         </div>
                                     </div>
                                 </div>
@@ -1128,7 +1128,7 @@
                                         </span>
                                         <i class="feather-chevron-right ms-auto me-0"></i>
                                     </a>
-                                    <div class="dropdown-menu">
+                                    {{-- <div class="dropdown-menu">
                                         <a href="javascript:void(0);" class="dropdown-item">
                                             <span class="hstack">
                                                 <i class="wd-10 ht-10 border border-2 border-gray-1 bg-warning rounded-circle me-2"></i>
@@ -1166,10 +1166,10 @@
                                                 <span>Cutomization</span>
                                             </span>
                                         </a>
-                                    </div>
+                                    </div> --}}
                                 </div>
                                 <div class="dropdown-divider"></div>
-                                <div class="dropdown">
+                                {{-- <div class="dropdown">
                                     <a href="javascript:void(0);" class="dropdown-item" data-bs-toggle="dropdown">
                                         <span class="hstack">
                                             <i class="feather-dollar-sign me-2"></i>
@@ -1216,8 +1216,8 @@
                                             </span>
                                         </a>
                                     </div>
-                                </div>
-                                <div class="dropdown-divider"></div>
+                                </div> --}}
+                                {{-- <div class="dropdown-divider"></div>
                                 <a href="javascript:void(0);" class="dropdown-item">
                                     <i class="feather-user"></i>
                                     <span>Profile Details</span>
@@ -1238,7 +1238,7 @@
                                     <i class="feather-settings"></i>
                                     <span>Account Settings</span>
                                 </a>
-                                <div class="dropdown-divider"></div>
+                                <div class="dropdown-divider"></div> --}}
                                 <a href="{{ route('logout') }}" class="dropdown-item">
                                     <i class="feather-log-out"></i>
                                     <span>Logout</span>

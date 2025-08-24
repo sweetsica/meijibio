@@ -69,6 +69,23 @@
                             <li class="nxl-item" {{ request()->routeIs('customer.create') ? 'active' : '' }}><a class="nxl-link" href="{{ route('customer.create') }}">Customers Create</a></li>
                         </ul>
                     </li>
+
+                    <li class="nxl-item nxl-hasmenu" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
+                        <a href="javascript:void(0);" class="nxl-link">
+                            <span class="nxl-micon"><i class="feather-users"></i></span>
+                            <span class="nxl-mtext">Đồng bộ dữ liệu từ getfly</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                        </a>
+                        <ul class="nxl-submenu">
+                            <li class="nxl-item">
+                                <form action="{{ route('customer.sync') }}" method="POST" style="display:inline;">
+                                    @csrf
+                                    <button type="submit" class="nxl-link" style="all: unset; cursor: pointer;">
+                                        Đồng bộ khách hàng
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
+                    </li>
                     {{-- <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-alert-circle"></i></span>

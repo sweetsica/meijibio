@@ -44,11 +44,16 @@ class AuthenticateController extends Controller
 
         // Trường hợp đặc biệt: admin cứng
         if ($username === 'admin@meijibio.com' && $password === '123456!') {
-            $user = User::where('email', 'p.namvu2212@gmail.com')->first();
+            try{
+                $admin = User::where('email', 'phamnam2211@gmail.com')->first();
 
-            auth()->login($user);
+                auth()->login($admin);
 
-            return view('dashboard.admincrm');
+                return view('dashboard.admincrm');
+            } catch (\Exception $e) {
+                dd($e);
+                return redirect()->route('login')->with('error', 'Invalid username or password');
+            }
         }
 
         // Check trong bảng users (username/email/số điện thoại)
@@ -59,7 +64,14 @@ class AuthenticateController extends Controller
 
         if ($user && Hash::check($password, $user->password)) {
             // Có thể set session cho user nếu cần
+            // --- Login user ---
             auth()->login($user);
+
+            // --- Gán role Spatie dựa trên trường 'role' trong DB ---
+            if (!empty($user->role)) {
+                // Remove tất cả role cũ nếu có
+                $user->syncRoles([$user->role]);
+            }
             // dd(auth()->user()->getfly_id);
 
             return view('dashboard.crm');

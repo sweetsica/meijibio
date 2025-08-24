@@ -298,10 +298,7 @@
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
                             </a> --}}
-                            <a href="javascript:void(0);" class="btn btn-primary successAlertMessage">
-                                <i class="feather-user-plus me-2"></i>
-                                <span>Create Customer</span>
-                            </a>
+                            
                         </div>
                     </div>
                     <div class="d-md-none d-flex align-items-center">
@@ -375,14 +372,14 @@
                                         {{-- WORKING HERE --}}
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Chi tiết quan hệ: </label>
+                                                <label class="fw-semibold">Trạng thái: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" name="account_relation_detail" data-select2-selector="account_relation_detail">
-                                                    <option value="3">Số không tồn tại</option>
+                                                    <option value="6" selected>Chưa phân loại</option>
                                                     <option value="1">Gọi được</option>
+                                                    <option value="3">Số không tồn tại</option>
                                                     <option value="5">Không liên lạc được (Trên 3 ngày)</option>
-                                                    <option value="6">Chưa phân loại</option>
                                                     <option value="4">Không liên lạc được (Dưới 3 ngày)</option>
                                                 </select>
                                             </div>
@@ -390,11 +387,11 @@
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Danh mục data đầu vào (#152): </label>
+                                                <label class="fw-semibold" style="color: red;">Danh mục data đầu vào (#152): </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="data-in" id="danh_muc_data_dau_vao" name="danh_muc_data_dau_vao">
-                                                    <option data-in="bg-primary" value="128">Mua (BI)</option>
+                                                <select class="form-control" data-select2-selector="data-in" id="danh_muc_data_dau_vao" name="danh_muc_data_dau_vao" required>
+                                                    <option data-in="bg-primary" value="128" selected>Mua (BI)</option>
                                                     <option data-in="bg-secondary" value="129">Quảng cáo (AD)</option>
                                                     <option data-in="bg-success" value="130">Online (OR)</option>
                                                     <option data-in="bg-warning" value="131">Offline (OF)</option>
@@ -403,11 +400,11 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Nguồn (#151): </label>
+                                                <label class="fw-semibold" style="color: red;">Nguồn (#151): </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="source" id="nguon" name="nguon">
-                                                    <option value="108">FB</option>
+                                                <select class="form-control" data-select2-selector="source" id="nguon" name="nguon" required>
+                                                    <option value="108" selected>FB</option>
                                                     <option value="109">Youtube</option>
                                                     <option value="110">Zalo</option>
                                                     <option value="111">Tiktok</option>
@@ -432,11 +429,11 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Mảng kinh doanh (#153): </label>
+                                                <label class="fw-semibold" style="color: red;">Mảng kinh doanh (#153): </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="business" id="mang_kinh_doanh" name="mang_kinh_doanh">
-                                                    <option value="132">MJB</option>
+                                                <select class="form-control" data-select2-selector="business" id="mang_kinh_doanh" name="mang_kinh_doanh" required>
+                                                    <option value="132" selected>MJB</option>
                                                     <option value="133">LMC</option>
                                                     <option value="134">LGP</option>
                                                     <option value="135">LGG</option>
@@ -445,11 +442,11 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Nhóm nguồn (#154): </label>
+                                                <label class="fw-semibold" style="color: red;">Nhóm nguồn (#154): </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="group" id="nhom_nguon" name="nhom_nguon">
-                                                    <option value="136">MKT</option>
+                                                <select class="form-control" data-select2-selector="group" id="nhom_nguon" name="nhom_nguon" required>
+                                                    <option value="136" selected>MKT</option>
                                                     <option value="137">PNS</option>
                                                     <option value="138">SR</option>
                                                     <option value="139">Collab</option>
@@ -474,22 +471,22 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="aboutInput" class="fw-semibold">Thông tin chung: </label>
+                                                <label for="aboutInput" class="fw-semibold" style="color: red;">Thông tin chung: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="feather-type"></i></div>
-                                                    <textarea class="form-control" id="aboutInput" cols="30" rows="5" placeholder="Thông tin chung" name="thong_tin_chung"></textarea>
+                                                    <textarea class="form-control" id="aboutInput" cols="30" rows="5" placeholder="Thông tin chung" name="thong_tin_chung" value="-" required></textarea>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Giới tính (#24): </label>
+                                                <label class="fw-semibold" style="color: red;">Giới tính (#24): </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="gender" name="gioi_tinh">
-                                                    <option value="2">Nam</option>
+                                                <select class="form-control" data-select2-selector="gender" name="gender" required>
+                                                    <option value="2" selected>Nam</option>
                                                     <option value="1">Nữ</option>
                                                     <option value="3">Khác</option>
                                                 </select>
@@ -497,33 +494,33 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="fullnameInput" class="fw-semibold">Họ tên khách hàng: </label>
+                                                <label for="fullnameInput" class="fw-semibold" style="color: red;">Họ tên khách hàng: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="feather-user"></i></div>
-                                                    <input type="text" class="form-control" id="fullnameInput" placeholder="Name" name="account_name">
+                                                    <input type="text" class="form-control" id="fullnameInput" placeholder="Name" name="account_name" required>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-4 align-items-center">
+                                        {{-- <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="fullnameInput" class="fw-semibold">Mã khách hàng: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="fullnameInput" placeholder="Code" name="account_code" readonly>
+                                                    <input type="text" class="form-control" id="fullnameInput" placeholder="Code" name="account_code"  readonly>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="phoneInput" class="fw-semibold">Phone: </label>
+                                                <label for="phoneInput" class="fw-semibold" style="color: red;">Điện thoại: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="feather-phone"></i></div>
-                                                    <input type="text" class="form-control" id="phoneInput" placeholder="Phone" name="phone_office">
+                                                    <input type="text" class="form-control" id="phoneInput" placeholder="Phone" name="phone_office" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -561,21 +558,21 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">Tuổi: </label>
+                                                <label for="mailInput" class="fw-semibold" style="color: red;">Tuổi: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Tuổi" name="tuoi">
+                                                    <input type="text" class="form-control" id="mailInput" placeholder="Tuổi" name="tuoi" required>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">Địa chỉ: </label>
+                                                <label for="mailInput" class="fw-semibold" style="color: red;">Địa chỉ: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Địa chỉ" name="address">
+                                                    <input type="text" class="form-control" id="mailInput" placeholder="Địa chỉ" name="billing_address_street" required>
                                                 </div>
                                             </div>
                                         </div>
@@ -585,7 +582,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="currency">
-                                                    <option data-currency="vn" selected>VND - Vietnamese</option>
+                                                    <option data-currency="vn" selected>Vietnam</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -594,7 +591,7 @@
                                                 <label class="fw-semibold">Tỉnh/Thành phố: (#21) </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="province" name="province_id">
+                                                <select class="form-control" data-select2-selector="gender" name="province_id" disabled>
                                                     <option value="1">HÀ NỘI</option>
                                                     <option value="2">HỒ CHÍ MINH</option>
                                                     <option value="3">HẢI PHÒNG</option>
@@ -667,7 +664,7 @@
                                               <label class="fw-semibold">Quận/Huyện: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="district_id">
+                                                <select class="form-control" data-select2-selector="gender" name="district_id" disabled>
                                                     <option value="1">Quận Ba Đình</option>
                                                     <option value="2">Quận Hoàn Kiếm</option>
                                                     <option value="3">Quận Hai Bà Trưng</option>
@@ -1379,7 +1376,7 @@
                                               <label class="fw-semibold">Phường/Xã: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="ward_id">
+                                                <select class="form-control" data-select2-selector="gender" name="ward_id" disabled>
                                                     <option value="1">Phường Phúc Xá</option>
                                                     <option value="2">Phường Trúc Bạch</option>
                                                     <option value="3">Phường Vĩnh Phúc</option>
@@ -11391,11 +11388,14 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Show] Chuyên viên tư vấn: (danh sách user -> trả getfly_id về bên kia)</label>
+                                                <label class="fw-semibold">[Show] Chuyên viên tư vấn:</label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="chuyen_vien_tu_van">
-                                                    <option value="168">Danh sách người dùng role Sale</option>
+                                                    <option value="" disabled selected>Chọn chuyên viên tư vấn</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -11664,22 +11664,11 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="description" placeholder="Feedback chung" name="description">
+                                                    <input type="text" class="form-control" id="description" placeholder="Feedback chung" name="description" value="Feedback chung">
                                                 </div>
                                             </div>
                                         </div>
-
-
-
-
-
-
-
-
-
                                         {{-- WORKING HERE --}}
-
-
                                     </div>
                                     <hr class="my-0">
                                     <div class="card-body additional-info">
@@ -11693,7 +11682,7 @@
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu (danh sách user -> trả getfly_id về bên kia) </label>
+                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu</label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-select form-control max-select" data-select2-selector="tag" name="referrer_id" multiple>
@@ -11705,30 +11694,55 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Người phụ trách khách hàng (#account_manager)</label>
+                                                <label class="fw-semibold">Người phụ trách khách hàng</label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager">
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                    @endforeach
+                                                <select class="form-select form-control max-select"
+                                                        data-select2-selector="tag"
+                                                        name="account_manager"
+                                                        @if(!in_array('account_manager', $editableFields)) disabled @endif>
+                                            
+                                                    {{-- option mặc định: user hiện tại --}}
+                                                    <option value="{{ auth()->user()->getfly_id }}" selected>
+                                                        {{ auth()->user()->name }}
+                                                    </option>
+
+                                                    {{-- nếu có quyền thì thêm các user khác --}}
+                                                    @if(in_array('account_manager', $editableFields))
+                                                        @foreach ($users as $user)
+                                                            @if($user->id !== auth()->id())
+                                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                            
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này (#accessible_user_ids) </label>
+                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này</label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple>
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple @if(!in_array('accessible_user_ids', $editableFields)) disabled @endif>
+                                                    <option value="1" selected>Admin</option>
                                                     @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                        <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
                                                     @endforeach
                                                 </select>
                                             </div>
                                         </div>
-
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col d-flex justify-content-end">
+                                                <button type="submit" class="btn btn-primary">
+                                                    <i class="feather-user-plus me-2"></i>
+                                                    <span>Add New Customer</span>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        
+                                        
 
 
                                     </div>

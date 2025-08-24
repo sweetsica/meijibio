@@ -19,9 +19,11 @@ class UserRoleSeeder extends Seeder
     {
         // Tạo role
         $adminRole = Role::firstOrCreate(['name' => 'admin']);
+        $moderatorRole = Role::firstOrCreate(['name' => 'moderator']);
         $userRole = Role::firstOrCreate(['name' => 'user']);
         $mktRole = Role::firstOrCreate(['name' => 'mkt']);
         $saleRole = Role::firstOrCreate(['name' => 'sale']);
+        $saleManagerRole = Role::firstOrCreate(['name' => 'sale_manager']);
         $ketoanRole = Role::firstOrCreate(['name' => 'ketoan']);
         $cskhRole = Role::firstOrCreate(['name' => 'cskh']);
 
@@ -30,6 +32,7 @@ class UserRoleSeeder extends Seeder
             ['email' => 'admin@example.com'],
             [
                 'name' => 'Admin',
+                'username' => 'admin',
                 'role' => 'admin',
                 'getfly_id' => '1',
                 'password' => Hash::make('tieuhoa195'),
@@ -42,6 +45,8 @@ class UserRoleSeeder extends Seeder
             ['email' => 'userdemo@example.com'],
             [
                 'name' => 'User Demo',
+                'username' => 'userdemo',
+                'role' => 'user',
                 'password' => Hash::make('tieuhoa195'),
             ]
         );

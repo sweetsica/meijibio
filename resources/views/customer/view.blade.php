@@ -119,7 +119,12 @@
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.create') }}">Customers Create</a></li>
                         </ul>
                     </li>
+                    @if(auth()->user()->hasRole('admin'))
                     <li class="nxl-item nxl-hasmenu">
+                        <a href="{{ router('customer.sync') }}" class="nxl-link">
+                    </li>
+                    @endif
+                    {{-- <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-alert-circle"></i></span>
                             <span class="nxl-mtext">Leads</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
@@ -129,7 +134,7 @@
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.view') }}">Leads View</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.create') }}">Leads Create</a></li>
                         </ul>
-                    </li>
+                    </li> --}}
                     {{-- <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-briefcase"></i></span>
@@ -296,10 +301,10 @@
                             </a>
                         </div>
                         <div class="d-flex align-items-center gap-2 page-header-right-items-wrapper">
-                            <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
+                            {{-- <a href="javascript:void(0);" class="btn btn-light-brand successAlertMessage">
                                 <i class="feather-layers me-2"></i>
                                 <span>Save as Draft</span>
-                            </a>
+                            </a> --}}
                             <a onclick="document.getElementById('customer-form').submit();" class="btn btn-primary successAlertMessage">
                                 <i class="feather-user-plus me-2"></i>
                                 <span>Save Customer</span>
@@ -377,14 +382,14 @@
                                         {{-- WORKING HERE --}}
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Chi tiết quan hệ: </label>
+                                                <label class="fw-semibold">Trạng thái: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" name="account_relation_detail" data-select2-selector="account_relation_detail" @if(!in_array('account_relation_detail', $editableFields)) disabled @endif>
-                                                    <option value="3" {{ $customer->relation_id == '3' ? 'selected' : '' }}>Số không tồn tại</option>
-                                                    <option value="1" {{ $customer->relation_id == '1' ? 'selected' : '' }}>Gọi được</option>
-                                                    <option value="5" {{ $customer->relation_id == '5' ? 'selected' : '' }}>Không liên lạc được (Trên 3 ngày)</option>
                                                     <option value="6" {{ $customer->relation_id == '6' ? 'selected' : '' }}>Chưa phân loại</option>
+                                                    <option value="1" {{ $customer->relation_id == '1' ? 'selected' : '' }}>Gọi được</option>
+                                                    <option value="3" {{ $customer->relation_id == '3' ? 'selected' : '' }}>Số không tồn tại</option>
+                                                    <option value="5" {{ $customer->relation_id == '5' ? 'selected' : '' }}>Không liên lạc được (Trên 3 ngày)</option>
                                                     <option value="4" {{ $customer->relation_id == '4' ? 'selected' : '' }}>Không liên lạc được (Dưới 3 ngày)</option>
                                                 </select>
                                             </div>
@@ -587,7 +592,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="currency" @if(!in_array('currency', $editableFields)) disabled @endif>
-                                                    <option data-currency="vn" selected>VND - Vietnamese</option>
+                                                    <option data-currency="vn" selected>Vietnam</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -596,7 +601,7 @@
                                                 <label class="fw-semibold">Tỉnh/Thành phố: (#21) </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="province_id" name="province_id" @if(!in_array('province_id', $editableFields)) disabled @endif>
+                                                <select class="form-control" data-select2-selector="province_id" name="province_id" disabled>
                                                     <option value="1" {{ $customer->province_id == '1' ? 'selected' : '' }}>HÀ NỘI</option>
                                                     <option value="2" {{ $customer->province_id == '2' ? 'selected' : '' }}>HỒ CHÍ MINH</option>
                                                     <option value="3" {{ $customer->province_id == '3' ? 'selected' : '' }}>HẢI PHÒNG</option>
@@ -669,7 +674,7 @@
                                               <label class="fw-semibold">Quận/Huyện: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control"  data-select2-selector="district_id" name="district_id" @if(!in_array('district_id', $editableFields)) disabled @endif>
+                                                <select class="form-control"  data-select2-selector="district_id" name="district_id" disabled>
                                                     <option value="1" {{ $customer->district_id == '1' ? 'selected' : '' }}>Quận Ba Đình</option>
                                                     <option value="2" {{ $customer->district_id == '2' ? 'selected' : '' }}>Quận Hoàn Kiếm</option>
                                                     <option value="3" {{ $customer->district_id == '3' ? 'selected' : '' }}>Quận Hai Bà Trưng</option>
@@ -1381,7 +1386,7 @@
                                               <label class="fw-semibold">Phường/Xã: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" name="ward_id" data-select2-selector="ward_id" @if(!in_array('ward_id', $editableFields)) disabled @endif>
+                                                <select class="form-control" name="ward_id" data-select2-selector="ward_id" disabled>
                                                     <option value="1" {{ $customer->ward_id == '1' ? 'selected' : '' }}>Phường Phúc Xá</option>
                                                     <option value="2" {{ $customer->ward_id == '2' ? 'selected' : '' }}>Phường Trúc Bạch</option>
                                                     <option value="3" {{ $customer->ward_id == '3' ? 'selected' : '' }}>Phường Vĩnh Phúc</option>
@@ -11393,11 +11398,14 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Show] Chuyên viên tư vấn: (danh sách user -> trả getfly_id về bên kia)</label>
+                                                <label class="fw-semibold">[Show] Chuyên viên tư vấn:</label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="chuyen_vien_tu_van" @if(!in_array('chuyen_vien_tu_van', $editableFields)) disabled @endif>
-                                                    <option value="168">Danh sách người dùng role Sale</option>
+                                                    <option value="" disabled selected>Chọn người giới thiệu</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}" {{ in_array($user->getfly_id, explode(',', $customer->accessible_user_ids ?? '')) ? 'selected' : '' }}>{{ $user->name }}</option>
+                                                    @endforeach
                                                 </select>
                                             </div>
                                         </div>
@@ -11695,51 +11703,45 @@
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu (danh sách user -> trả getfly_id về bên kia) </label>
+                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu:</label>
                                             </div>
                                             <div class="col-lg-8">
-
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id" @if(!in_array('referrer_id', $editableFields)) disabled @endif>
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id" disabled @if(!in_array('referrer_id', $editableFields)) disabled @endif>
                                                     <option value="" disabled selected>Chọn người giới thiệu</option>
-                                                    @foreach ($users as $user)
+                                                    {{-- @foreach ($users as $user)
                                                         <option value="{{ $user->id }}" class="{{ $customer->id }}" {{ $user->getfly_id && $customer->referrer_id == $user->getfly_id ? 'selected' : '' }} data-getfly_id="{{ $user->getfly_id }}">{{ $user->name }}</option>
-                                                    @endforeach
-                                            </select>
+                                                    @endforeach --}}
+                                                </select>
                                             </div>
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Người phụ trách khách hàng (#account_manager)</label>
+                                                <label class="fw-semibold">Người phụ trách khách hàng</label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager" @if(!in_array('account_manager', $editableFields)) disabled @endif>
-                                                    @foreach ($users as $user)
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager" disable @if(!in_array('account_manager', $editableFields)) disabled @endif>
+                                                    {{-- @foreach ($users as $user)
                                                         <option value="{{ $user->id }}" {{ $customer->account_manager == $user->getfly_id ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này (#accessible_user_ids) </label>
+                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này</label>
                                             </div>
                                             <div class="col-lg-8">
-
-
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple @if(!in_array('accessible_user_ids', $editableFields)) disabled @endif>
-                                                    @foreach ($users as $user)
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" disabled multiple @if(!in_array('accessible_user_ids', $editableFields)) disabled @endif>
+                                                    {{-- @foreach ($users as $user)
                                                         <option value="{{ $user->id }}" {{ in_array($user->getfly_id, explode(',', $customer->accessible_user_ids ?? '')) ? 'selected' : '' }}>{{ $user->name }}</option>
-                                                    @endforeach
+                                                    @endforeach --}}
                                                 </select>
                                             </div>
                                         </div>
-
-
-
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="passwordTab" role="tabpanel">
+                                {{-- <div class="tab-pane fade" id="passwordTab" role="tabpanel">
                                     <div class="card-body pass-info">
                                         <div class="mb-4 d-flex align-items-center justify-content-between">
                                             <h5 class="fw-bold mb-0 me-4">
@@ -12564,7 +12566,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>

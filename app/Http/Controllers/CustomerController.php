@@ -76,8 +76,9 @@ class CustomerController extends Controller
     {
         // get list of users
         $users = User::all();
+        $editableFields = RoleFieldResolver::forUser(Auth::user());
         // Logic to retrieve and display customers
-        return view('customer.create', compact('users'));
+        return view('customer.create', compact('users', 'editableFields'));
         // return view('customer.create');
     }
 
@@ -121,31 +122,54 @@ class CustomerController extends Controller
     public function createCustomer(Request $request)
     {
         $dataToSync = [];
-        $requestFields = $request->all();
+        // $requestFields = $request->all();
+        // Loại bỏ _token, _method ra khỏi request
+        $requestFields = $request->except(['_token', '_method','account_relation_detail','province_id','district_id','ward_id','accessible_user_ids']);
+
         $defaultFields = FieldDefine::defaultFields;
 
+        // dd($request->all());
         // Loop through $requestFields and check
         // If request has field in FieldDefine.php, then add to $dataToSync key value, else add to array in dataSync['custom_fields']
         // Check toàn bộ các field request gửi lên và phân biệt xem có được update hay không
         // Nếu được update thì là field custom hay default
+        $dataToSync = [
+            'custom_fields' => []
+        ];
+        
         foreach ($requestFields as $field => $value) {
+            // Bỏ qua nếu value null, rỗng hoặc 0
+            if ($value === null || $value === '' || $value === 0 || $value === '0') {
+                continue;
+            }
+        
             if (in_array($field, $defaultFields)) {
                 $dataToSync[$field] = $value;
             } else {
-                $dataToSync['custom_fields'][] = [
-                    'field' => $field,
-                    'value' => $value
-                ];
+                // Chuyển sang key-value thay vì array
+                $dataToSync['custom_fields'][$field] = $value;
             }
         }
-
+        
         $crmAPIKey = env('GETFLY_CRM_API_KEY');
-
-        // Call api to push $dataToSync to another service meijibio
+        
         $response = Http::withHeaders([
             'X-API-KEY' => $crmAPIKey
         ])->post('https://meijibio.getflycrm.com/api/v6/accounts', $dataToSync);
 
+        $accountId = $response->json('data.id');
+
+        // 2. Gán người phụ trách (nếu có accessible_user_ids)
+        if ($accountId && $request->filled('accessible_user_ids')) {
+            Http::withHeaders([
+                'X-API-KEY' => $crmAPIKey
+            ])->post("https://meijibio.getflycrm.com/api/v6/accounts/{$accountId}/manager", [
+                'accessible_user_ids' => $request->accessible_user_ids
+            ]);
+        }
+        
+
+        // dd($response->body());
         if ($response->successful()) {
             $customer = Customer::create($dataToSync);
             return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
@@ -195,6 +219,7 @@ class CustomerController extends Controller
         $response = Http::withHeaders([
             'X-API-KEY' => $crmAPIKey
         ])->post('https://meijibio.getflycrm.com/api/v6/accounts/'.$id, $dataToSync);
+        
 
         if ($response->successful()) {
             $customer->update($dataToSync);
