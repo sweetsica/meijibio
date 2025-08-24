@@ -207,7 +207,7 @@ class CustomerController extends Controller
             $defaultFieldsString = implode(',', $defaultFields);
             $fieldsRequests = $defaultFieldsString;
 
-            $limit = 1000000000; // 1 billion records
+            $limit = 10000000000; // 10 billion records
 
             $url = 'https://meijibio.getflycrm.com/api/v6/accounts?limit=' . $limit . '&fields=' . $fieldsRequests;
 
@@ -220,36 +220,34 @@ class CustomerController extends Controller
             $data = json_decode($response->body(), true);
             $firstItem = $data['data'][0];
 
+            foreach ($data['data'] as $item) {
+                $customer = Customer::where('getfly_id', $item['id'])->first();
 
-            // sync data with our database
-            $customer = Customer::where('getfly_id', $firstItem['id'])->first();
+                $customerData = [
+                    'getfly_id' => $item['id'],
+                ];
 
+                $defaultFields = FieldDefine::defaultFields;
 
-            $customerData = [
-                'getfly_id' => $firstItem['id'],
-            ];
+                foreach ($defaultFields as $field) {
+                    $customerData[$field] = $item[$field];
+                }
 
-            $defaultFields = FieldDefine::defaultFields;
-
-            foreach ($defaultFields as $field) {
-                $customerData[$field] = $firstItem[$field];
-            }
-
-            if ($customer) {
-                $customer->update($customerData);
-            } else {
-                $customer = Customer::create($customerData);
+                if ($customer) {
+                    $customer->update($customerData);
+                } else {
+                    $customer = Customer::create($customerData);
+                }
             }
 
 
             if ($response->successful()) {
-                return response()->json(['message' => 'Sync success', 'data' => $firstItem]);
+                return response()->json(['message' => 'Sync success']);
             } else {
-
-                return response()->json(['message' => 'Sync failed', 'data' => $response->body()], 500);
+                return response()->json(['message' => 'Sync failed'], 500);
             }
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Sync failed', 'data' => $e], 500);
+            return response()->json(['message' => 'Sync failed'], 500);
         }
     }
 }
