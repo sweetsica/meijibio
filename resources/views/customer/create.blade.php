@@ -591,7 +591,8 @@
                                                 <label class="fw-semibold">Tỉnh/Thành phố: (#21) </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="gender" name="province_id" disabled>
+                                               <select class="form-control" data-select2-selector="gender" name="province_id" disabled>
+
                                                     <option value="1">HÀ NỘI</option>
                                                     <option value="2">HỒ CHÍ MINH</option>
                                                     <option value="3">HẢI PHÒNG</option>
@@ -665,6 +666,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="gender" name="district_id" disabled>
+
                                                     <option value="1">Quận Ba Đình</option>
                                                     <option value="2">Quận Hoàn Kiếm</option>
                                                     <option value="3">Quận Hai Bà Trưng</option>
@@ -1376,7 +1378,9 @@
                                               <label class="fw-semibold">Phường/Xã: </label>
                                             </div>
                                             <div class="col-lg-8">
+
                                                 <select class="form-control" data-select2-selector="gender" name="ward_id" disabled>
+
                                                     <option value="1">Phường Phúc Xá</option>
                                                     <option value="2">Phường Trúc Bạch</option>
                                                     <option value="3">Phường Vĩnh Phúc</option>
@@ -11679,7 +11683,6 @@
                                             </h5>
                                             <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a>
                                         </div>
-
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="Input" class="fw-semibold">[Ref] Người giới thiệu</label>
@@ -11740,7 +11743,7 @@
                                                     <span>Add New Customer</span>
                                                 </button>
                                             </div>
-                                        </div>
+                                        </div>                                                   
                                         
                                         
 
@@ -12609,6 +12612,7 @@
     <!-- vendors.min.js {always must need to be top} -->
     <script src="{{asset('assets/vendors/js/select2.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/select2-active.min.js')}}"></script>
+    <script src="{{asset('assets/js/custom-select2-init.js')}}"></script>
     <script src="{{asset('assets/vendors/js/datepicker.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/lslstrength.min.js')}}"></script>
     <!--! END: Vendors JS !-->
