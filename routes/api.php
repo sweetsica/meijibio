@@ -19,3 +19,5 @@ Route::post('/customers/import', [CustomerController::class, 'import'])->name('c
 Route::post('/customers/{id}/update', [CustomerController::class, 'updateCustomer']);
 
 Route::post('/customers/sync-customer', [CustomerController::class, 'syncCustomer']);
+
+Router::post('/customers/sync-customer/{id}', [CustomerController::class, 'syncDetailCustomer']);
