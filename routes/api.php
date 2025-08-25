@@ -20,4 +20,4 @@ Route::post('/customers/{id}/update', [CustomerController::class, 'updateCustome
 
 Route::post('/customers/sync-customer', [CustomerController::class, 'syncCustomer']);
 
-Router::post('/customers/sync-customer/{id}', [CustomerController::class, 'syncDetailCustomer']);
+Route::post('/customers/sync-customer/{id}', [CustomerController::class, 'syncDetailCustomer']);
