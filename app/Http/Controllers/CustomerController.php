@@ -125,6 +125,7 @@ class CustomerController extends Controller
         // $requestFields = $request->all();
         // Loại bỏ _token, _method ra khỏi request
         $requestFields = $request->except(['_token', '_method','account_relation_detail','province_id','district_id','ward_id','accessible_user_ids']);
+        // $requestFields = $request->except(['_token', '_method','account_relation_detail','province_id','district_id','ward_id',]);
 
         $defaultFields = FieldDefine::defaultFields;
 
@@ -157,6 +158,7 @@ class CustomerController extends Controller
             'X-API-KEY' => $crmAPIKey
         ])->post('https://meijibio.getflycrm.com/api/v6/accounts', $dataToSync);
 
+        // dd($response->body());
         $accountId = $response->json('data.id');
 
         // 2. Gán người phụ trách (nếu có accessible_user_ids)
@@ -172,9 +174,11 @@ class CustomerController extends Controller
         // dd($response->body());
         if ($response->successful()) {
             $customer = Customer::create($dataToSync);
-            return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
+            // return response()->json(['message' => 'Sync thành công', 'data' => $dataToSync]);
+            return redirect()->route('customer.index')->with('success', 'Customer created successfully');
         } else {
-            return response()->json(['message' => 'Sync thất bại', 'data' => $dataToSync], 500);
+            return redirect()->route('customer.index')->with('error', 'Customer created failed');
+            // return response()->json(['message' => 'Sync thất bại', 'data' => $dataToSync], 500);
         }
     }
 

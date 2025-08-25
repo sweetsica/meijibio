@@ -11747,7 +11747,7 @@
 
                                     </div>
                                 </div>
-                                <div class="tab-pane fade" id="passwordTab" role="tabpanel">
+                                {{-- <div class="tab-pane fade" id="passwordTab" role="tabpanel">
                                     <div class="card-body pass-info">
                                         <div class="mb-4 d-flex align-items-center justify-content-between">
                                             <h5 class="fw-bold mb-0 me-4">
@@ -12572,7 +12572,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div> --}}
                             </div>
                         </div>
                     </div>
