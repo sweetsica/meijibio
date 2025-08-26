@@ -124,8 +124,10 @@ class CustomerController extends Controller
         $dataToSync = [];
         // $requestFields = $request->all();
         // Loại bỏ _token, _method ra khỏi request
-        $requestFields = $request->except(['_token', '_method','account_relation_detail','province_id','district_id','ward_id','accessible_user_ids']);
+        // $requestFields = $request->except(['_token', '_method','account_relation_detail','province_id','district_id','ward_id','accessible_user_ids']);
         // $requestFields = $request->except(['_token', '_method','account_relation_detail','province_id','district_id','ward_id',]);
+        $requestFields = $request->except(['_token', '_method']);
+        // accessible_account_users++
 
         $defaultFields = FieldDefine::defaultFields;
 
@@ -156,19 +158,19 @@ class CustomerController extends Controller
         
         $response = Http::withHeaders([
             'X-API-KEY' => $crmAPIKey
-        ])->post('https://meijibio.getflycrm.com/api/v6/accounts', $dataToSync);
+        ])->post('https://meijibio.getflycrm.com/api/v6.1/accounts', $dataToSync);
 
-        // dd($response->body());
-        $accountId = $response->json('data.id');
+        dd($response->body());
+        // $accountId = $response->json('data.id');
 
-        // 2. Gán người phụ trách (nếu có accessible_user_ids)
-        if ($accountId && $request->filled('accessible_user_ids')) {
-            Http::withHeaders([
-                'X-API-KEY' => $crmAPIKey
-            ])->post("https://meijibio.getflycrm.com/api/v6/accounts/{$accountId}/manager", [
-                'accessible_user_ids' => $request->accessible_user_ids
-            ]);
-        }
+        // // 2. Gán người phụ trách (nếu có accessible_user_ids)
+        // if ($accountId && $request->filled('accessible_user_ids')) {
+        //     Http::withHeaders([
+        //         'X-API-KEY' => $crmAPIKey
+        //     ])->post("https://meijibio.getflycrm.com/api/v6/accounts/{$accountId}/manager", [
+        //         'accessible_user_ids' => $request->accessible_user_ids
+        //     ]);
+        // }
         
 
         // dd($response->body());
