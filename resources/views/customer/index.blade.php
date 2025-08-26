@@ -7,6 +7,7 @@
     <meta name="description" content="">
     <meta name="keyword" content="">
     <meta name="author" content="Lucif" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <!--! The above 6 meta tags *must* come first in the head; any other head content must come *after* these tags !-->
     <!--! BEGIN: Apps Title-->
     <title>Customers Dashboard || Meijibio S</title>
@@ -212,14 +213,23 @@
                                                 </td>
                                                 <td>
                                                     <div class="hstack gap-2 justify-content-end">
-                                                        <a href="{{ route('customer.view', $customer->id)}}" class="avatar-text avatar-md">
-                                                            <i class="feather feather-eye"></i>
-                                                        </a>
+                                                        <button type="button" class="avatar-text avatar-md btn btn-link p-0 sync-customer-btn"
+                                                                data-customer-id="{{ $customer->id }}"
+                                                                data-customer-name="{{ $customer->account_name ?? 'N/A' }}"
+                                                                title="Sync Customer Details">
+                                                            <i class="feather feather-refresh-cw"></i>
+                                                        </button>
                                                         <div class="dropdown">
                                                             <a href="javascript:void(0)" class="avatar-text avatar-md" data-bs-toggle="dropdown" data-bs-offset="0,21">
                                                                 <i class="feather feather-more-horizontal"></i>
                                                             </a>
                                                             <ul class="dropdown-menu">
+                                                                <li>
+                                                                    <a class="dropdown-item" href="{{ route('customer.view', $customer->id)}}">
+                                                                        <i class="feather feather-eye me-3"></i>
+                                                                        <span>View Details</span>
+                                                                    </a>
+                                                                </li>
                                                                 <li>
                                                                     <a class="dropdown-item" href="javascript:void(0)">
                                                                         <i class="feather feather-edit-3 me-3"></i>
@@ -253,7 +263,7 @@
                                                                 </li> --}}
                                                                 <li class="dropdown-divider"></li>
                                                                 <li>
-                                                                    <form action="{{ route('customer.delete', $customer->id) }}" method="POST" 
+                                                                    <form action="{{ route('customer.delete', $customer->id) }}" method="POST"
                                                                           onsubmit="return confirm('Bạn có chắc muốn xoá khách hàng này không?')" style="display:inline;">
                                                                         @csrf
                                                                         @method('DELETE')
@@ -315,13 +325,14 @@
 
 @section('footer')
     <!-- Delete customer -->
-        
-        
+
+
     <!--! Footer Script !-->
     <!--! ================================================================ !-->
     <!--! BEGIN: Vendors JS !-->
     <script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>
     <!-- vendors.min.js {always must need to be top} -->
+    <script src="{{asset('assets/vendors/js/sweetalert2.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/dataTables.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/dataTables.bs5.min.js')}}"></script>
     <script src="{{asset('assets/vendors/js/select2.min.js')}}"></script>
@@ -334,4 +345,116 @@
     <!--! BEGIN: Theme Customizer  !-->
     <script src="{{asset('assets/js/theme-customizer-init.min.js')}}"></script>
     <!--! END: Theme Customizer !-->
+
+    <!--! BEGIN: Customer Sync Functionality !-->
+    <script>
+        $(document).ready(function() {
+            console.log("document ready");
+            // Handle sync customer button click
+            $('.sync-customer-btn').on('click', function() {
+                console.log("button click");
+                const $button = $(this);
+                const customerId = $button.data('customer-id');
+                const customerName = $button.data('customer-name');
+                const $icon = $button.find('i');
+                console.log("Starting sync for customer ID:", customerId, "Name:", customerName);
+
+                // Disable button and show loading state
+                $button.prop('disabled', true);
+                $icon.removeClass('feather-refresh-cw').addClass('feather-loader');
+                $icon.css('animation', 'spin 1s linear infinite');
+
+                // Add loading style
+                $button.attr('title', 'Syncing...');
+
+                // Make API call to sync customer
+                $.ajax({
+                    url: `/customers/sync-customer/${customerId}`,
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    xhrFields: {
+                        withCredentials: true
+                    },
+                    success: function(response) {
+                        console.log("Sync successful:", response);
+                        // Show success toast
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Success!',
+                                text: `Customer "${customerName}" synced successfully!`,
+                                icon: 'success',
+                                timer: 5000,
+                                timerProgressBar: true,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                showCloseButton: true
+                            });
+                        }
+
+                        // Optionally reload the page to show updated data
+                        // You can remove this line if you don't want automatic reload
+                        setTimeout(() => {
+                            location.reload();
+                        }, 3000);
+                    },
+                    error: function(xhr, status, error) {
+                        console.log("Sync error - Status:", status, "Error:", error);
+                        console.log("XHR Response:", xhr.responseText);
+                        console.log("XHR Status Code:", xhr.status);
+                        console.log("XHR Headers:", xhr.getAllResponseHeaders());
+
+                        let errorMessage = 'Failed to sync customer';
+
+                        if (xhr.responseJSON && xhr.responseJSON.error) {
+                            errorMessage = xhr.responseJSON.error;
+                        } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        } else if (xhr.status === 401) {
+                            errorMessage = 'Authentication required. Please refresh the page and try again.';
+                        } else if (xhr.status === 403) {
+                            errorMessage = 'You do not have permission to perform this action.';
+                        } else if (xhr.status === 404) {
+                            errorMessage = 'Customer not found.';
+                        } else if (xhr.status >= 500) {
+                            errorMessage = 'Server error. Please try again later.';
+                        }
+
+                        // Show error toast
+                        if (typeof Swal !== 'undefined') {
+                            Swal.fire({
+                                title: 'Error!',
+                                text: errorMessage,
+                                icon: 'error',
+                                timer: 7000,
+                                timerProgressBar: true,
+                                toast: true,
+                                position: 'top-end',
+                                showConfirmButton: false,
+                                showCloseButton: true
+                            });
+                        }
+
+                        console.error('Sync error:', error, xhr.responseText);
+                    },
+                    complete: function() {
+                        // Re-enable button and restore original state
+                        $button.prop('disabled', false);
+                        $icon.removeClass('feather-loader').addClass('feather-refresh-cw');
+                        $icon.css('animation', '');
+                        $button.attr('title', 'Sync Customer Details');
+                    }
+                });
+            });
+
+            // Add CSS for loading animation
+            if (!$('#spin-animation').length) {
+                $('<style id="spin-animation">@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }</style>').appendTo('head');
+            }
+        });
+    </script>
+    <!--! END: Customer Sync Functionality !-->
 @endsection

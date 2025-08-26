@@ -96,6 +96,12 @@ Route::post('/customers/store', [CustomerController::class, 'createCustomer'])->
 Route::put('/customers/{id}/update', [CustomerController::class, 'updateCustomer'])->name('customer.update');
 Route::delete('/customers/{id}', [CustomerController::class, 'deleteCustomer'])->name('customer.delete');
 
+// Customer sync routes for web access - require authentication
+Route::middleware(['auth'])->group(function () {
+    Route::post('/customers/sync-customer', [CustomerController::class, 'syncCustomer'])->name('web.customer.sync');
+    Route::post('/customers/sync-customer/{id}', [CustomerController::class, 'syncDetailCustomer'])->name('web.customer.sync.detail');
+});
+
 
 
 

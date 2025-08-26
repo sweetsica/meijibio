@@ -302,7 +302,7 @@ class CustomerController extends Controller
         }
     }
 
-    public function createCustomer(Request $request)
+        public function createCustomer(Request $request)
     {
         try {
             // Validate input data
@@ -322,7 +322,10 @@ class CustomerController extends Controller
 
             if (!$response->successful()) {
                 $this->handleCrmError($response, 'customer creation');
-                return redirect()->route('customer.create')->with('error', 'Failed to create customer in CRM system.');
+                $errorMessage = $response->json('message') ?? 'Failed to create customer in CRM system';
+                return redirect()->route('customer.create')
+                    ->withInput()
+                    ->with('error', 'Failed to create customer: ' . $errorMessage);
             }
 
             $accountId = $response->json('data.id');
@@ -351,6 +354,7 @@ class CustomerController extends Controller
                 'user_id' => Auth::id()
             ]);
 
+            // SUCCESS: Redirect to customer list
             return redirect()->route('customer.index')->with('success', 'Customer created successfully!');
 
         } catch (\Exception $e) {
@@ -359,45 +363,57 @@ class CustomerController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'user_id' => Auth::id()
             ]);
-            return redirect()->route('customer.create')->with('error', 'An unexpected error occurred while creating the customer. Please try again.');
+            // ERROR: Stay on create page with input preserved
+            return redirect()->route('customer.create')
+                ->withInput()
+                ->with('error', 'An unexpected error occurred while creating the customer. Please try again.');
         }
     }
 
-    /** This function will check current user role and get field that allowed to update to another service meijibio */
+        /** This function will check current user role and get field that allowed to update to another service meijibio */
     public function updateCustomer(Request $request, $id = null)
     {
         try {
             if (!$id) {
                 Log::warning('Update customer attempted without ID', ['user_id' => Auth::id()]);
-                return response()->json(['message' => 'Customer ID is required'], 400);
+                // MISSING ID: Redirect to customer list (no specific customer to return to)
+                return redirect()->route('customer.index')->with('error', 'Customer ID is required');
             }
 
             $customer = Customer::find($id);
             if (!$customer) {
                 Log::warning('Update attempted on non-existent customer', ['id' => $id, 'user_id' => Auth::id()]);
-                return response()->json(['message' => 'Customer not found'], 404);
+                // CUSTOMER NOT FOUND: Redirect to customer list
+                return redirect()->route('customer.index')->with('error', 'Customer not found');
             }
 
             // Validate user permissions
             $rolePermission = $this->getUserPermissions();
             if (empty($rolePermission)) {
-                return response()->json(['message' => 'Insufficient permissions'], 403);
+                // PERMISSION ERROR: Stay on customer view page
+                return redirect()->route('customer.view', $id)
+                    ->withInput()
+                    ->with('error', 'You do not have permission to update this customer');
             }
 
             // Validate input data
             $validator = $this->validateCustomerData($request, true);
             if ($validator->fails()) {
-                return response()->json([
-                    'message' => 'Validation failed',
-                    'errors' => $validator->errors()
-                ], 422);
+                // VALIDATION ERROR: Stay on customer view page with errors
+                return redirect()->route('customer.view', $id)
+                    ->withErrors($validator)
+                    ->withInput()
+                    ->with('error', 'Please fix the validation errors and try again.');
             }
 
             // Prepare data for sync (filtered by permissions)
             $dataToSync = $this->prepareUpdateData($request, $rolePermission);
 
             if (empty($dataToSync)) {
-                return response()->json(['message' => 'No valid fields to update'], 400);
+                // NO FIELDS TO UPDATE: Stay on customer view page
+                return redirect()->route('customer.view', $id)
+                    ->withInput()
+                    ->with('warning', 'No valid fields to update');
             }
 
             // Update in CRM
@@ -405,7 +421,11 @@ class CustomerController extends Controller
 
             if (!$response->successful()) {
                 $this->handleCrmError($response, 'customer update');
-                return response()->json(['message' => 'Failed to update customer in CRM system'], 500);
+                $errorMessage = $response->json('message') ?? 'Failed to update customer in CRM system';
+                // CRM ERROR: Stay on customer view page with input preserved
+                return redirect()->route('customer.view', $id)
+                    ->withInput()
+                    ->with('error', 'Failed to update customer: ' . $errorMessage);
             }
 
             // Update local database
@@ -417,10 +437,8 @@ class CustomerController extends Controller
                 'updated_fields' => array_keys($dataToSync)
             ]);
 
-            return response()->json([
-                'message' => 'Customer updated successfully',
-                'data' => $dataToSync
-            ]);
+            // SUCCESS: Redirect to customer list
+            return redirect()->route('customer.index')->with('success', 'Customer updated successfully!');
 
         } catch (\Exception $e) {
             Log::error('Exception during customer update', [
@@ -429,7 +447,14 @@ class CustomerController extends Controller
                 'trace' => $e->getTraceAsString(),
                 'user_id' => Auth::id()
             ]);
-            return response()->json(['message' => 'An unexpected error occurred while updating the customer'], 500);
+            // EXCEPTION ERROR: Stay on customer view page if we have valid ID, otherwise go to list
+            if ($id && Customer::find($id)) {
+                return redirect()->route('customer.view', $id)
+                    ->withInput()
+                    ->with('error', 'An unexpected error occurred while updating the customer. Please try again.');
+            } else {
+                return redirect()->route('customer.index')->with('error', 'An unexpected error occurred while updating the customer.');
+            }
         }
     }
 
