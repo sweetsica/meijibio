@@ -101,10 +101,10 @@ Route::delete('/customers/{id}', [CustomerController::class, 'deleteCustomer'])-
 
 
 
-//Lead routes
-Route::get('/leads', [CustomerController::class, 'indexLead'])->name('lead.index');
-Route::get('/leads/view', [CustomerController::class, 'viewLead'])->name('lead.view');
-Route::get('/leads/create', [CustomerController::class, 'createLead'])->name('lead.create');
+//Lead routes - TODO: Implement Lead functionality
+// Route::get('/leads', [CustomerController::class, 'indexLead'])->name('lead.index');
+// Route::get('/leads/view', [CustomerController::class, 'viewLead'])->name('lead.view');
+// Route::get('/leads/create', [CustomerController::class, 'createLead'])->name('lead.create');
 
 
 ##########################################################################################################################################

@@ -311,7 +311,7 @@
                     </div>
                     <!--! [End] nxl-navigation-toggle !-->
                     <!--! [Start] nxl-lavel-mega-menu-toggle !-->
-                    
+
                     <!--! [End] nxl-lavel-mega-menu-toggle !-->
                     <!--! [Start] nxl-lavel-mega-menu !-->
                     <div class="nxl-drp-link nxl-lavel-mega-menu">
@@ -696,7 +696,7 @@
                             </div>
                             <!--! [End] nxl-lavel-menu !-->
                             <!--! [Start] nxl-h-item nxl-mega-menu !-->
-                            
+
                             <!--! [End] nxl-h-item nxl-mega-menu !-->
                         </div>
                         <!--! [End] nxl-lavel-mega-menu-wrapper !-->
@@ -1446,6 +1446,7 @@
         <!--! BEGIN: Vendors JS !-->
         <script src="{{asset('assets/vendors/js/vendors.min.js')}}"></script>
         <!-- vendors.min.js {always must need to be top} -->
+        <script src="{{asset('assets/vendors/js/sweetalert2.min.js')}}"></script>
         <script src="{{asset('assets/vendors/js/daterangepicker.min.js')}}"></script>
         <script src="{{asset('assets/vendors/js/apexcharts.min.js')}}"></script>
         <script src="{{asset('assets/vendors/js/circle-progress.min.js')}}"></script>
@@ -1458,6 +1459,46 @@
         <script src="{{asset('assets/js/theme-customizer-init.min.js')}}"></script>
         <!--! END: Theme Customizer !-->
     @endif
+
+    <!--! BEGIN: Toast Notifications !-->
+    @php
+        $toastMessages = [];
+        if(session('success')) $toastMessages[] = ['type' => 'success', 'title' => 'Success!', 'message' => session('success')];
+        if(session('error')) $toastMessages[] = ['type' => 'error', 'title' => 'Error!', 'message' => session('error')];
+        if(session('warning')) $toastMessages[] = ['type' => 'warning', 'title' => 'Warning!', 'message' => session('warning')];
+        if(session('info')) $toastMessages[] = ['type' => 'info', 'title' => 'Info', 'message' => session('info')];
+    @endphp
+
+        @if(count($toastMessages) > 0)
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var toastMessages = {!! json_encode($toastMessages) !!};
+
+                // Check if Swal is available
+                if (typeof Swal === 'undefined') {
+                    console.error('SweetAlert2 is not loaded');
+                    return;
+                }
+
+                toastMessages.forEach(function(toast) {
+                    var timer = toast.type === 'error' ? 7000 : (toast.type === 'warning' ? 6000 : 5000);
+
+                    Swal.fire({
+                        title: toast.title,
+                        text: toast.message,
+                        icon: toast.type,
+                        timer: timer,
+                        timerProgressBar: true,
+                        toast: true,
+                        position: 'top-end',
+                        showConfirmButton: false,
+                        showCloseButton: true
+                    });
+                });
+            });
+        </script>
+    @endif
+    <!--! END: Toast Notifications !-->
 </body>
 
 </html>
