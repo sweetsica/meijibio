@@ -1,0 +1,254 @@
+[
+  {
+    "id": 1,
+    "name": "HÀ NỘI"
+  },
+  {
+    "id": 2,
+    "name": "HỒ CHÍ MINH"
+  },
+  {
+    "id": 3,
+    "name": "HẢI PHÒNG"
+  },
+  {
+    "id": 4,
+    "name": "ĐÀ NẴNG"
+  },
+  {
+    "id": 5,
+    "name": "HÀ GIANG"
+  },
+  {
+    "id": 6,
+    "name": "CAO BẰNG"
+  },
+  {
+    "id": 7,
+    "name": "LAI CHÂU"
+  },
+  {
+    "id": 8,
+    "name": "LÀO CAI"
+  },
+  {
+    "id": 9,
+    "name": "TUYÊN QUANG"
+  },
+  {
+    "id": 10,
+    "name": "LẠNG SƠN"
+  },
+  {
+    "id": 11,
+    "name": "BẮC KẠN"
+  },
+  {
+    "id": 12,
+    "name": "THÁI NGUYÊN"
+  },
+  {
+    "id": 13,
+    "name": "YÊN BÁI"
+  },
+  {
+    "id": 14,
+    "name": "SƠN LA"
+  },
+  {
+    "id": 15,
+    "name": "PHÚ THỌ"
+  },
+  {
+    "id": 16,
+    "name": "VĨNH PHÚC"
+  },
+  {
+    "id": 17,
+    "name": "QUẢNG NINH"
+  },
+  {
+    "id": 18,
+    "name": "BẮC GIANG"
+  },
+  {
+    "id": 19,
+    "name": "BẮC NINH"
+  },
+  {
+    "id": 20,
+    "name": "HẢI DƯƠNG"
+  },
+  {
+    "id": 21,
+    "name": "HƯNG YÊN"
+  },
+  {
+    "id": 22,
+    "name": "HÒA BÌNH"
+  },
+  {
+    "id": 23,
+    "name": "HÀ NAM"
+  },
+  {
+    "id": 24,
+    "name": "NAM ĐỊNH"
+  },
+  {
+    "id": 25,
+    "name": "THÁI BÌNH"
+  },
+  {
+    "id": 26,
+    "name": "NINH BÌNH"
+  },
+  {
+    "id": 27,
+    "name": "THANH HÓA"
+  },
+  {
+    "id": 28,
+    "name": "NGHỆ AN"
+  },
+  {
+    "id": 29,
+    "name": "HÀ TĨNH"
+  },
+  {
+    "id": 30,
+    "name": "QUẢNG BÌNH"
+  },
+  {
+    "id": 31,
+    "name": "QUẢNG TRỊ"
+  },
+  {
+    "id": 32,
+    "name": "THỪA THIÊN HUẾ"
+  },
+  {
+    "id": 33,
+    "name": "QUẢNG NAM"
+  },
+  {
+    "id": 34,
+    "name": "QUẢNG NGÃI"
+  },
+  {
+    "id": 35,
+    "name": "KONTUM"
+  },
+  {
+    "id": 36,
+    "name": "BÌNH ĐỊNH"
+  },
+  {
+    "id": 37,
+    "name": "GIA LAI"
+  },
+  {
+    "id": 38,
+    "name": "PHÚ YÊN"
+  },
+  {
+    "id": 39,
+    "name": "ĐĂK LĂK"
+  },
+  {
+    "id": 40,
+    "name": "KHÁNH HÒA"
+  },
+  {
+    "id": 41,
+    "name": "LÂM ĐỒNG"
+  },
+  {
+    "id": 42,
+    "name": "BÌNH PHƯỚC"
+  },
+  {
+    "id": 43,
+    "name": "BÌNH DƯƠNG"
+  },
+  {
+    "id": 44,
+    "name": "NINH THUẬN"
+  },
+  {
+    "id": 45,
+    "name": "TÂY NINH"
+  },
+  {
+    "id": 46,
+    "name": "BÌNH THUẬN"
+  },
+  {
+    "id": 47,
+    "name": "ĐỒNG NAI"
+  },
+  {
+    "id": 48,
+    "name": "LONG AN"
+  },
+  {
+    "id": 49,
+    "name": "ĐỒNG THÁP"
+  },
+  {
+    "id": 50,
+    "name": "AN GIANG"
+  },
+  {
+    "id": 51,
+    "name": "BÀ RỊA-VŨNG TÀU"
+  },
+  {
+    "id": 52,
+    "name": "TIỀN GIANG"
+  },
+  {
+    "id": 53,
+    "name": "KIÊN GIANG"
+  },
+  {
+    "id": 54,
+    "name": "CẦN THƠ"
+  },
+  {
+    "id": 55,
+    "name": "BẾN TRE"
+  },
+  {
+    "id": 56,
+    "name": "VĨNH LONG"
+  },
+  {
+    "id": 57,
+    "name": "TRÀ VINH"
+  },
+  {
+    "id": 58,
+    "name": "SÓC TRĂNG"
+  },
+  {
+    "id": 59,
+    "name": "BẠC LIÊU"
+  },
+  {
+    "id": 60,
+    "name": "CÀ MAU"
+  },
+  {
+    "id": 61,
+    "name": "ĐIỆN BIÊN"
+  },
+  {
+    "id": 62,
+    "name": "ĐĂK NÔNG"
+  },
+  {
+    "id": 63,
+    "name": "HẬU GIANG"
+  }
+]
