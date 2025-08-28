@@ -13,6 +13,7 @@ use App\Support\RoleFieldResolver;
 use Illuminate\Support\Facades\Http;
 use App\Enum\FieldDefine;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
 
 class CustomerController extends Controller
@@ -220,8 +221,8 @@ class CustomerController extends Controller
             // get list of users
             $users = User::all();
 
-                    // Lấy danh sách field có thể edit theo role của user hiện tại
-        $editableFields = $this->getUserPermissions();
+            // Lấy danh sách field có thể edit theo role của user hiện tại
+            $editableFields = $this->getUserPermissions();
 
             // Logic to retrieve and display customers
             return view('customer.view', compact('customer', 'users', 'editableFields'));
@@ -241,7 +242,10 @@ class CustomerController extends Controller
         $users = User::all();
         $editableFields = $this->getUserPermissions();
         // Logic to retrieve and display customers
-        return view('customer.create', compact('users', 'editableFields'));
+        $provinces = json_decode(File::get(public_path('json/province.json')), true);
+        $districts = json_decode(File::get(public_path('json/district.json')), true);
+        $wards     = json_decode(File::get(public_path('json/ward.json')), true);
+        return view('customer.create', compact('users', 'editableFields', 'provinces', 'districts', 'wards'));
         // return view('customer.create');
     }
 
