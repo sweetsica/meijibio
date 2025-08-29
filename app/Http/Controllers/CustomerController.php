@@ -101,7 +101,7 @@ class CustomerController extends Controller
         $dateTimeFields = ['created_at', 'updated_at', 'deleted_at']; 
 
         // Các field địa chỉ không muốn gửi nếu rỗng
-        $skipIfNullFields = ['province_name', 'district_name', 'ward_name','industry','birthday'];
+        $skipIfNullFields = ['province_name', 'district_name', 'ward_name','industry','birthday','email'];
 
         foreach ($requestFields as $field => $value) {
             if ($value === null) {

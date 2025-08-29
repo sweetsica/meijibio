@@ -50,9 +50,9 @@ class CustomersImport implements ToModel, WithHeadingRow, SkipsEmptyRows, WithCh
             'country_name' => $row['country_name'] ?? null,
             'country_code' => $row['country_code'] ?? null,
             'country_id' => $row['country_id'] ?? null,
-            'province_id' => $row['province_id'] ?? null,
-            'district_id' => $row['district_id'] ?? null,
-            'ward_id' => $row['ward_id'] ?? null,
+            'province_name' => $row['province_name'] ?? null,
+            'district_name' => $row['district_name'] ?? null,
+            'ward_name' => $row['ward_name'] ?? null,
             'industry' => $row['industry'] ?? null,
         ]);
     }
