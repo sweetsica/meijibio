@@ -26,9 +26,11 @@ class CustomerController extends Controller
     public function __construct()
     {
         $this->crmBaseUrl = config('services.getfly_crm.base_url');
+        $this->crmBaseUrl61 = config('services.getfly_crm_61.base_url');
         $this->crmApiKey = config('services.getfly_crm.api_key');
         $this->httpTimeout = config('services.getfly_crm.timeout');
     }
+
 
     /**
      * Make a CRM API request with proper error handling and timeout
@@ -40,6 +42,21 @@ class CustomerController extends Controller
         }
 
         $url = $this->crmBaseUrl . $endpoint;
+
+        $response = Http::timeout($this->httpTimeout)
+            ->withHeaders(['X-API-KEY' => $this->crmApiKey])
+            ->$method($url, $data);
+
+        return $response;
+    }
+
+    private function makeCrmRequest61($method, $endpoint, $data = [])
+    {
+        if (!$this->crmApiKey) {
+            throw new \Exception('CRM API key not configured');
+        }
+
+        $url = $this->crmBaseUrl61 . $endpoint;
 
         $response = Http::timeout($this->httpTimeout)
             ->withHeaders(['X-API-KEY' => $this->crmApiKey])
@@ -70,7 +87,7 @@ class CustomerController extends Controller
      */
     private function prepareCustomerData(Request $request, $isUpdate = false)
     {
-        $excludeFields = ['_token', '_method', 'account_relation_detail', 'province_id', 'district_id', 'ward_id'];
+        $excludeFields = ['_token', '_method', 'account_relation_detail'];
         if (!$isUpdate) {
             $excludeFields[] = 'accessible_user_ids';
         }
@@ -80,10 +97,24 @@ class CustomerController extends Controller
 
         $dataToSync = ['custom_fields' => []];
 
+        // Các field có kiểu datetime
+        $dateTimeFields = ['created_at', 'updated_at', 'deleted_at']; 
+
+        // Các field địa chỉ không muốn gửi nếu rỗng
+        $skipIfNullFields = ['province_name', 'district_name', 'ward_name','industry','birthday'];
+
         foreach ($requestFields as $field => $value) {
-            // Skip null, empty, or zero values
-            if ($value === null || $value === '' || $value === 0 || $value === '0') {
-                continue;
+            if ($value === null) {
+                if (in_array($field, $skipIfNullFields)) {
+                    // bỏ qua, không gửi field này
+                    continue;
+                }
+
+                if (in_array($field, $dateTimeFields)) {
+                    $value = "2000-01-01 00:00:00";
+                } else {
+                    $value = "Chưa có dữ liệu";
+                }
             }
 
             if (in_array($field, $defaultFields)) {
@@ -95,6 +126,9 @@ class CustomerController extends Controller
 
         return $dataToSync;
     }
+
+
+
 
     /**
      * Handle CRM API errors
@@ -322,31 +356,35 @@ class CustomerController extends Controller
             $dataToSync = $this->prepareCustomerData($request, false);
 
             // Create customer in CRM
-            $response = $this->makeCrmRequest('post', '/accounts', $dataToSync);
+            $response = $this->makeCrmRequest61('post', '/account', $dataToSync);
+            // dd($dataToSync);
+            dd($response->json());
 
             if (!$response->successful()) {
+                dd($response->json());
                 $this->handleCrmError($response, 'customer creation');
                 $errorMessage = $response->json('message') ?? 'Failed to create customer in CRM system';
                 return redirect()->route('customer.create')
                     ->withInput()
                     ->with('error', 'Failed to create customer: ' . $errorMessage);
             }
-
+            
+            // dd($response->json());
             $accountId = $response->json('data.id');
 
-            // Assign manager if specified
-            if ($accountId && $request->filled('accessible_user_ids')) {
-                try {
-                    $this->makeCrmRequest('post', "/accounts/{$accountId}/manager", [
-                        'accessible_user_ids' => $request->accessible_user_ids
-                    ]);
-                } catch (\Exception $e) {
-                    Log::warning('Failed to assign manager to customer', [
-                        'account_id' => $accountId,
-                        'error' => $e->getMessage()
-                    ]);
-                }
-            }
+            // // Assign manager if specified
+            // if ($accountId && $request->filled('accessible_user_ids')) {
+            //     try {
+            //         $this->makeCrmRequest61('post', "/accounts/{$accountId}/manager", [
+            //             'accessible_user_ids' => $request->accessible_user_ids
+            //         ]);
+            //     } catch (\Exception $e) {
+            //         Log::warning('Failed to assign manager to customer', [
+            //             'account_id' => $accountId,
+            //             'error' => $e->getMessage()
+            //         ]);
+            //     }
+            // }
 
             // Create customer in local database
             $dataToSync['getfly_id'] = $accountId;

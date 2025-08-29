@@ -146,10 +146,7 @@
                                         <a href="javascript:void(0);" class="nav-link" data-bs-toggle="tab" data-bs-target="#servicesTab" role="tab">4.Sử dụng dịch vụ</a>
                                     </li>
                                     <li class="nav-item flex-fill border-top" role="presentation">
-                                        <a href="javascript:void(0);" class="nav-link" data-bs-toggle="tab" data-bs-target="#notificationsTab" role="tab">Notifications</a>
-                                    </li>
-                                    <li class="nav-item flex-fill border-top" role="presentation">
-                                        <a href="javascript:void(0);" class="nav-link" data-bs-toggle="tab" data-bs-target="#connectionTab" role="tab">Connection</a>
+                                        <a href="javascript:void(0);" class="nav-link" data-bs-toggle="tab" data-bs-target="#notificationsTab" role="tab">Thông tin liên quan</a>
                                     </li>
                                 </ul>
                             </div>
@@ -225,11 +222,11 @@
                                                 <label class="fw-semibold">[ID]Tỉnh/Thành phố: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                               <select class="form-control" data-select2-selector="gender" name="province_id" >
-                                                    <option value="">-- Chọn Tỉnh/Thành --</option>
+                                               <select class="form-control" data-select2-selector="gender" name="province_name" >
+                                                    <option disabled selected value="">-- Chọn Tỉnh/Thành --</option>
                                                     @foreach($provinces as $province)
                                                         <option value="{{ $province['name'] }}"
-                                                            {{ old('province_id') == $province['name'] ? 'selected' : '' }}>
+                                                            {{ old('province_name') == $province['name'] ? 'selected' : '' }}>
                                                             {{ $province['name'] }}
                                                         </option>
                                                     @endforeach
@@ -241,11 +238,11 @@
                                               <label class="fw-semibold">[ID] Quận/Huyện: </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="gender" name="district_id" >
-                                                    <option value="">-- Chọn Quận/Huyện --</option>
+                                                <select class="form-control" data-select2-selector="gender" name="district_name" >
+                                                    <option disabled selected value="">-- Chọn Quận/Huyện --</option>
                                                     @foreach($districts as $district)
                                                         <option value="{{ $district['name'] }}"
-                                                            {{ old('district_id') == $district['name'] ? 'selected' : '' }}>
+                                                            {{ old('district_name') == $district['name'] ? 'selected' : '' }}>
                                                             {{ $district['name'] }}
                                                         </option>
                                                     @endforeach
@@ -258,11 +255,11 @@
                                             </div>
                                             <div class="col-lg-8">
 
-                                                <select class="form-control" data-select2-selector="gender" name="ward_id" >
-                                                    <option value="">-- Chọn Phường/Xã --</option>
+                                                <select class="form-control" data-select2-selector="gender" name="ward_name" >
+                                                    <option disabled selected value="">-- Chọn Phường/Xã --</option>
                                                     @foreach($wards as $ward)
                                                         <option value="{{ $ward['name'] }}"
-                                                            {{ old('ward_id') == $ward['name'] ? 'selected' : '' }}>
+                                                            {{ old('ward_name') == $ward['name'] ? 'selected' : '' }}>
                                                             {{ $ward['name'] }}
                                                         </option>
                                                     @endforeach
@@ -272,7 +269,7 @@
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold" style="color: red;">[ID]Địa chỉ: </label>
+                                                <label for="thong_tin_chung" class="fw-semibold" style="color: red;">[ID]Địa chỉ: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
@@ -310,7 +307,7 @@
                                             <div class="col-lg-8">
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="feather-mail"></i></div>
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Email" name="email">
+                                                    <input type="text" class="form-control" id="mailInput" placeholder="Email" name="email" value="blank@gmail.com">
                                                 </div>
                                             </div>
                                         </div>
@@ -337,11 +334,13 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[ID] Nghề nghiệp: </label>
+                                                <label for="industry" class="fw-semibold">[ID] Nghề nghiệp: </label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Nghề nghiệp" name="industry">
+                                                    <select class="form-control" data-select2-selector="gender" name="industry">
+                                                        <option value="" disabled selected>Chưa phân loại</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -522,73 +521,7 @@
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
-
-                                    <hr class="my-0">
-
-                                    <div class="card-body additional-info">
-                                        <div class="mb-4 d-flex align-items-center justify-content-between">
-                                            <h5 class="fw-bold mb-0 me-4">
-                                                <span class="d-block mb-2">Thông tin liên quan:</span>
-                                                <span class="fs-12 fw-normal text-muted text-truncate-1-line">Communication details in case we want to connect with you.</span>
-                                            </h5>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="referrer_id" multiple>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">Người phụ trách khách hàng</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-select form-control max-select"
-                                                        data-select2-selector="tag"
-                                                        name="account_manager"
-                                                        @if(!in_array('account_manager', $editableFields)) disabled @endif>
-                                            
-                                                    {{-- option mặc định: user hiện tại --}}
-                                                    <option value="{{ auth()->user()->getfly_id }}" selected>
-                                                        {{ auth()->user()->name }}
-                                                    </option>
-
-                                                    {{-- nếu có quyền thì thêm các user khác --}}
-                                                    @if(in_array('account_manager', $editableFields))
-                                                        @foreach ($users as $user)
-                                                            @if($user->id !== auth()->id())
-                                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                            
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple @if(!in_array('accessible_user_ids', $editableFields)) disabled @endif>
-                                                    <option value="1" selected>Admin</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                    </div>
-                                   
+                                    </div>                                                              
                                 </div>
                             
                                 <div class="tab-pane fade" id="bookingTab" role="tabpanel">
@@ -661,7 +594,14 @@
                                             <div class="col-lg-8">
                                                 <div class="input-group">
                                                     <div class="input-group-text"><i class="feather-calendar"></i></div>
-                                                    <input class="form-control" id="ngay_booking_du_kien" placeholder="[Tele] Ngày booking dự kiến:" name="ngay_booking_du_kien">
+                                                    <select class="form-select form-control max-select" data-select2-selector="tag" name="ngay_booking_du_kien">
+                                                        <option value="" disabled selected>Chọn ngày booking dự kiến</option>
+                                                        <option value="145">Lên đúng lịch</option>
+                                                        <option value="146">Dời lịch</option>
+                                                        <option value="147">Hủy lịch</option>
+                                                        <option value="148">Chốt nóng</option>
+                                                        <option value="149">Không đặt được lịch</option>
+                                                    </select>
                                                 </div>
                                             </div>
                                         </div>
@@ -672,6 +612,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" name="booking" data-select2-selector="booking">
+                                                    <option value="" disabled selected>Chọn ngày booking</option>
                                                     <option value="72">Lên đúng lịch</option>
                                                     <option value="73">Dời lịch</option>
                                                     <option value="74">Hủy lịch</option>
@@ -954,7 +895,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="so_luong_booking" placeholder="[Booking] Số lượng" name="so_luong_booking">
+                                                    <input type="number" class="form-control" id="so_luong_booking" placeholder="[Booking] Số lượng" name="so_luong_booking" value="0">
                                                 </div>
                                             </div>
                                         </div>
@@ -1015,322 +956,75 @@
                                     <hr class="my-0">
                                 </div>
                                 <div class="tab-pane fade" id="notificationsTab" role="tabpanel">
-                                    <div class="table-responsive">
-                                        <table class="table mb-0">
-                                            <thead>
-                                                <tr>
-                                                    <th>Description</th>
-                                                    <th class="wd-250 text-end">Actions</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Successful payments</div>
-                                                        <small class="fs-12 text-muted">Receive a notification for every successful payment.</small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail" selected>Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Customer payment dispute</div>
-                                                        <small class="fs-12 text-muted">Receive a notification if a payment is disputed by a customer and for dispute purposes. </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off" selected>Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Refund alerts</div>
-                                                        <small class="fs-12 text-muted">Receive a notification if a payment is stated as risk by the Finance Department. </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell" selected>Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Invoice payments</div>
-                                                        <small class="fs-12 text-muted">Receive a notification if a customer sends an incorrect amount to pay their invoice. </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail" selected>Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Rating reminders</div>
-                                                        <small class="fs-12 text-muted">Send an email reminding me to rate an item a week after purchase </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off" selected>Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Item update notifications</div>
-                                                        <small class="fs-12 text-muted">Send an email when an item I've purchased is updated </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone" selected>SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Item comment notifications</div>
-                                                        <small class="fs-12 text-muted">Send me an email when someone comments on one of my items </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell" selected>Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Team comment notifications</div>
-                                                        <small class="fs-12 text-muted">Send me an email when someone comments on one of my team items </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat" selected>Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Item review notifications</div>
-                                                        <small class="fs-12 text-muted">Send me an email when my items are approved or rejected </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off" selected>Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Buyer review notifications</div>
-                                                        <small class="fs-12 text-muted">Send me an email when someone leaves a review with their rating </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off" selected>Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Expiring support notifications</div>
-                                                        <small class="fs-12 text-muted">Send me emails showing my soon to expire support entitlements </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell">Push</option>
-                                                                <option value="Email" data-icon="feather-mail" selected>Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="fw-bold text-dark">Daily summary emails</div>
-                                                        <small class="fs-12 text-muted">Send me a daily summary of all items approved or rejected </small>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <div class="form-group select-wd-lg">
-                                                            <select class="form-control" data-select2-selector="icon">
-                                                                <option value="SMS" data-icon="feather-smartphone">SMS</option>
-                                                                <option value="Push" data-icon="feather-bell" selected>Push</option>
-                                                                <option value="Email" data-icon="feather-mail">Email</option>
-                                                                <option value="Repeat" data-icon="feather-repeat">Repeat</option>
-                                                                <option value="Deactivate" data-icon="feather-bell-off">Deactivate</option>
-                                                                <option value="SMS+Push" data-icon="feather-smartphone">SMS + Push</option>
-                                                                <option value="Email+Push" data-icon="feather-mail">Email + Push</option>
-                                                                <option value="SMS+Email" data-icon="feather-smartphone">SMS + Email</option>
-                                                                <option value="SMS+Push+Email" data-icon="feather-smartphone">SMS + Push + Email</option>
-                                                            </select>
-                                                        </div>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <hr class="my-0">
-                                    <div class="card-body notify-activity-section">
+                                    <div class="card-body pass-info">
                                         <div class="mb-4 d-flex align-items-center justify-content-between">
                                             <h5 class="fw-bold mb-0 me-4">
-                                                <span class="d-block mb-2">Account Activity:</span>
-                                                <span class="fs-12 fw-normal text-muted text-truncate-1-line">Lookup you account activity checkup.</span>
+                                                <span class="d-block mb-2">Thông tin liên quan:</span>
+                                                <span class="fs-12 fw-normal text-muted text-truncate-1-line">Thông tin này chỉ admin và quản lý được sửa.</span>
                                             </h5>
-                                            <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">View Activity</a>
                                         </div>
-                                        <div class="hstack justify-content-between p-4 mb-3 border border-dashed border-gray-3 rounded-1">
-                                            <div class="hstack me-4">
-                                                <div class="avatar-text">
-                                                    <i class="feather-message-square"></i>
-                                                </div>
-                                                <div class="ms-4">
-                                                    <a href="javascript:void(0);" class="fw-bold mb-1 text-truncate-1-line">Someone comments on one of my items</a>
-                                                    <div class="fs-12 text-muted text-truncate-1-line">If someone comments on one of your items, it's important to respond in a timely and appropriate manner.</div>
-                                                </div>
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-lg-4">
+                                                <label for="thong_tin_chung" class="fw-semibold">Thông tin chung</label>
                                             </div>
-                                            <div class="form-check form-switch form-switch-sm">
-                                                <label class="form-check-label fw-500 text-dark c-pointer" for="formSwitchComment"></label>
-                                                <input class="form-check-input c-pointer" type="checkbox" id="formSwitchComment">
+                                            <div class="col-lg-8">
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="thong_tin_chung" placeholder="Thông tin chung" name="thong_tin_chung">
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="hstack justify-content-between p-4 mb-3 border border-dashed border-gray-3 rounded-1">
-                                            <div class="hstack me-4">
-                                                <div class="avatar-text">
-                                                    <i class="feather-briefcase"></i>
-                                                </div>
-                                                <div class="ms-4">
-                                                    <a href="javascript:void(0);" class="fw-bold mb-1 text-truncate-1-line">Someone replies to my job posting</a>
-                                                    <div class="fs-12 text-muted text-truncate-1-line">Great! It's always exciting to hear from someone who's interested in a job posting you've put out.</div>
-                                                </div>
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-lg-4">
+                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu</label>
                                             </div>
-                                            <div class="form-check form-switch form-switch-sm">
-                                                <label class="form-check-label fw-500 text-dark c-pointer" for="formSwitchReplie"></label>
-                                                <input class="form-check-input c-pointer" type="checkbox" id="formSwitchReplie">
+                                            <div class="col-lg-8">
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="referrer_id" multiple>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
-                                        <div class="hstack justify-content-between p-4 mb-3 border border-dashed border-gray-3 rounded-1">
-                                            <div class="hstack me-4">
-                                                <div class="avatar-text">
-                                                    <i class="feather-briefcase"></i>
-                                                </div>
-                                                <div class="ms-4">
-                                                    <a href="javascript:void(0);" class="fw-bold mb-1 text-truncate-1-line">Someone mentions or follows me</a>
-                                                    <div class="fs-12 text-muted text-truncate-1-line">If you received a notification that someone mentioned or followed you, take a moment to read it and understand what it means.</div>
-                                                </div>
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-lg-4">
+                                                <label class="fw-semibold">Người phụ trách khách hàng</label>
                                             </div>
-                                            <div class="form-check form-switch form-switch-sm">
-                                                <label class="form-check-label fw-500 text-dark c-pointer" for="formSwitchFollow"></label>
-                                                <input class="form-check-input c-pointer" type="checkbox" id="formSwitchFollow">
+                                            <div class="col-lg-8">
+                                                <select class="form-select form-control max-select"
+                                                        data-select2-selector="tag"
+                                                        name="account_manager"
+                                                        @if(!in_array('account_manager', $editableFields)) disabled @endif>
+                                            
+                                                    {{-- option mặc định: user hiện tại --}}
+                                                    <option value="{{ auth()->user()->getfly_id }}" selected>
+                                                        {{ auth()->user()->name }}
+                                                    </option>
+
+                                                    {{-- nếu có quyền thì thêm các user khác --}}
+                                                    @if(in_array('account_manager', $editableFields))
+                                                        @foreach ($users as $user)
+                                                            @if($user->id !== auth()->id())
+                                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                            @endif
+                                                        @endforeach
+                                                    @endif
+                                            
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-lg-4">
+                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này</label>
+                                                <span class="fs-12 fw-normal text-muted text-truncate-1-line">Getfly hãm cành cạch không cho sửa.</span>
+                                            </div>
+                                            <div class="col-lg-8">
+                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple disabled>
+                                                    <option value="1" selected>Admin</option>
+                                                    @foreach ($users as $user)
+                                                        <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
+                                                    @endforeach
+                                                </select>
                                             </div>
                                         </div>
                                     </div>

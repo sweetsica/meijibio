@@ -32,9 +32,9 @@ return new class extends Migration
             $table->unsignedSmallInteger('tuoi')->nullable()->comment('Tuổi');
             $table->string('billing_address_street')->nullable()->comment('Địa chỉ');
             $table->unsignedBigInteger('country_id')->nullable()->comment('Quốc gia');
-            $table->unsignedBigInteger('province_id')->nullable()->comment('Tỉnh/thành phố');
-            $table->unsignedBigInteger('district_id')->nullable()->comment('Quận/huyện');
-            $table->unsignedBigInteger('ward_id')->nullable()->comment('Phường/Xã');
+            $table->unsignedBigInteger('province_name')->nullable()->comment('Tỉnh/thành phố');
+            $table->unsignedBigInteger('district_name')->nullable()->comment('Quận/huyện');
+            $table->unsignedBigInteger('ward_name')->nullable()->comment('Phường/Xã');
             $table->string('industry')->nullable()->comment('Nghề nghiệp');
             $table->string('lieu_phap')->nullable()->comment('Liệu pháp');
             $table->text('insight')->nullable()->comment('Insight');

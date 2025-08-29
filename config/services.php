@@ -40,5 +40,11 @@ return [
         'base_url' => env('GETFLY_CRM_BASE_URL', 'https://meijibio.getflycrm.com/api/v6'),
         'timeout' => env('GETFLY_CRM_TIMEOUT', 30),
     ],
+    
+    'getfly_crm_61' => [
+        'api_key' => env('GETFLY_CRM_API_KEY'),
+        'base_url' => env('GETFLY_CRM_BASE_URL', 'https://meijibio.getflycrm.com/api/v6.1'),
+        'timeout' => env('GETFLY_CRM_TIMEOUT', 30),
+    ],
 
 ];
