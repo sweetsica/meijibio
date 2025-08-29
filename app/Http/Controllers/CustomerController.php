@@ -228,7 +228,7 @@ class CustomerController extends Controller
         ->get();
 
         if (Auth::user()->role == 'admin') {
-            $customers = Customer::all();
+            $customers = Customer::orderBy('id', 'desc')->get();
         }
 
         // Logic to retrieve and display customers
@@ -357,34 +357,21 @@ class CustomerController extends Controller
 
             // Create customer in CRM
             $response = $this->makeCrmRequest61('post', '/account', $dataToSync);
-            // dd($dataToSync);
-            dd($response->json());
+
 
             if (!$response->successful()) {
-                dd($response->json());
+                Log::info('Failed to create customer in CRM system', [
+                    'response' => $response->json()
+                ]);
                 $this->handleCrmError($response, 'customer creation');
+
                 $errorMessage = $response->json('message') ?? 'Failed to create customer in CRM system';
                 return redirect()->route('customer.create')
                     ->withInput()
                     ->with('error', 'Failed to create customer: ' . $errorMessage);
             }
             
-            // dd($response->json());
             $accountId = $response->json('data.id');
-
-            // // Assign manager if specified
-            // if ($accountId && $request->filled('accessible_user_ids')) {
-            //     try {
-            //         $this->makeCrmRequest61('post', "/accounts/{$accountId}/manager", [
-            //             'accessible_user_ids' => $request->accessible_user_ids
-            //         ]);
-            //     } catch (\Exception $e) {
-            //         Log::warning('Failed to assign manager to customer', [
-            //             'account_id' => $accountId,
-            //             'error' => $e->getMessage()
-            //         ]);
-            //     }
-            // }
 
             // Create customer in local database
             $dataToSync['getfly_id'] = $accountId;
