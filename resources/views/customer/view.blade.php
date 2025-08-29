@@ -506,7 +506,7 @@
                                                 <label class="fw-semibold">Giới tính (#24): </label>
                                             </div>
                                             <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="gender" name="gioi_tinh" @if(!in_array('gioi_tinh', $editableFields)) disabled @endif>
+                                                <select class="form-control" data-select2-selector="gender" name="gender" @if(!in_array('gender', $editableFields)) disabled @endif>
                                                     <option value="2" {{ $customer->gender == '2' ? 'selected' : '' }}>Nam</option>
                                                     <option value="1" {{ $customer->gender == '1' ? 'selected' : '' }}>Nữ</option>
                                                     <option value="3" {{ $customer->gender == '3' ? 'selected' : '' }}>Khác</option>
@@ -593,7 +593,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Địa chỉ" name="address" value="{{ $customer->billing_address_street ?? '' }}" @if(!in_array('address', $editableFields)) disabled @endif>
+                                                    <input type="text" class="form-control" id="mailInput" placeholder="Địa chỉ" name="billing_address_street" value="{{ $customer->billing_address_street ?? '' }}" @if(!in_array('address', $editableFields)) disabled @endif>
                                                 </div>
                                             </div>
                                         </div>

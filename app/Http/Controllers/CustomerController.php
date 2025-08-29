@@ -87,7 +87,7 @@ class CustomerController extends Controller
      */
     private function prepareCustomerData(Request $request, $isUpdate = false)
     {
-        $excludeFields = ['_token', '_method', 'account_relation_detail'];
+        $excludeFields = ['_token', '_method', 'account_relation_detail','account_code'];
         if (!$isUpdate) {
             $excludeFields[] = 'accessible_user_ids';
         }
@@ -101,7 +101,7 @@ class CustomerController extends Controller
         $dateTimeFields = ['created_at', 'updated_at', 'deleted_at']; 
 
         // Các field địa chỉ không muốn gửi nếu rỗng
-        $skipIfNullFields = ['province_name', 'district_name', 'ward_name','industry','birthday','email'];
+        $skipIfNullFields = ['province_name', 'district_name', 'ward_name','industry','birthday','email','tuoi', 'ngay_booking_du_kien', 'so_luong_booking'];
 
         foreach ($requestFields as $field => $value) {
             if ($value === null) {
@@ -228,7 +228,7 @@ class CustomerController extends Controller
         ->get();
 
         if (Auth::user()->role == 'admin') {
-            $customers = Customer::orderBy('id', 'desc')->get();
+            $customers = Customer::orderBy('getfly_id', 'desc')->get();
         }
 
         // Logic to retrieve and display customers
@@ -371,13 +371,16 @@ class CustomerController extends Controller
                     ->with('error', 'Failed to create customer: ' . $errorMessage);
             }
             
-            $accountId = $response->json('data.id');
+            $accountId = $response->json('data.account_id');
+            $accountCode = $response->json('data.account_code');
 
             // Create customer in local database
             $dataToSync['getfly_id'] = $accountId;
+            $dataToSync['account_code'] = $accountCode;
             $customer = Customer::create($dataToSync);
 
             Log::info('Customer created successfully', [
+                'response' => $response->json(),
                 'customer_id' => $customer->id,
                 'account_id' => $accountId,
                 'user_id' => Auth::id()
@@ -438,6 +441,8 @@ class CustomerController extends Controller
             // Prepare data for sync (filtered by permissions)
             $dataToSync = $this->prepareUpdateData($request, $rolePermission);
 
+            $dataToSync = $this->prepareCustomerData($request, true);
+
             if (empty($dataToSync)) {
                 // NO FIELDS TO UPDATE: Stay on customer view page
                 return redirect()->route('customer.view', $id)
@@ -445,8 +450,11 @@ class CustomerController extends Controller
                     ->with('warning', 'No valid fields to update');
             }
 
+            // Need insert current account code to dataToSync for getFly CRM detect user update
+            $dataToSync['current_account_code'] = $customer->account_code;
+            // dd($dataToSync);
             // Update in CRM
-            $response = $this->makeCrmRequest('put', "/accounts/{$customer->getfly_id}", $dataToSync);
+            $response = $this->makeCrmRequest61('put', "/account", $dataToSync);
 
             if (!$response->successful()) {
                 $this->handleCrmError($response, 'customer update');
@@ -560,6 +568,7 @@ class CustomerController extends Controller
             $limit = 10000000000; // 10 billion records
 
             $url = 'https://meijibio.getflycrm.com/api/v6/accounts?limit=' . $limit . '&fields=' . $fieldsRequests;
+            // dd($url);
 
             $response = Http::withHeaders([
                 'X-API-KEY' => $crmAPIKey

@@ -195,7 +195,8 @@
                                             </div>
                                         </div>
 
-                                        <div class="row mb-4 align-items-center">
+                                        {{-- Do not push account code to CRM 29/08/2025 --}}
+                                        {{-- <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="fullnameInput" class="fw-semibold">[ID] Mã khách hàng: </label>
                                             </div>
@@ -204,7 +205,7 @@
                                                     <input type="text" class="form-control" id="fullnameInput" placeholder="Code" name="account_code"  readonly>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
