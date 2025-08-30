@@ -137,7 +137,4 @@ class FieldDefine
         "custom_fields",
         "detail_custom_fields"
     ];
-
-    
-
 }

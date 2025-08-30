@@ -28,7 +28,8 @@ class CustomersExport implements FromQuery, WithHeadings, WithMapping
     {
         $userId = Auth::id();
 
-        return Customer::query()->select([
+        return Customer::query()
+        ->select([
             'account_name',
             'account_code',
             'country_id',
@@ -108,13 +109,14 @@ class CustomersExport implements FromQuery, WithHeadings, WithMapping
             'thumbnail_logo',
             'phan_loai_bo_sung',
             'relation_id',
-        ])->where(function($q) use ($userId) {
+        ])
+        ->where(function($q) use ($userId) {
             // 1) account_manager đúng user
-            // 2) hoặc JSON_CONTAINS match số (CAST as JSON)
-            // 3) hoặc JSON_CONTAINS match chuỗi (trường hợp dữ liệu JSON lưu "1" thay vì 1)
+            // 2) hoặc accessible_user_ids chứa userId (dạng số)
+            // 3) hoặc accessible_user_ids chứa userId (dạng chuỗi)
             $q->where('customers.account_manager', $userId)
-              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, CAST(? AS JSON))', [$userId])
-              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, CONCAT(\'"\', ?, \'"\'))', [$userId]);
+              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, ?)', [$userId])
+              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, ?)', [json_encode($userId)]);
         });
     }
 
