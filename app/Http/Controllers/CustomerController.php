@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Maatwebsite\Excel\Facades\Excel;
 use App\Imports\CustomersImport;
+use App\Exports\CustomersExport;
 use Maatwebsite\Excel\Excel as ExcelType;
 use App\Models\Customer;
 use App\Models\User;
@@ -281,63 +282,6 @@ class CustomerController extends Controller
         $wards     = json_decode(File::get(public_path('json/ward.json')), true);
         return view('customer.create', compact('users', 'editableFields', 'provinces', 'districts', 'wards'));
         // return view('customer.create');
-    }
-
-    public function import(Request $request)
-    {
-        try {
-            // Validate request
-            $validator = Validator::make($request->only(['file']), [
-                'file' => 'required|file|mimes:xlsx|max:10240' // Max 10MB
-            ]);
-
-            if ($validator->fails()) {
-                return response()->json([
-                    'error' => 'Invalid file. Please upload a valid XLSX file (max 10MB).'
-                ], 400);
-            }
-
-            $file = $request->file('file');
-
-            // Additional mime type validation
-            $allowedMimes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
-            if (!in_array($file->getMimeType(), $allowedMimes)) {
-                Log::warning('Invalid file type uploaded for import', [
-                    'mime_type' => $file->getMimeType(),
-                    'user_id' => Auth::id()
-                ]);
-                return response()->json(['error' => 'Invalid file type. Only XLSX files are allowed.'], 400);
-            }
-
-            // Import data
-            Excel::import(new CustomersImport(), $file, null, ExcelType::XLSX);
-
-            Log::info('Customer import completed successfully', [
-                'file_name' => $file->getClientOriginalName(),
-                'file_size' => $file->getSize(),
-                'user_id' => Auth::id()
-            ]);
-
-            return response()->json(['message' => 'Import completed successfully!']);
-
-        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
-            Log::error('Excel validation error during import', [
-                'failures' => $e->failures(),
-                'user_id' => Auth::id()
-            ]);
-            return response()->json([
-                'error' => 'Data validation failed. Please check your Excel file format.',
-                'details' => $e->failures()
-            ], 422);
-
-        } catch (\Exception $e) {
-            Log::error('Exception during customer import', [
-                'message' => $e->getMessage(),
-                'trace' => $e->getTraceAsString(),
-                'user_id' => Auth::id()
-            ]);
-            return response()->json(['error' => 'An error occurred during import. Please check your file format and try again.'], 500);
-        }
     }
 
         public function createCustomer(Request $request)
@@ -731,5 +675,76 @@ class CustomerController extends Controller
             Log::error('Error syncing customer ' . $id . ': ' . $e->getMessage());
             return response()->json(['error' => 'An error occurred while syncing customer'], 500);
         }
+    }
+
+    public function import(Request $request)
+    {
+        try {
+            // Validate request
+            $validator = Validator::make($request->only(['file']), [
+                'file' => 'required|file|mimes:xlsx|max:10240' // Max 10MB
+            ]);
+
+            if ($validator->fails()) {
+                return response()->json([
+                    'error' => 'Invalid file. Please upload a valid XLSX file (max 10MB).'
+                ], 400);
+            }
+
+            $file = $request->file('file');
+
+            // Additional mime type validation
+            $allowedMimes = ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'];
+            if (!in_array($file->getMimeType(), $allowedMimes)) {
+                Log::warning('Invalid file type uploaded for import', [
+                    'mime_type' => $file->getMimeType(),
+                    'user_id' => Auth::id()
+                ]);
+                return response()->json(['error' => 'Invalid file type. Only XLSX files are allowed.'], 400);
+            }
+
+            // Import data
+            Excel::import(new CustomersImport(), $file, null, ExcelType::XLSX);
+
+            Log::info('Customer import completed successfully', [
+                'file_name' => $file->getClientOriginalName(),
+                'file_size' => $file->getSize(),
+                'user_id' => Auth::id()
+            ]);
+
+            return response()->json(['message' => 'Import completed successfully!']);
+
+        } catch (\Maatwebsite\Excel\Validators\ValidationException $e) {
+            Log::error('Excel validation error during import', [
+                'failures' => $e->failures(),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json([
+                'error' => 'Data validation failed. Please check your Excel file format.',
+                'details' => $e->failures()
+            ], 422);
+
+        } catch (\Exception $e) {
+            Log::error('Exception during customer import', [
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString(),
+                'user_id' => Auth::id()
+            ]);
+            return response()->json(['error' => 'An error occurred during import. Please check your file format and try again.'], 500);
+        }
+    }
+
+    public function export()
+    {
+        if (!Auth::check()) {
+            return redirect('/'); // hoặc route('login') nếu bạn có định nghĩa
+        }
+    
+        $userId = Auth::id();
+        $timestamp = now()->format('d-m-Y-H-i');
+    
+        $fileName = "customers-export-ID{$userId}-{$timestamp}.xlsx";
+    
+        return Excel::download(new CustomersExport, $fileName);
     }
 }

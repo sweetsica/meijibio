@@ -49,7 +49,9 @@ class AuthenticateController extends Controller
 
                 auth()->login($admin);
 
-                return view('dashboard.admincrm');
+                // return view('dashboard.admincrm');
+                return redirect()->route('dashboard.admincrm'); // nếu route có name = dashboard
+
             } catch (\Exception $e) {
                 dd($e);
                 return redirect()->route('login')->with('error', 'Invalid username or password');
@@ -74,7 +76,8 @@ class AuthenticateController extends Controller
             }
             // dd(auth()->user()->getfly_id);
 
-            return view('dashboard.crm');
+            // return view('dashboard.crm');
+            return redirect()->route('dashboard.crm');
         }
 
         return redirect()->route('login')->with('error', 'Invalid username or password');
