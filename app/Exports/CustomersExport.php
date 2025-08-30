@@ -115,8 +115,8 @@ class CustomersExport implements FromQuery, WithHeadings, WithMapping
             // 2) hoặc accessible_user_ids chứa userId (dạng số)
             // 3) hoặc accessible_user_ids chứa userId (dạng chuỗi)
             $q->where('customers.account_manager', $userId)
-              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, ?)', [$userId])
-              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, ?)', [json_encode($userId)]);
+              ->orWhereRaw('EXISTS (SELECT 1 FROM json_each(customers.accessible_user_ids) WHERE json_each.value = ?)', [$userId])
+              ->orWhereRaw('EXISTS (SELECT 1 FROM json_each(customers.accessible_user_ids) WHERE json_each.value = ?)', [json_encode($userId)]);
         });
     }
 
