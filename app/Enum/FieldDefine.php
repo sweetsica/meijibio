@@ -134,7 +134,8 @@ class FieldDefine
         "contacts",
         "account_manager",
         "accessible_user_ids",
-        "custom_fields"
+        "custom_fields",
+        "detail_custom_fields"
     ];
 
     

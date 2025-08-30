@@ -19,5 +19,6 @@ Route::post('/webhook', [LogController::class, 'webhook']);
     Route::put('/customers/{id}/update', [CustomerController::class, 'updateCustomer'])->name('api.customer.update');
     Route::post('/customers/sync-customer', [CustomerController::class, 'syncCustomer'])->name('customer.sync');
     Route::post('/customers/sync-customer/{id}', [CustomerController::class, 'syncDetailCustomer'])->name('api.customer.sync.detail');
+    Route::post('/customers/sync-by-getfly-id/{getflyId}', [CustomerController::class, 'syncCustomerByGetflyId'])->name('api.customer.sync.by.getfly.id');
 // });
 

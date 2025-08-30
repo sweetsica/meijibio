@@ -566,79 +566,59 @@ class CustomerController extends Controller
                 'X-API-KEY' => $crmAPIKey
             ])->get($url);
 
-
-            // Get first item of response
-            $data = json_decode($response->body(), true);
-            $firstItem = $data['data'][0];
-
-            foreach ($data['data'] as $item) {
-                $customer = Customer::where('getfly_id', $item['id'])->first();
-
-                $customerData = [
-                    'getfly_id' => $item['id'],
-                ];
-
-                                // Fields that exist in migration and should be saved directly
-                $directFields = [
-                    'account_code', 'account_name', 'description', 'phone_office', 'email',
-                    'website', 'birthday', 'sic_code', 'gender', 'total_revenue', 'account_manager'
-                ];
-
-                // JSON fields that should be saved as arrays (not JSON strings)
-                $jsonFields = ['contacts', 'accessible_user_ids'];
-
-                // Handle direct fields
-                foreach ($directFields as $field) {
-                    if (isset($item[$field])) {
-                        $customerData[$field] = $item[$field];
-                    }
-                }
-
-                // Handle JSON fields properly
-                foreach ($jsonFields as $field) {
-                    if (isset($item[$field]) && is_array($item[$field])) {
-                        $customerData[$field] = $item[$field]; // Laravel will auto-cast to JSON
-                    }
-                }
-
-                // Handle custom_fields
-                if (isset($item['custom_fields']) && is_array($item['custom_fields'])) {
-                    $customerData['custom_fields'] = $item['custom_fields']; // Laravel will auto-cast to JSON
-                }
-
-                // Handle address field mapping
-                if (isset($item['billing_address_street'])) {
-                    $customerData['billing_address_street'] = $item['billing_address_street'];
-                }
-
-                try {
-                    if ($customer) {
-                        $customer->update($customerData);
-                    } else {
-                        $customer = Customer::create($customerData);
-                    }
-                } catch (\Exception $e) {
-                    Log::error('Error syncing customer ' . $item['id'] . ': ' . $e->getMessage());
-                }
-            }
-
-
-            if ($response->successful()) {
-                Log::info('Customer sync completed successfully');
-                return response()->json(['message' => 'Sync completed successfully']);
-            } else {
+            if (!$response->successful()) {
                 Log::error('Customer sync failed', [
                     'status' => $response->status(),
                     'response' => $response->body()
                 ]);
                 return response()->json(['message' => 'Sync failed'], 500);
             }
+
+            // Get response data
+            $data = json_decode($response->body(), true);
+            
+            if (!isset($data['data']) || !is_array($data['data'])) {
+                Log::error('Invalid response format from CRM API');
+                return response()->json(['message' => 'Invalid response format'], 500);
+            }
+
+            $syncedCount = 0;
+            $errorCount = 0;
+
+            foreach ($data['data'] as $item) {
+                try {
+                    // Use the comprehensive mapping function from Customer model
+                    $customerData = Customer::mapGetflyDataToCustomer($item);
+                    
+                    // Create or update customer using the model's method
+                    Customer::createOrUpdateCustomer($customerData);
+                    
+                    $syncedCount++;
+                } catch (\Exception $e) {
+                    Log::error('Error syncing customer ' . ($item['id'] ?? 'unknown') . ': ' . $e->getMessage());
+                    $errorCount++;
+                }
+            }
+
+            Log::info('Customer sync completed', [
+                'total_processed' => count($data['data']),
+                'synced_count' => $syncedCount,
+                'error_count' => $errorCount
+            ]);
+
+            return response()->json([
+                'message' => 'Sync completed successfully',
+                'total_processed' => count($data['data']),
+                'synced_count' => $syncedCount,
+                'error_count' => $errorCount
+            ]);
+
         } catch (\Exception $e) {
             Log::error('Exception during customer sync', [
                 'message' => $e->getMessage(),
                 'trace' => $e->getTraceAsString()
             ]);
-            return response()->json(['message' => 'Sync failed'], 500);
+            return response()->json(['message' => 'Sync failed: ' . $e->getMessage()], 500);
         }
     }
 
@@ -676,52 +656,21 @@ class CustomerController extends Controller
                 return response()->json(['error' => 'Invalid response from CRM API'], 500);
             }
 
-            // Use the API response data (assuming it returns customer data directly)
-
-            $customerData = [
-                'getfly_id' => $data['id'] ?? $customer->getfly_id,
-            ];
-
-            // Fields that exist in migration and should be saved directly
-            $directFields = [
-                'account_code', 'account_name', 'description', 'phone_office', 'email',
-                'website', 'birthday', 'sic_code', 'gender', 'total_revenue', 'account_manager'
-            ];
-
-            // JSON fields that should be saved as arrays (not JSON strings)
-            $jsonFields = ['contacts', 'accessible_user_ids'];
-
-            // Handle direct fields
-            foreach ($directFields as $field) {
-                if (isset($data[$field])) {
-                    $customerData[$field] = $data[$field];
-                }
-            }
-
-            // Handle JSON fields properly
-            foreach ($jsonFields as $field) {
-                if (isset($data[$field]) && is_array($data[$field])) {
-                    $customerData[$field] = $data[$field]; // Laravel will auto-cast to JSON
-                }
-            }
-
-            // Handle custom_fields
-            if (isset($data['custom_fields']) && is_array($data['custom_fields'])) {
-                $customerData['custom_fields'] = $data['custom_fields']; // Laravel will auto-cast to JSON
-            }
-
-            // Handle address field mapping
-            if (isset($data['billing_address_street'])) {
-                $customerData['billing_address_street'] = $data['billing_address_street'];
-            }
-
+            // Use the comprehensive mapping function from Customer model
+            $customerData = Customer::mapGetflyDataToCustomer($data);
+            
             // Update the existing customer with new data
             $customer->update($customerData);
+
+            Log::info('Customer detail sync completed successfully', [
+                'customer_id' => $id,
+                'getfly_id' => $customer->getfly_id
+            ]);
 
             return response()->json(['message' => 'Customer synced successfully']);
         } catch (\Exception $e) {
             Log::error('Error syncing customer ' . $id . ': ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred while syncing customer'], 500);
+            return response()->json(['error' => 'An error occurred while syncing customer: ' . $e->getMessage()], 500);
         }
     }
 
@@ -794,5 +743,57 @@ class CustomerController extends Controller
         $fileName = "customers-export-ID{$userId}-{$timestamp}.xlsx";
     
         return Excel::download(new CustomersExport, $fileName);
+    }
+
+    /**
+     * Sync a single customer by Getfly ID
+     * This is useful for testing or syncing individual customers
+     */
+    public function syncCustomerByGetflyId($getflyId)
+    {
+        try {
+            $crmAPIKey = $this->crmApiKey;
+
+            if (!$crmAPIKey) {
+                return response()->json(['error' => 'CRM API key not configured'], 500);
+            }
+
+            $response = Http::withHeaders([
+                'X-API-KEY' => $crmAPIKey
+            ])->get("https://meijibio.getflycrm.com/api/v6/accounts/{$getflyId}");
+
+            if (!$response->successful()) {
+                Log::error('CRM API request failed for Getfly ID ' . $getflyId . ': ' . $response->body());
+                return response()->json(['error' => 'Failed to fetch customer data from CRM'], 500);
+            }
+
+            $data = json_decode($response->body(), true);
+
+            if (!$data) {
+                return response()->json(['error' => 'Invalid response from CRM API'], 500);
+            }
+
+            // Use the comprehensive mapping function from Customer model
+            $customerData = Customer::mapGetflyDataToCustomer($data);
+            
+            // Create or update customer using the model's method
+            $customer = Customer::createOrUpdateCustomer($customerData);
+
+            Log::info('Customer sync by Getfly ID completed successfully', [
+                'getfly_id' => $getflyId,
+                'customer_id' => $customer->id,
+                'action' => $customer->wasRecentlyCreated ? 'created' : 'updated'
+            ]);
+
+            return response()->json([
+                'message' => 'Customer synced successfully',
+                'customer_id' => $customer->id,
+                'action' => $customer->wasRecentlyCreated ? 'created' : 'updated'
+            ]);
+
+        } catch (\Exception $e) {
+            Log::error('Error syncing customer by Getfly ID ' . $getflyId . ': ' . $e->getMessage());
+            return response()->json(['error' => 'An error occurred while syncing customer: ' . $e->getMessage()], 500);
+        }
     }
 }

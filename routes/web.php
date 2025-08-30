@@ -100,6 +100,7 @@ Route::delete('/customers/{id}', [CustomerController::class, 'deleteCustomer'])-
 Route::middleware(['auth'])->group(function () {
     Route::post('/customers/sync-customer', [CustomerController::class, 'syncCustomer'])->name('web.customer.sync');
     Route::post('/customers/sync-customer/{id}', [CustomerController::class, 'syncDetailCustomer'])->name('web.customer.sync.detail');
+    Route::post('/customers/sync-by-getfly-id/{getflyId}', [CustomerController::class, 'syncCustomerByGetflyId'])->name('web.customer.sync.by.getfly.id');
 });
 
 
