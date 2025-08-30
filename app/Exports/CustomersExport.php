@@ -3,120 +3,289 @@
 namespace App\Exports;
 
 use App\Models\Customer;
-use Illuminate\Support\Facades\Schema;
-use Maatwebsite\Excel\Concerns\FromCollection;
+use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\WithMapping;
+use App\Enums\CustomerDefine;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
-class CustomersExport implements FromCollection, WithHeadings, WithMapping
+class CustomersExport implements FromQuery, WithHeadings, WithMapping
 {
-    protected array $baseColumns = [];
-    protected array $customFieldKeys = [];
+    protected int $userId;
+    protected array $userMap;
 
-    public function __construct()
+    public function __construct(int $userId)
     {
-        // 1) Lấy danh sách cột gốc từ migration (trừ custom_fields vì sẽ tách riêng)
-        $allColumns = Schema::getColumnListing('customers');
-        $this->baseColumns = array_values(array_filter($allColumns, fn($c) => $c !== 'custom_fields'));
+        // Ghi nhớ userId từ lúc khởi tạo (không phụ thuộc Auth trong job/queue)
+        $this->userId = $userId;
 
-        // 2) Gom TẤT CẢ key trong custom_fields của mọi Customer
-        $keys = [];
-        Customer::query()
-            ->select('id', 'custom_fields')
-            ->whereNotNull('custom_fields')
-            ->chunkById(1000, function ($rows) use (&$keys) {
-                foreach ($rows as $row) {
-                    $cf = $this->decodeCustomFields($row->custom_fields);
-                    if (!empty($cf)) {
-                        $flat = $this->flatten($cf);                  // 'contacts.0.name' => '...'
-                        $keys = array_merge($keys, array_keys($flat));
-                    }
-                }
-            });
-
-        // 3) Loại trùng, giữ thứ tự xuất hiện
-        $this->customFieldKeys = array_values(array_unique($keys));
+        // Load map id => name 1 lần (nhẹ)
+        $this->userMap = User::pluck('name', 'id')->toArray();
     }
 
-    public function collection()
+    public function query()
     {
-        // Lấy full model để map tất cả base columns + đọc custom_fields
-        return Customer::all();
+        $userId = Auth::id();
+
+        return Customer::query()->select([
+            'account_name',
+            'account_code',
+            'country_id',
+            'province_name',
+            'district_name',
+            'ward_name',
+            'billing_address_street',
+            'gender',
+            'phone_office',
+            'email',
+            'birthday',
+            'tuoi',
+            'industry',
+            'lieu_phap',
+            'insight',
+            'link_mxh',
+            'camp',
+            'danh_muc_data_dau_vao',
+            'nguon',
+            'mang_kinh_doanh',
+            'nhom_nguon',
+            'chuyen_vien_tu_van',
+            'benh_ly',
+            'dich_vu_quan_tam',
+            'tai_chinh',
+            'ngay_booking_du_kien',
+            'booking',
+            'cham_diem',
+            'dich_vu_thuc_hien',
+            'bac_si_tu_van',
+            'phan_loai_show',
+            'lich_su_tu_van',
+            'hop_dong',
+            'dich_vu',
+            'tong_gia_tri',
+            'cong_no',
+            'ngay_thu_du_kien',
+            'tien_thu_du_kien',
+            'ngay_thu_thuc_te',
+            'tien_thu_thuc_te',
+            'dich_vu_booking',
+            'so_luong_booking',
+            'ngay_du_kien_su_dung',
+            'ngay_thuc_te_su_dung',
+            'dia_diem_su_dung',
+            'nguoi_thuc_hien',
+            'feedback_booking',
+            'phan_loai',
+            'dich_vu_af',
+            'lich_su_tu_van_af',
+            'referrer_id',
+            'chinh_sach_ref',
+            'dich_vu_ref',
+            'gia_tri_ref',
+            'thong_tin_chung',
+            'description',
+            'creator_id',
+            'created_at',
+            'account_manager',
+            'last_contact_name',
+            'last_contact_phone',
+            'last_contact_email',
+            'last_contact_title',
+            'last_contact_birthdate',
+            'sic_code',
+            'last_contact_gender',
+            'publisher_code',
+            'last_active',
+            'last_comment',
+            'total_activity',
+            'total_f_amount',
+            'last_contact_honorific',
+            'total_point_bonus',
+            'website',
+            'total_revenue',
+            'count_order',
+            'thumbnail_logo',
+            'phan_loai_bo_sung',
+            'relation_id',
+        ])->where(function($q) use ($userId) {
+            // 1) account_manager đúng user
+            // 2) hoặc JSON_CONTAINS match số (CAST as JSON)
+            // 3) hoặc JSON_CONTAINS match chuỗi (trường hợp dữ liệu JSON lưu "1" thay vì 1)
+            $q->where('customers.account_manager', $userId)
+              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, CAST(? AS JSON))', [$userId])
+              ->orWhereRaw('JSON_CONTAINS(customers.accessible_user_ids, CONCAT(\'"\', ?, \'"\'))', [$userId]);
+        });
     }
 
-    public function map($customer): array
+    public function map($row): array
     {
-        $row = [];
-
-        // 1) Ghi dữ liệu theo đúng thứ tự cột gốc
-        foreach ($this->baseColumns as $col) {
-            $row[] = $customer->{$col};
-        }
-
-        // 2) Ghi dữ liệu custom_fields theo đúng thứ tự key đã thu thập
-        $cf    = $this->decodeCustomFields($customer->custom_fields);
-        $flat  = $this->flatten($cf); // key như 'contacts.0.name'
-
-        foreach ($this->customFieldKeys as $key) {
-            $row[] = $flat[$key] ?? null; // giá trị có thể là số, chuỗi, null...
-        }
-
-        return $row;
+        return [
+            $row->account_name,
+            $row->account_code,
+            $row->country_id,
+            $row->province_name,
+            $row->district_name,
+            $row->ward_name,
+            $row->billing_address_street,
+            CustomerDefine::getValue(CustomerDefine::GIOI_TINH, $row->gender),
+            $row->phone_office,
+            $row->email,
+            $row->birthday,
+            $row->tuoi,
+            $row->industry,
+            $row->lieu_phap,
+            $row->insight,
+            $row->link_mxh,
+            $row->camp,
+            // ✨ Ánh xạ từ CustomerDefine
+            CustomerDefine::getValue(CustomerDefine::DANH_MUC_DATA_DAU_VAO, $row->danh_muc_data_dau_vao),
+            CustomerDefine::getValue(CustomerDefine::NGUON, $row->nguon),
+            CustomerDefine::getValue(CustomerDefine::MANG_KINH_DOANH, $row->mang_kinh_doanh),
+            CustomerDefine::getValue(CustomerDefine::NHOM_NGUON, $row->nhom_nguon),
+            $row->chuyen_vien_tu_van,
+            $row->benh_ly,
+            $row->dich_vu_quan_tam,
+            $row->tai_chinh,
+            $row->ngay_booking_du_kien,
+            $row->booking,
+            $row->cham_diem,
+            $row->dich_vu_thuc_hien,
+            $row->bac_si_tu_van,
+            $row->phan_loai_show,
+            $row->lich_su_tu_van,
+            $row->hop_dong,
+            $row->dich_vu,
+            $row->tong_gia_tri,
+            $row->cong_no,
+            $row->ngay_thu_du_kien,
+            $row->tien_thu_du_kien,
+            $row->ngay_thu_thuc_te,
+            $row->tien_thu_thuc_te,
+            $row->dich_vu_booking,
+            $row->so_luong_booking,
+            $row->ngay_du_kien_su_dung,
+            $row->ngay_thuc_te_su_dung,
+            $row->dia_diem_su_dung,
+            $row->nguoi_thuc_hien,
+            $row->feedback_booking,
+            $row->phan_loai,
+            $row->dich_vu_af,
+            $row->lich_su_tu_van_af,
+            $row->referrer_id,
+            $row->chinh_sach_ref,
+            $row->dich_vu_ref,
+            $row->gia_tri_ref,
+            $row->thong_tin_chung,
+            $row->description,
+            $row->creator_id,
+            $row->created_at,
+            $this->userMap[$row->account_manager] ?? $row->account_manager,
+            $row->last_contact_name,
+            $row->last_contact_phone,
+            $row->last_contact_email,
+            $row->last_contact_title,
+            $row->last_contact_birthdate,
+            $row->sic_code,
+            $row->last_contact_gender,
+            $row->publisher_code,
+            $row->last_active,
+            $row->last_comment,
+            $row->total_activity,
+            $row->total_f_amount,
+            $row->last_contact_honorific,
+            $row->total_point_bonus,
+            $row->website,
+            $row->total_revenue,
+            $row->count_order,
+            $row->thumbnail_logo,
+            $row->phan_loai_bo_sung,
+            CustomerDefine::getValue(CustomerDefine::TRANG_THAI, $row->relation_id),
+        ];
     }
 
     public function headings(): array
     {
-        // Base headings = tên cột gốc
-        $headings = $this->baseColumns;
-
-        // Custom field headings = cf_ + key đã normalize để dễ đọc trong Excel
-        foreach ($this->customFieldKeys as $key) {
-            $headings[] = 'cf_' . $this->normalizeKey($key);
-        }
-
-        return $headings;
-    }
-
-    /**
-     * Giải mã custom_fields: có thể đã cast thành array, hoặc là JSON string.
-     */
-    private function decodeCustomFields($customFields): array
-    {
-        if (is_array($customFields)) {
-            return $customFields;
-        }
-        if (is_string($customFields) && $customFields !== '') {
-            $decoded = json_decode($customFields, true);
-            return is_array($decoded) ? $decoded : [];
-        }
-        return [];
-    }
-
-    /**
-     * Flatten mảng lồng: ['a' => ['b' => 1], 'c' => [ ['d' => 2] ]]
-     * => ['a.b' => 1, 'c.0.d' => 2]
-     */
-    private function flatten(array $arr, string $prefix = ''): array
-    {
-        $out = [];
-        foreach ($arr as $k => $v) {
-            $key = $prefix === '' ? (string)$k : $prefix . '.' . $k;
-            if (is_array($v)) {
-                $out += $this->flatten($v, $key);
-            } else {
-                // cast scalar -> string/number; để nguyên tiếng Việt (json_decode đã unicode)
-                $out[$key] = $v;
-            }
-        }
-        return $out;
-    }
-
-    /**
-     * Normalize key để làm heading thân thiện Excel:
-     * 'contacts.0.name' -> 'contacts__0__name'
-     */
-    private function normalizeKey(string $key): string
-    {
-        return str_replace(['.', '[', ']'], ['__', '_', ''], $key);
+        return [
+            '[ID] Tên khách hàng',
+            '[ID] Mã KH',
+            '[ID] Quốc gia',
+            '[ID] Tỉnh/thành phố',
+            '[ID] Quận/huyện',
+            '[ID] Phường/Xã',
+            '[ID] Địa chỉ',
+            '[ID] Giới tính',
+            '[ID] Điện thoại',
+            '[ID] Email',
+            '[ID] Sinh nhật',
+            '[ID] Tuổi',
+            '[ID] Nghề nghiệp',
+            '[ID] Liệu pháp',
+            '[ID] Insight',
+            '[ID] Link MXH',
+            '[ID] Camp',
+            'Danh mục data đầu vào',
+            'Nguồn',
+            'Mảng kinh doanh',
+            'Nhóm nguồn',
+            '[Show] Chuyên viên tư vấn',
+            '[Tele] Bệnh lý',
+            '[Tele] Dịch vụ quan tâm',
+            '[Tele] Tài chính',
+            '[Tele] Ngày booking dự kiến',
+            '[Tele] Booking',
+            'Chấm điểm',
+            '[Show] Dịch vụ thực hiện',
+            '[Show] Bác sĩ tư vấn',
+            '[Show] Phân loại show',
+            '[Show] Lịch sử tư vấn',
+            '[DD] Hợp đồng',
+            '[DD] Dịch vụ',
+            '[DD] Tổng giá trị',
+            '[DD] Công nợ',
+            '[DD] Ngày thu dự kiến',
+            '[DD] Tiền thu dự kiến',
+            '[DD] Ngày thu thực tế',
+            '[DD] Tiền thu thực tế',
+            '[Booking] Booking thăm khám',
+            '[Booking] Số lượng',
+            '[Booking] Ngày dự kiến sử dụng',
+            '[Booking] Ngày thực tế sử dụng',
+            '[Booking] Địa điểm sử dụng',
+            '[Booking] Người thực hiện',
+            '[Booking] Feedback booking',
+            '[AF] Phân loại',
+            '[AF] Dịch vụ',
+            '[AF] Lịch sử tư vấn',
+            '[Ref] Người giới thiệu',
+            '[Ref] Chính sách người giới thiệu',
+            '[Ref] Dịch vụ',
+            '[Ref] Giá trị',
+            'Thông tin chung',
+            'Feedback chung',
+            'Người tạo',
+            'Ngày tạo',
+            'Người phụ trách',
+            'Người liên hệ chính',
+            'Điện thoại người liên hệ chính',
+            'Email người liên hệ chính',
+            'Chức vụ liên hệ chính',
+            'Sinh nhật liên hệ chính',
+            'Mã số thuế',
+            'Giới tính người liên hệ',
+            'Mã tiếp thị liên kết',
+            'Liên hệ lần cuối',
+            'Trao đổi gần nhất',
+            'Tổng số tương tác',
+            'Giá trị',
+            'Danh xưng người liên hệ chính',
+            'Điểm thưởng',
+            'Website',
+            'Tổng doanh thu',
+            'Số đơn hàng',
+            'Logo',
+            'Phân loại bổ sung',
+            'Mối quan hệ',
+        ];
     }
 }

@@ -12,7 +12,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Auth;
 use App\Support\RoleFieldResolver;
 use Illuminate\Support\Facades\Http;
-use App\Enum\FieldDefine;
+use App\Enums\FieldDefine;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Validator;
@@ -737,12 +737,14 @@ class CustomerController extends Controller
             return redirect('/'); // hoặc route('login') nếu bạn có định nghĩa
         }
     
-        $userId = Auth::id();
+        
         $timestamp = now()->format('d-m-Y-H-i');
+        $userId = (int) Auth::id(); // bắt buộc là int
+        
     
         $fileName = "customers-export-ID{$userId}-{$timestamp}.xlsx";
     
-        return Excel::download(new CustomersExport, $fileName);
+        return Excel::download(new CustomersExport($userId), $fileName);
     }
 
     /**
