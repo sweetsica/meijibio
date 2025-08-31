@@ -88,10 +88,11 @@ class CustomerController extends Controller
      */
     private function prepareCustomerData(Request $request, $isUpdate = false)
     {
-        $excludeFields = ['_token', '_method', 'account_relation_detail','account_code'];
-        if (!$isUpdate) {
-            $excludeFields[] = 'accessible_user_ids';
-        }
+        $excludeFields = [];
+        // $excludeFields = ['_token', '_method', 'account_relation_detail','account_code'];
+        // if (!$isUpdate) {
+        //     $excludeFields[] = 'accessible_user_ids';
+        // }
 
         $requestFields = $request->except($excludeFields);
         $defaultFields = FieldDefine::defaultFields;
