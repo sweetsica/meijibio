@@ -177,7 +177,7 @@ class Customer extends Model
             'account_source'         => $csv($raw['account_source'] ?? ($idsCsv($raw['account_source_details'] ?? []) ?? null)),
 
             'custom_fields'          => $cf,
-            'contacts'   => $raw['contacts'],
+            'contacts'   => isset($raw['contacts']) ? $raw['contacts'] : [],
             'accessible_user_ids' => $raw['accessible_user_ids'],
         ];
     }
