@@ -342,10 +342,14 @@
                                                 <i class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                                 <span>Xuất excel KH</span>
                                             </a>
-                                            <a href="{{ route('web.customer.sync') }}" class="dropdown-item">
+                                            <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('sync-customer-form').submit();">
                                                 <i class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                                 <span>Đồng bộ KH</span>
                                             </a>
+                                            
+                                            <form id="sync-customer-form" action="{{ route('web.customer.sync') }}" method="POST" class="d-none">
+                                                @csrf
+                                            </form>
                                         </div>
                                     </div>
                                    
