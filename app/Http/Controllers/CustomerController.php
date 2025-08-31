@@ -499,13 +499,31 @@ class CustomerController extends Controller
 
     public function deleteCustomerApi(Request $request)
     {
-        $account_code = $request->query('account_code');
+        $accountCode = $request->query('account_code');
+        $getflyId    = $request->query('getfly_id');
 
-        $customer = Customer::where('account_code', $account_code)->first();
+        if (!$accountCode && !$getflyId) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Vui lòng truyền account_code hoặc getfly_id',
+            ], 400);
+        }
+
+        $query = Customer::query();
+
+        if ($accountCode) {
+            $query->where('account_code', $accountCode);
+        }
+
+        if ($getflyId) {
+            $query->orWhere('getfly_id', $getflyId);
+        }
+
+        $customer = $query->first();
 
         if (!$customer) {
             return response()->json([
-                'status' => 'error',
+                'status'  => 'error',
                 'message' => 'Không tìm thấy khách hàng',
             ], 404);
         }
@@ -513,10 +531,11 @@ class CustomerController extends Controller
         $customer->delete();
 
         return response()->json([
-            'status' => 'success',
-            'message' => 'Xoá thành công',
-        ]);
+            'status'  => 'success',
+            'message' => 'Khách hàng đã được xoá thành công',
+        ], 200);
     }
+
 
 
     // Sync customer from getfly to database
