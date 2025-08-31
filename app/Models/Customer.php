@@ -178,7 +178,7 @@ class Customer extends Model
 
             'custom_fields'          => $cf,
             'contacts'   => isset($raw['contacts']) ? $raw['contacts'] : [],
-            'accessible_user_ids' => $raw['accessible_user_ids'],
+            'accessible_user_ids' => isset($raw['accessible_user_ids']) ? $raw['accessible_user_ids'] : [],
         ];
     }
 
