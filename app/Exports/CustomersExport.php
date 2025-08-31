@@ -27,7 +27,7 @@ class CustomersExport implements FromQuery, WithHeadings, WithMapping
     public function query()
     {
         $userId = Auth::user()->getfly_id;
-        dd($userId);
+        // dd($userId);
 
         $customers = Customer::query()
         ->select([
