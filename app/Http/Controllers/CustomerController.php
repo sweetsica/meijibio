@@ -641,9 +641,19 @@ class CustomerController extends Controller
         }
 
         try {
+
+            $defaultFields = FieldDefine::defaultListFields;
+
+            // Convert default fields array to comma-separated string
+            $defaultFieldsString = implode(',', $defaultFields);
+            $fieldsRequests = $defaultFieldsString;
+
+            $limit = 10000000000; // 10 billion records
+
+            $url = 'https://meijibio.getflycrm.com/api/v6/accounts/' . $customer->getfly_id . '?fields=' . $fieldsRequests;
             $response = Http::withHeaders([
                 'X-API-KEY' => $crmAPIKey
-            ])->get("https://meijibio.getflycrm.com/api/v6/accounts/{$customer->getfly_id}");
+            ])->get($url);
 
             if (!$response->successful()) {
                 Log::error('CRM API request failed: ' . $response->body());
