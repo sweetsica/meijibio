@@ -111,9 +111,9 @@ class CustomersExport implements FromQuery, WithHeadings, WithMapping
             'relation_id',
         ])
         ->where(function($q) use ($userId) {
-            // 1) account_manager đúng user
-            // 2) hoặc accessible_user_ids chứa userId (dạng số)
-            // 3) hoặc accessible_user_ids chứa userId (dạng chuỗi)
+            // 1) account_manager đúng getfly_id
+            // 2) hoặc accessible_user_ids chứa getfly_id (dạng số)
+            // 3) hoặc accessible_user_ids chứa getfly_id (dạng chuỗi)
             $q->where('customers.account_manager', $userId)
             ->orWhereJsonContains('accessible_user_ids', $userId);
         });
