@@ -18,7 +18,7 @@ class Customer extends Model
     {
         $cf  = $raw['custom_fields'] ?? [];
         $dcf = $raw['detail_custom_fields'] ?? [];
-
+// dd($raw);
         // contact chính (is_primary = 1) -> fallback contact đầu tiên
         $contact = [];
         if (!empty($raw['contacts']) && is_array($raw['contacts'])) {
@@ -175,6 +175,10 @@ class Customer extends Model
             // 2 field này là string trong migration → join nếu là mảng, hoặc lấy id-list từ *_details
             'account_type'           => $csv($raw['account_type'] ?? ($idsCsv($raw['account_type_details'] ?? []) ?? null)),
             'account_source'         => $csv($raw['account_source'] ?? ($idsCsv($raw['account_source_details'] ?? []) ?? null)),
+
+            'custom_fields'          => $cf,
+            'contacts'   => $raw['contacts'],
+            'accessible_user_ids' => $raw['accessible_user_ids'],
         ];
     }
 
