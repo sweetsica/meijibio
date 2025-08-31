@@ -22,3 +22,4 @@ Route::post('/webhook', [LogController::class, 'webhook']);
     Route::post('/customers/sync-by-getfly-id/{getflyId}', [CustomerController::class, 'syncCustomerByGetflyId'])->name('api.customer.sync.by.getfly.id');
 // });
 
+Route::delete('/customers', [CustomerController::class, 'deleteCustomerApi']);

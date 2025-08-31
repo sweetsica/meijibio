@@ -342,7 +342,7 @@
                                                 <i class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                                 <span>Xuất excel KH</span>
                                             </a>
-                                            <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('sync-customer-form').submit();">
+                                            <a href="#" class="dropdown-item" onclick="event.preventDefault(); document.getElementById('sync-customer-form').submit();" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
                                                 <i class="wd-5 ht-5 bg-gray-500 rounded-circle me-3"></i>
                                                 <span>Đồng bộ KH</span>
                                             </a>

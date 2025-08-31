@@ -497,54 +497,46 @@ class CustomerController extends Controller
         }
     }
 
-    // Các trường từ customer cần sync với db local gồm:
-    // [
-    //     "camp",
-    //     "tuoi",
-    //     "nguon",
-    //     "benh_ly",
-    //     "booking",
-    //     "cong_no",
-    //     "dich_vu",
-    //     "insight",
-    //     "hop_dong",
-    //     "link_mxh",
-    //     "cham_diem",
-    //     "lieu_phap",
-    //     "phan_loai",
-    //     "tai_chinh",
-    //     "dich_vu_af",
-    //     "nhom_nguon",
-    //     "dich_vu_ref",
-    //     "gia_tri_ref",
-    //     "tong_gia_tri",
-    //     "bac_si_tu_van",
-    //     "chinh_sach_ref",
-    //     "lich_su_tu_van",
-    //     "phan_loai_show",
-    //     "dich_vu_booking",
-    //     "mang_kinh_doanh",
-    //     "nguoi_thuc_hien",
-    //     "thong_tin_chung",
-    //     "dia_diem_su_dung",
-    //     "dich_vu_quan_tam",
-    //     "feedback_booking",
-    //     "ngay_thu_du_kien",
-    //     "ngay_thu_thuc_te",
-    //     "so_luong_booking",
-    //     "tien_thu_du_kien",
-    //     "tien_thu_thuc_te",
-    //     "dich_vu_thuc_hien",
-    //     "lich_su_tu_van_af",
-    //     "phan_loai_bo_sung",
-    //     "chuyen_vien_tu_van",
-    //     "ngay_booking_du_kien",
-    //     "ngay_du_kien_su_dung",
-    //     "ngay_thuc_te_su_dung",
-    //     "danh_muc_data_dau_vao"
-    // ]
-    // không dùng trường data_dau_vao
-    
+    public function deleteCustomerApi(Request $request)
+    {
+        $accountCode = $request->query('account_code');
+        $getflyId    = $request->query('getfly_id');
+
+        if (!$accountCode && !$getflyId) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Vui lòng truyền account_code hoặc getfly_id',
+            ], 400);
+        }
+
+        $query = Customer::query();
+
+        if ($accountCode) {
+            $query->where('account_code', $accountCode);
+        }
+
+        if ($getflyId) {
+            $query->orWhere('getfly_id', $getflyId);
+        }
+
+        $customer = $query->first();
+
+        if (!$customer) {
+            return response()->json([
+                'status'  => 'error',
+                'message' => 'Không tìm thấy khách hàng',
+            ], 404);
+        }
+
+        $customer->delete();
+
+        return response()->json([
+            'status'  => 'success',
+            'message' => 'Khách hàng đã được xoá thành công',
+        ], 200);
+    }
+
+
 
     // Sync customer from getfly to database
     public function syncCustomer()
