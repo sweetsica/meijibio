@@ -802,13 +802,13 @@ class CustomerController extends Controller
             $customer->update($customerData);
 
             Log::info('Customer detail by get_fly_id sync completed successfully', [
-                'customer_id' => $id,
+                'customer_id' => $customer->id,
                 'getfly_id' => $customer->getfly_id
             ]);
 
             return response()->json(['message' => 'Customer synced successfully']);
         } catch (\Exception $e) {
-            Log::error('Error syncing customer ' . $id . ': ' . $e->getMessage());
+            Log::error('Error syncing customer ' . $cu . ': ' . $e->getMessage());
             return response()->json(['error' => 'An error occurred while syncing customer: ' . $e->getMessage()], 500);
         }
     }
