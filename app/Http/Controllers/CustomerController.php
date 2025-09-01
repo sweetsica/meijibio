@@ -755,19 +755,37 @@ class CustomerController extends Controller
      */
     public function syncCustomerByGetflyId($getflyId)
     {
+        $customer = Customer::where('getfly_id', $getflyId)->first();
+
+        if (!$customer) {
+            $customer = new Customer();
+            $customer->getfly_id = $getflyId;
+            $customer->save();
+        }
+
+        $crmAPIKey = $this->crmApiKey;
+
+        if (!$crmAPIKey) {
+            return response()->json(['error' => 'CRM API key not configured'], 500);
+        }
+
         try {
-            $crmAPIKey = $this->crmApiKey;
 
-            if (!$crmAPIKey) {
-                return response()->json(['error' => 'CRM API key not configured'], 500);
-            }
+            $defaultFields = FieldDefine::defaultListFields;
 
+            // Convert default fields array to comma-separated string
+            $defaultFieldsString = implode(',', $defaultFields);
+            $fieldsRequests = $defaultFieldsString;
+
+            $limit = 10000000000; // 10 billion records
+
+            $url = 'https://meijibio.getflycrm.com/api/v6/accounts/' . $getflyId . '?fields=' . $fieldsRequests;
             $response = Http::withHeaders([
                 'X-API-KEY' => $crmAPIKey
-            ])->get("https://meijibio.getflycrm.com/api/v6/accounts/{$getflyId}");
+            ])->get($url);
 
             if (!$response->successful()) {
-                Log::error('CRM API request failed for Getfly ID ' . $getflyId . ': ' . $response->body());
+                Log::error('CRM API request failed: ' . $response->body());
                 return response()->json(['error' => 'Failed to fetch customer data from CRM'], 500);
             }
 
@@ -780,23 +798,17 @@ class CustomerController extends Controller
             // Use the comprehensive mapping function from Customer model
             $customerData = Customer::mapGetflyDataToCustomer($data);
             
-            // Create or update customer using the model's method
-            $customer = Customer::createOrUpdateCustomer($customerData);
+            // Update the existing customer with new data
+            $customer->update($customerData);
 
-            Log::info('Customer sync by Getfly ID completed successfully', [
-                'getfly_id' => $getflyId,
-                'customer_id' => $customer->id,
-                'action' => $customer->wasRecentlyCreated ? 'created' : 'updated'
+            Log::info('Customer detail by get_fly_id sync completed successfully', [
+                'customer_id' => $id,
+                'getfly_id' => $customer->getfly_id
             ]);
 
-            return response()->json([
-                'message' => 'Customer synced successfully',
-                'customer_id' => $customer->id,
-                'action' => $customer->wasRecentlyCreated ? 'created' : 'updated'
-            ]);
-
+            return response()->json(['message' => 'Customer synced successfully']);
         } catch (\Exception $e) {
-            Log::error('Error syncing customer by Getfly ID ' . $getflyId . ': ' . $e->getMessage());
+            Log::error('Error syncing customer ' . $id . ': ' . $e->getMessage());
             return response()->json(['error' => 'An error occurred while syncing customer: ' . $e->getMessage()], 500);
         }
     }
