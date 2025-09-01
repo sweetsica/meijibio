@@ -160,28 +160,6 @@
                                             </h5>
                                             {{-- <a href="javascript:void(0);" class="btn btn-sm btn-light-brand">Add New</a> --}}
                                         </div>
-                                        {{-- <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">Avatar: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="mb-4 mb-md-0 d-flex gap-4 your-brand">
-                                                    <div class="wd-100 ht-100 position-relative overflow-hidden border border-gray-2 rounded">
-                                                        <img src="{{asset('assets/images/avatar/1.png')}}" class="upload-pic img-fluid rounded h-100 w-100" alt="">
-                                                        <div class="position-absolute start-50 top-50 end-0 bottom-0 translate-middle h-100 w-100 hstack align-items-center justify-content-center c-pointer upload-button">
-                                                            <i class="feather feather-camera" aria-hidden="true"></i>
-                                                        </div>
-                                                        <input class="file-upload" type="file" accept="image/*">
-                                                    </div>
-                                                    <div class="d-flex flex-column gap-1">
-                                                        <div class="fs-11 text-gray-500 mt-2"># Upload your prifile</div>
-                                                        <div class="fs-11 text-gray-500"># Avatar size 150x150</div>
-                                                        <div class="fs-11 text-gray-500"># Max upload size 2mb</div>
-                                                        <div class="fs-11 text-gray-500"># Allowed file types: png, jpg, jpeg</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div> --}}
                                         {{-- WORKING HERE --}}
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
@@ -194,8 +172,6 @@
                                                 </div>
                                             </div>
                                         </div>
-
-                                        {{-- Do not push account code to CRM 29/08/2025 --}}
                                         {{-- <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="fullnameInput" class="fw-semibold">[ID] Mã khách hàng: </label>
@@ -524,7 +500,6 @@
                                         </div>
                                     </div>                                                              
                                 </div>
-                            
                                 <div class="tab-pane fade" id="bookingTab" role="tabpanel">
                                     <div class="card-body pass-info">
                                         <div class="mb-4 d-flex align-items-center justify-content-between">
@@ -594,7 +569,6 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-calendar"></i></div>
                                                     <select class="form-select form-control max-select" data-select2-selector="tag" name="ngay_booking_du_kien">
                                                         <option value="" disabled selected>Chọn ngày booking dự kiến</option>
                                                         <option value="145">Lên đúng lịch</option>
@@ -858,7 +832,7 @@
                                     </div>
                                 </div>
                                 <div class="tab-pane fade" id="servicesTab" role="tabpanel">
-                                    <div class="alert alert-dismissible m-4 p-4 d-flex alert-soft-teal-message" role="alert">
+                                    {{-- <div class="alert alert-dismissible m-4 p-4 d-flex alert-soft-teal-message" role="alert">
                                         <div class="me-4 d-none d-md-block">
                                             <i class="feather feather-alert-octagon fs-1"></i>
                                         </div>
@@ -868,7 +842,7 @@
                                             <a href="javascript:void(0);" class="btn btn-sm bg-soft-teal text-teal d-inline-block">Add Payment Method</a>
                                             <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                                         </div>
-                                    </div>
+                                    </div> --}}
                                     <div class="card-body choose-plan">
                                         <div class="mb-4 d-flex align-items-center justify-content-between">
                                             <h5 class="fw-bold mb-0 me-4">
@@ -878,7 +852,7 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Booking] Booking thăm khám </label>
+                                                <label class="fw-semibold">[Booking] Booking thăm khám</label>
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" name="dich_vu_booking" placeholder="[Booking] Booking thăm khám" data-select2-selector="dich_vu_booking">
@@ -1035,7 +1009,7 @@
                                 <div class="col d-flex justify-content-end" style="padding-right: 2%;">
                                     <button type="submit" class="btn btn-primary">
                                         <i class="feather-user-plus me-2"></i>
-                                        <span>Add New Customer</span>
+                                        <span>Thêm mới khách hàng</span>
                                     </button>
                                 </div>
                             </div>      
