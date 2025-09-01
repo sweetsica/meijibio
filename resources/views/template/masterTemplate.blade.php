@@ -452,7 +452,7 @@
                                         <div class="d-flex align-items-center justify-content-between mb-4">
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="avatar-image rounded">
-                                                    <img src="./../assets/images/avatar/1.png" alt="" class="img-fluid" />
+                                                    <img src="{{ asset('assets/images/avatar/1.png')}}" alt="" class="img-fluid" />
                                                 </div>
                                                 <div>
                                                     <a href="javascript:void(0);" class="font-body fw-bold d-block mb-1">Alexandra Della</a>
@@ -466,7 +466,7 @@
                                         <div class="d-flex align-items-center justify-content-between mb-4">
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="avatar-image rounded">
-                                                    <img src="./../assets/images/avatar/2.png" alt="" class="img-fluid" />
+                                                    <img src="{{ asset('assets/images/avatar/2.png')}}" alt="" class="img-fluid" />
                                                 </div>
                                                 <div>
                                                     <a href="javascript:void(0);" class="font-body fw-bold d-block mb-1">Green Cute</a>
@@ -480,7 +480,7 @@
                                         <div class="d-flex align-items-center justify-content-between mb-4">
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="avatar-image rounded">
-                                                    <img src="./../assets/images/avatar/3.png" alt="" class="img-fluid" />
+                                                    <img src="{{ asset('assets/images/avatar/3.png')}}" alt="" class="img-fluid" />
                                                 </div>
                                                 <div>
                                                     <a href="javascript:void(0);" class="font-body fw-bold d-block mb-1">Malanie Hanvey</a>
@@ -494,7 +494,7 @@
                                         <div class="d-flex align-items-center justify-content-between mb-4">
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="avatar-image rounded">
-                                                    <img src="./../assets/images/avatar/4.png" alt="" class="img-fluid" />
+                                                    <img src="{{ asset('assets/images/avatar/4.png')}}" alt="" class="img-fluid" />
                                                 </div>
                                                 <div>
                                                     <a href="javascript:void(0);" class="font-body fw-bold d-block mb-1">Kenneth Hune</a>
@@ -508,7 +508,7 @@
                                         <div class="d-flex align-items-center justify-content-between mb-0">
                                             <div class="d-flex align-items-center gap-3">
                                                 <div class="avatar-image rounded">
-                                                    <img src="./../assets/images/avatar/5.png" alt="" class="img-fluid" />
+                                                    <img src="{{ asset('assets/images/avatar/5.png')}}" alt="" class="img-fluid" />
                                                 </div>
                                                 <div>
                                                     <a href="javascript:void(0);" class="font-body fw-bold d-block mb-1">Archie Cantones</a>
@@ -769,12 +769,12 @@
                         </div>
                         <div class="dropdown nxl-h-item">
                             <a href="javascript:void(0);" data-bs-toggle="dropdown" role="button" data-bs-auto-close="outside">
-                                <img src="./../assets/images/avatar/1.png" alt="user-image" class="img-fluid user-avtar me-0" />
+                                <img src="{{ asset('assets/images/avatar/1.png') }}" alt="user-image" class="img-fluid user-avtar me-0" />
                             </a>
                             <div class="dropdown-menu dropdown-menu-end nxl-h-dropdown nxl-user-dropdown">
                                 <div class="dropdown-header">
                                     <div class="d-flex align-items-center">
-                                        <img src="./../assets/images/avatar/1.png" alt="user-image" class="img-fluid user-avtar" />
+                                        <img src="{{ asset('assets/images/avatar/1.png') }}" alt="user-image" class="img-fluid user-avtar" />
                                         <div>
                                             <h6 class="text-dark mb-0">{{ auth()->user()->name ?? 'unknown' }} <span class="badge bg-soft-success text-success ms-1">PRO</span></h6>
                                             <span class="fs-12 fw-medium text-muted">{{ auth()->user()->email ?? 'unknown' }}</span>

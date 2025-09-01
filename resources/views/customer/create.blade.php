@@ -457,17 +457,7 @@
                                                 <span class="d-block mb-2">Giới thiệu bạn:</span>
                                                 <span class="fs-12 fw-normal text-muted text-truncate-1-line">Communication details in case we want to connect with you.</span>
                                             </h5>
-                                        </div>                                      
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Ref] Chính sách người giới thiệu</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="chinh_sach_ref" placeholder="[Ref] Chính sách người giới thiệu" name="chinh_sach_ref">
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </div>   
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
                                                 <label for="mailInput" class="fw-semibold">[Ref] Chính sách người giới thiệu</label>
