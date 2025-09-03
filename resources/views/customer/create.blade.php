@@ -51,7 +51,7 @@
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-airplay"></i></span>
-                            <span class="nxl-mtext">Dashboards</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                            <span class="nxl-mtext">Bảng tin (đang cập nhật)</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('dashboard.crm') }}">CRM</a></li>
@@ -61,21 +61,21 @@
                     <li class="nxl-item nxl-hasmenu">
                         <a href="javascript:void(0);" class="nxl-link">
                             <span class="nxl-micon"><i class="feather-users"></i></span>
-                            <span class="nxl-mtext">Customers</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
+                            <span class="nxl-mtext">Khách hàng</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
                         </a>
                         <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.index') }}">Customers</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.index') }}">Danh sách khách hàng</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.view') }}" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>Customers View</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.create') }}">Customers Create</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.create') }}">Thêm mới khách hàng</a></li>
                         </ul>
                     </li>
                 </ul>
                 <div class="card text-center" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
                     <div class="card-body">
                         <i class="feather-sunrise fs-4 text-dark"></i>
-                        <h6 class="mt-4 text-dark fw-bolder">Downloading Center</h6>
+                        <h6 class="mt-4 text-dark fw-bolder">Mục này chỉ admin thấy - không cần để tâm nhé</h6>
                         <p class="fs-11 my-3 text-dark">Meijibio S is a production ready CRM to get started up and running easily.</p>
-                        <a href="javascript:void(0);" class="btn btn-primary text-dark w-100">Download Now</a>
+                        <a href="javascript:void(0);" class="btn btn-primary text-dark w-100">Start Now</a>
                     </div>
                 </div>
             </div>

@@ -793,7 +793,7 @@
                                 <div class="dropdown-divider"></div>
                                 <a href="{{ route('logout') }}" class="dropdown-item">
                                     <i class="feather-log-out"></i>
-                                    <span>Logout</span>
+                                    <span>Đăng xuất</span>
                                 </a>
                             </div>
                         </div>
