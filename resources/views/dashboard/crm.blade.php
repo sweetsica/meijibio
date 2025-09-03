@@ -81,7 +81,7 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.index') }}">Customers</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.view') }}">Customers View</a></li>
+                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.view') }}" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>Customers View</a></li>
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.create') }}">Customers Create</a></li>
                         </ul>
                     </li>

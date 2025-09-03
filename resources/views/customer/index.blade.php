@@ -66,22 +66,10 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item" {{ request()->routeIs('customer.index') ? 'active' : '' }}><a class="nxl-link" href="{{ route('customer.index') }}">Customers</a></li>
-                            <li class="nxl-item" {{ request()->routeIs('customer.view') ? 'active' : '' }}><a class="nxl-link" href="{{ route('customer.view') }}">Customers View</a></li>
+                            <li class="nxl-item" {{ request()->routeIs('customer.view') ? 'active' : '' }} {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}><a class="nxl-link" href="{{ route('customer.view') }}">Customers View</a></li>
                             <li class="nxl-item" {{ request()->routeIs('customer.create') ? 'active' : '' }}><a class="nxl-link" href="{{ route('customer.create') }}">Customers Create</a></li>
                         </ul>
                     </li>
-
-                    
-                    {{-- <li class="nxl-item nxl-hasmenu">
-                        <a href="javascript:void(0);" class="nxl-link">
-                            <span class="nxl-micon"><i class="feather-alert-circle"></i></span>
-                            <span class="nxl-mtext">Leads</span><span class="nxl-arrow"><i class="feather-chevron-right"></i></span>
-                        </a>
-                        <ul class="nxl-submenu">
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.index') }}">Leads</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.view') }}">Leads View</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('lead.create') }}">Leads Create</a></li>
-                        </ul>
                     </li> --}}
                 </ul>
                 <div class="card text-center" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>
