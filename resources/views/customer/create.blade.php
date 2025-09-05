@@ -65,7 +65,7 @@
                         </a>
                         <ul class="nxl-submenu">
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.index') }}">Danh sách khách hàng</a></li>
-                            <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.view') }}" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>Customers View</a></li>
+                            {{-- <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.view') }}" {{ auth()->check() && auth()->user()->hasRole('admin') ? '' : 'hidden' }}>Customers View</a></li> --}}
                             <li class="nxl-item"><a class="nxl-link" href="{{ route('customer.create') }}">Thêm mới khách hàng</a></li>
                         </ul>
                     </li>
@@ -393,7 +393,8 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="source" id="nguon" name="nguon" required>
-                                                    <option value="108" selected>FB</option>
+                                                    <option value="174" selected>Cá nhân</option>
+                                                    <option value="108">FB</option>
                                                     <option value="109">Youtube</option>
                                                     <option value="110">Zalo</option>
                                                     <option value="111">Tiktok</option>

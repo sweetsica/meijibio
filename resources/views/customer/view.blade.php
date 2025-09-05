@@ -427,6 +427,7 @@
                                             </div>
                                             <div class="col-lg-8">
                                                 <select class="form-control" data-select2-selector="source" id="nguon" name="nguon" @if(!in_array('nguon', $editableFields)) disabled @endif>
+                                                    <option value="174" {{ $customer->nguon == '174' ? 'selected' : '' }}>Cá nhân</option>
                                                     <option value="108" {{ $customer->nguon == '108' ? 'selected' : '' }}>FB</option>
                                                     <option value="109" {{ $customer->nguon == '109' ? 'selected' : '' }}>Youtube</option>
                                                     <option value="110" {{ $customer->nguon == '110' ? 'selected' : '' }}>Zalo</option>
