@@ -26,6 +26,48 @@
     <!--! BEGIN: Custom CSS-->
     <link rel="stylesheet" type="text/css" href="{{asset('assets/css/theme.min.css')}}">
     <!--! END: Custom CSS-->
+    <style>
+        .personal-info .row,
+        .additional-info .row,
+        .pass-info .row,
+        .choose-plan .row { margin-bottom: 0.5rem !important; }
+        .personal-info .form-control,
+        .personal-info .form-select,
+        .personal-info select.form-control,
+        .personal-info .input-group-text,
+        .additional-info .form-control,
+        .additional-info .form-select,
+        .additional-info select.form-control,
+        .additional-info .input-group-text,
+        .pass-info .form-control,
+        .pass-info .form-select,
+        .pass-info select.form-control,
+        .pass-info .input-group-text,
+        .choose-plan .form-control,
+        .choose-plan .form-select,
+        .choose-plan select.form-control,
+        .choose-plan .input-group-text {
+            height: 36px;
+            min-height: 36px;
+            padding: 0.3rem 0.6rem;
+            font-size: 13px;
+        }
+        .personal-info .input-group,
+        .additional-info .input-group,
+        .pass-info .input-group,
+        .choose-plan .input-group { height: 36px; }
+        .personal-info label,
+        .additional-info label,
+        .pass-info label,
+        .choose-plan label { font-size: 12px; margin-bottom: 0; }
+        .pass-info textarea.form-control,
+        .choose-plan textarea.form-control {
+            height: auto;
+            min-height: auto;
+        }
+        .pass-info .input-group:has(textarea),
+        .choose-plan .input-group:has(textarea) { height: auto; }
+    </style>
     <!--! HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries !-->
     <!--! WARNING: Respond.js doesn"t work if you view the page via file: !-->
     <!--[if lt IE 9]>
@@ -189,199 +231,145 @@
                                         </div> --}}
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="fullnameInput" class="fw-semibold">Getfly_ID Khách: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="getfly_id" placeholder="Code" name="getfly_id" value="{{ $customer->getfly_id ?? '' }}" readonly>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Getfly ID:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="getfly_id" value="{{ $customer->getfly_id ?? '' }}" readonly></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="fullnameInput" class="fw-semibold">Mã khách hàng: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="account_code" placeholder="Code" name="account_code" value="{{ $customer->account_code ?? '' }}" readonly>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Mã KH:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="account_code" value="{{ $customer->account_code ?? '' }}" readonly></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="fullnameInput" class="fw-semibold" style="color: red;">[ID] Họ tên khách hàng:</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-user"></i></div>
-                                                    <input type="text" class="form-control" id="fullnameInput" placeholder="Name" name="account_name" value="{{ $customer->account_name ?? '' }}" @if(!in_array('account_name', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">[ID] Quốc gia: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="currency" @if(!in_array('currency', $editableFields)) disabled @endif>
-                                                    <option data-currency="vn" selected>Vietnam</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">[ID] Tỉnh/Thành phố: (#21) </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                              <label class="fw-semibold">[ID] Quận/Huyện: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                              <label class="fw-semibold">[ID] Phường/Xã: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold" style="color: red;">[ID] Địa chỉ: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Địa chỉ" name="billing_address_street" value="{{ $customer->billing_address_street ?? '' }}" @if(!in_array('address', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold" style="color:red">Họ tên:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="account_name" value="{{ $customer->account_name ?? '' }}" @if(!in_array('account_name', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold" style="color: red;">[ID] Giới tính (#24): </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold" style="color:red">Giới tính:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="gender" @if(!in_array('gender', $editableFields)) disabled @endif>
+                                                            <option value="2" {{ $customer->gender == '2' ? 'selected' : '' }}>Nam</option>
+                                                            <option value="1" {{ $customer->gender == '1' ? 'selected' : '' }}>Nữ</option>
+                                                            <option value="3" {{ $customer->gender == '3' ? 'selected' : '' }}>Khác</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="gender" name="gender" @if(!in_array('gender', $editableFields)) disabled @endif>
-                                                    <option value="2" {{ $customer->gender == '2' ? 'selected' : '' }}>Nam</option>
-                                                    <option value="1" {{ $customer->gender == '1' ? 'selected' : '' }}>Nữ</option>
-                                                    <option value="3" {{ $customer->gender == '3' ? 'selected' : '' }}>Khác</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="phoneInput" class="fw-semibold" style="color: red;">[ID] Điện thoại: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold" style="color:red">Tuổi:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="tuoi" value="{{ $customer->tuoi ?? '' }}" @if(!in_array('tuoi', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-phone"></i></div>
-                                                    <input type="text" class="form-control" id="phoneInput" placeholder="[ID] Điện thoại" name="phone_office" value="{{ $customer->phone_office ?? '' }}" @if(!in_array('phone_office', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Sinh nhật:</label></div>
+                                                    <div class="col-8"><input class="form-control" id="dateofBirth" name="birthday" value="{{ $customer->birthday ?? '' }}" @if(!in_array('birthday', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">Email: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold" style="color:red">Điện thoại:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="phone_office" value="{{ $customer->phone_office ?? '' }}" @if(!in_array('phone_office', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-mail"></i></div>
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Email" name="email" value="{{ $customer->email ?? '' }}" @if(!in_array('email', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Email:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="email" value="{{ $customer->email ?? '' }}" @if(!in_array('email', $editableFields)) disabled @endif></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Nghề nghiệp:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="industry" value="{{ $customer->industry ?? '' }}" @if(!in_array('industry', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="dateofBirth" class="fw-semibold">[ID] Sinh nhật:</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Quốc gia:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" @if(!in_array('currency', $editableFields)) disabled @endif>
+                                                            <option selected>Vietnam</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-calendar"></i></div>
-                                                    <input class="form-control" id="dateofBirth" placeholder="Birthday" name="birthday" value="{{ $customer->birthday ?? '' }}" @if(!in_array('birthday', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Tỉnh/TP:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" value="" disabled></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Quận/Huyện:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" value="" disabled></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold" style="color: red;">[ID] Tuổi: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Phường/Xã:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" value="" disabled></div>
+                                                </div>
                                             </div>
                                             <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="mailInput" placeholder="Tuổi" name="tuoi" value="{{ $customer->tuoi ?? '' }}" @if(!in_array('tuoi', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-2"><label class="fw-semibold" style="color:red">Địa chỉ:</label></div>
+                                                    <div class="col-10"><input type="text" class="form-control" name="billing_address_street" value="{{ $customer->billing_address_street ?? '' }}" @if(!in_array('address', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="industry" class="fw-semibold">[ID] Nghề nghiệp: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-mail"></i></div>
-                                                    <input type="text" class="form-control" id="industry" placeholder="Email" name="industry" value="{{ $customer->industry ?? '' }}" @if(!in_array('industry', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Liệu pháp:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="lieu_phap" @if(!in_array('lieu_phap', $editableFields)) disabled @endif>
+                                                            <option value="50" {{ $customer->lieu_phap == '50' ? 'selected' : '' }}>TBG Nhật</option>
+                                                            <option value="51" {{ $customer->lieu_phap == '51' ? 'selected' : '' }}>NMN MJ</option>
+                                                            <option value="49" {{ $customer->lieu_phap == '49' ? 'selected' : '' }}>TBG Nhật</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>    
-
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Liệu pháp: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Insight:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="insight" value="{{ $customer->insight ?? '' }}" @if(!in_array('insight', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="gender" name="lieu_phap" @if(!in_array('lieu_phap', $editableFields)) disabled @endif>
-                                                    <option value="50" {{ $customer->lieu_phap == '50' ? 'selected' : '' }}>TBG Nhật</option>
-                                                    <option value="51" {{ $customer->lieu_phap == '51' ? 'selected' : '' }}>NMN MJ</option>
-                                                    <option value="49" {{ $customer->lieu_phap == '49' ? 'selected' : '' }}>TBG Nhật</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[ID] Insight </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="insight" placeholder="Insight" name="insight" value="{{ $customer->insight ?? '' }}" @if(!in_array('insight', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Camp:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="camp" value="{{ $customer->camp ?? '' }}" @if(!in_array('camp', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[ID] Link MXH </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="link_mxh" placeholder="Link MXH" name="link_mxh" value="{{ $customer->link_mxh ?? '' }}" @if(!in_array('link_mxh', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="fullnameInput" class="fw-semibold">[ID] Camp: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-briefcase"></i></div>
-                                                    <input type="text" class="form-control" id="fullnameInput" placeholder="Camp" name="camp" value="{{ $customer->camp ?? '' }}" @if(!in_array('camp', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Link MXH:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" name="link_mxh" value="{{ $customer->link_mxh ?? '' }}" @if(!in_array('link_mxh', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -396,91 +384,96 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Trạng thái: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Trạng thái:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="account_relation_detail" data-select2-selector="account_relation_detail" @if(!in_array('account_relation_detail', $editableFields)) disabled @endif>
+                                                            <option value="6" {{ $customer->relation_id == '6' ? 'selected' : '' }}>Chưa phân loại</option>
+                                                            <option value="1" {{ $customer->relation_id == '1' ? 'selected' : '' }}>Gọi được</option>
+                                                            <option value="3" {{ $customer->relation_id == '3' ? 'selected' : '' }}>Số không tồn tại</option>
+                                                            <option value="5" {{ $customer->relation_id == '5' ? 'selected' : '' }}>Không liên lạc được (Trên 3 ngày)</option>
+                                                            <option value="4" {{ $customer->relation_id == '4' ? 'selected' : '' }}>Không liên lạc được (Dưới 3 ngày)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="account_relation_detail" data-select2-selector="account_relation_detail" @if(!in_array('account_relation_detail', $editableFields)) disabled @endif>
-                                                    <option value="6" {{ $customer->relation_id == '6' ? 'selected' : '' }}>Chưa phân loại</option>
-                                                    <option value="1" {{ $customer->relation_id == '1' ? 'selected' : '' }}>Gọi được</option>
-                                                    <option value="3" {{ $customer->relation_id == '3' ? 'selected' : '' }}>Số không tồn tại</option>
-                                                    <option value="5" {{ $customer->relation_id == '5' ? 'selected' : '' }}>Không liên lạc được (Trên 3 ngày)</option>
-                                                    <option value="4" {{ $customer->relation_id == '4' ? 'selected' : '' }}>Không liên lạc được (Dưới 3 ngày)</option>
-                                                </select>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">DM data vào:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" data-select2-selector="data-in" id="danh_muc_data_dau_vao" name="danh_muc_data_dau_vao" @if(!in_array('danh_muc_data_dau_vao', $editableFields)) disabled @endif>
+                                                            <option data-in="bg-primary" value="128" {{ $customer->danh_muc_data_dau_vao == '128' ? 'selected' : '' }}>Mua (BI)</option>
+                                                            <option data-in="bg-secondary" value="129" {{ $customer->danh_muc_data_dau_vao == '129' ? 'selected' : '' }}>Quảng cáo (AD)</option>
+                                                            <option data-in="bg-success" value="130" {{ $customer->danh_muc_data_dau_vao == '130' ? 'selected' : '' }}>Online (OR)</option>
+                                                            <option data-in="bg-warning" value="131" {{ $customer->danh_muc_data_dau_vao == '131' ? 'selected' : '' }}>Offline (OF)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Nguồn:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" data-select2-selector="source" id="nguon" name="nguon" @if(!in_array('nguon', $editableFields)) disabled @endif>
+                                                            <option value="174" {{ $customer->nguon == '174' ? 'selected' : '' }}>Cá nhân</option>
+                                                            <option value="108" {{ $customer->nguon == '108' ? 'selected' : '' }}>FB</option>
+                                                            <option value="109" {{ $customer->nguon == '109' ? 'selected' : '' }}>Youtube</option>
+                                                            <option value="110" {{ $customer->nguon == '110' ? 'selected' : '' }}>Zalo</option>
+                                                            <option value="111" {{ $customer->nguon == '111' ? 'selected' : '' }}>Tiktok</option>
+                                                            <option value="112" {{ $customer->nguon == '112' ? 'selected' : '' }}>Web</option>
+                                                            <option value="113" {{ $customer->nguon == '113' ? 'selected' : '' }}>Cali</option>
+                                                            <option value="114" {{ $customer->nguon == '114' ? 'selected' : '' }}>Elite</option>
+                                                            <option value="115" {{ $customer->nguon == '115' ? 'selected' : '' }}>SR</option>
+                                                            <option value="116" {{ $customer->nguon == '116' ? 'selected' : '' }}>Collab</option>
+                                                            <option value="117" {{ $customer->nguon == '117' ? 'selected' : '' }}>Internal</option>
+                                                            <option value="118" {{ $customer->nguon == '118' ? 'selected' : '' }}>Mar</option>
+                                                            <option value="119" {{ $customer->nguon == '119' ? 'selected' : '' }}>PNS</option>
+                                                            <option value="120" {{ $customer->nguon == '120' ? 'selected' : '' }}>SR</option>
+                                                            <option value="121" {{ $customer->nguon == '121' ? 'selected' : '' }}>Collab</option>
+                                                            <option value="122" {{ $customer->nguon == '122' ? 'selected' : '' }}>Internal</option>
+                                                            <option value="123" {{ $customer->nguon == '123' ? 'selected' : '' }}>BOD</option>
+                                                            <option value="124" {{ $customer->nguon == '124' ? 'selected' : '' }}>FOC</option>
+                                                            <option value="125" {{ $customer->nguon == '125' ? 'selected' : '' }}>BOD</option>
+                                                            <option value="126" {{ $customer->nguon == '126' ? 'selected' : '' }}>FOC</option>
+                                                            <option value="127" {{ $customer->nguon == '127' ? 'selected' : '' }}>Walk-in</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Danh mục data đầu vào (#152): </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Mảng KD:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" data-select2-selector="business" id="mang_kinh_doanh" name="mang_kinh_doanh" @if(!in_array('mang_kinh_doanh', $editableFields)) disabled @endif>
+                                                            <option value="132" {{ $customer->mang_kinh_doanh == '132' ? 'selected' : '' }}>MJB</option>
+                                                            <option value="133" {{ $customer->mang_kinh_doanh == '133' ? 'selected' : '' }}>LMC</option>
+                                                            <option value="134" {{ $customer->mang_kinh_doanh == '134' ? 'selected' : '' }}>LGP</option>
+                                                            <option value="135" {{ $customer->mang_kinh_doanh == '135' ? 'selected' : '' }}>LGG</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="data-in" id="danh_muc_data_dau_vao" name="danh_muc_data_dau_vao" @if(!in_array('danh_muc_data_dau_vao', $editableFields)) disabled @endif>
-                                                    <option data-in="bg-primary" value="128" {{ $customer->danh_muc_data_dau_vao == '128' ? 'selected' : '' }}>Mua (BI)</option>
-                                                    <option data-in="bg-secondary" value="129" {{ $customer->danh_muc_data_dau_vao == '129' ? 'selected' : '' }}>Quảng cáo (AD)</option>
-                                                    <option data-in="bg-success" value="130" {{ $customer->danh_muc_data_dau_vao == '130' ? 'selected' : '' }}>Online (OR)</option>
-                                                    <option data-in="bg-warning" value="131" {{ $customer->danh_muc_data_dau_vao == '131' ? 'selected' : '' }}>Offline (OF)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">Nguồn (#151): </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Nhóm nguồn:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" data-select2-selector="group" id="nhom_nguon" name="nhom_nguon" @if(!in_array('nhom_nguon', $editableFields)) disabled @endif>
+                                                            <option value="136" {{ $customer->nhom_nguon == '136' ? 'selected' : '' }}>MKT</option>
+                                                            <option value="137" {{ $customer->nhom_nguon == '137' ? 'selected' : '' }}>PNS</option>
+                                                            <option value="138" {{ $customer->nhom_nguon == '138' ? 'selected' : '' }}>SR</option>
+                                                            <option value="139" {{ $customer->nhom_nguon == '139' ? 'selected' : '' }}>Collab</option>
+                                                            <option value="140" {{ $customer->nhom_nguon == '140' ? 'selected' : '' }}>Internal</option>
+                                                            <option value="141" {{ $customer->nhom_nguon == '141' ? 'selected' : '' }}>BR</option>
+                                                            <option value="142" {{ $customer->nhom_nguon == '142' ? 'selected' : '' }}>BOD</option>
+                                                            <option value="143" {{ $customer->nhom_nguon == '143' ? 'selected' : '' }}>FOC</option>
+                                                            <option value="144" {{ $customer->nhom_nguon == '144' ? 'selected' : '' }}>Walk-in</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="source" id="nguon" name="nguon" @if(!in_array('nguon', $editableFields)) disabled @endif>
-                                                    <option value="174" {{ $customer->nguon == '174' ? 'selected' : '' }}>Cá nhân</option>
-                                                    <option value="108" {{ $customer->nguon == '108' ? 'selected' : '' }}>FB</option>
-                                                    <option value="109" {{ $customer->nguon == '109' ? 'selected' : '' }}>Youtube</option>
-                                                    <option value="110" {{ $customer->nguon == '110' ? 'selected' : '' }}>Zalo</option>
-                                                    <option value="111" {{ $customer->nguon == '111' ? 'selected' : '' }}>Tiktok</option>
-                                                    <option value="112" {{ $customer->nguon == '112' ? 'selected' : '' }}>Web</option>
-                                                    <option value="113" {{ $customer->nguon == '113' ? 'selected' : '' }}>Cali</option>
-                                                    <option value="114" {{ $customer->nguon == '114' ? 'selected' : '' }}>Elite</option>
-                                                    <option value="115" {{ $customer->nguon == '115' ? 'selected' : '' }}>SR</option>
-                                                    <option value="116" {{ $customer->nguon == '116' ? 'selected' : '' }}>Collab</option>
-                                                    <option value="117" {{ $customer->nguon == '117' ? 'selected' : '' }}>Internal</option>
-                                                    <option value="118" {{ $customer->nguon == '118' ? 'selected' : '' }}>Mar</option>
-                                                    <option value="119" {{ $customer->nguon == '119' ? 'selected' : '' }}>PNS</option>
-                                                    <option value="120" {{ $customer->nguon == '120' ? 'selected' : '' }}>SR</option>
-                                                    <option value="121" {{ $customer->nguon == '121' ? 'selected' : '' }}>Collab</option>
-                                                    <option value="122" {{ $customer->nguon == '122' ? 'selected' : '' }}>Internal</option>
-                                                    <option value="123" {{ $customer->nguon == '123' ? 'selected' : '' }}>BOD</option>
-                                                    <option value="124" {{ $customer->nguon == '124' ? 'selected' : '' }}>FOC</option>
-                                                    <option value="125" {{ $customer->nguon == '125' ? 'selected' : '' }}>BOD</option>
-                                                    <option value="126" {{ $customer->nguon == '126' ? 'selected' : '' }}>FOC</option>
-                                                    <option value="127" {{ $customer->nguon == '127' ? 'selected' : '' }}>Walk-in</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">Mảng kinh doanh (#153): </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="business" id="mang_kinh_doanh" name="mang_kinh_doanh" @if(!in_array('mang_kinh_doanh', $editableFields)) disabled @endif>
-                                                    <option value="132" {{ $customer->mang_kinh_doanh == '132' ? 'selected' : '' }}>MJB</option>
-                                                    <option value="133" {{ $customer->mang_kinh_doanh == '133' ? 'selected' : '' }}>LMC</option>
-                                                    <option value="134" {{ $customer->mang_kinh_doanh == '134' ? 'selected' : '' }}>LGP</option>
-                                                    <option value="135" {{ $customer->mang_kinh_doanh == '135' ? 'selected' : '' }}>LGG</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">Nhóm nguồn (#154): </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="group" id="nhom_nguon" name="nhom_nguon" @if(!in_array('nhom_nguon', $editableFields)) disabled @endif>
-                                                    <option value="136" {{ $customer->nhom_nguon == '136' ? 'selected' : '' }}>MKT</option>
-                                                    <option value="137" {{ $customer->nhom_nguon == '137' ? 'selected' : '' }}>PNS</option>
-                                                    <option value="138" {{ $customer->nhom_nguon == '138' ? 'selected' : '' }}>SR</option>
-                                                    <option value="139" {{ $customer->nhom_nguon == '139' ? 'selected' : '' }}>Collab</option>
-                                                    <option value="140" {{ $customer->nhom_nguon == '140' ? 'selected' : '' }}>Internal</option>
-                                                    <option value="141" {{ $customer->nhom_nguon == '141' ? 'selected' : '' }}>BR</option>
-                                                    <option value="142" {{ $customer->nhom_nguon == '142' ? 'selected' : '' }}>BOD</option>
-                                                    <option value="143" {{ $customer->nhom_nguon == '143' ? 'selected' : '' }}>FOC</option>
-                                                    <option value="144" {{ $customer->nhom_nguon == '144' ? 'selected' : '' }}>Walk-in</option>
-                                                </select>
-                                            </div>
+                                            <div class="col-lg-4"></div>
                                         </div>
                                     </div>
                                          {{-- ###    --}}
@@ -496,32 +489,21 @@
 
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Ref] Chính sách người giới thiệu</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="chinh_sach_ref" placeholder="[Ref] Chính sách người giới thiệu" name="chinh_sach_ref" value="{{ $customer->chinh_sach_ref ?? '' }}" @if(!in_array('chinh_sach_ref', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Chính sách ref:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="chinh_sach_ref" name="chinh_sach_ref" value="{{ $customer->chinh_sach_ref ?? '' }}" @if(!in_array('chinh_sach_ref', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Ref] Dịch vụ</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="dich_vu_ref" placeholder="[Ref] Dịch vụ" name="dich_vu_ref" value="{{ $customer->dich_vu_ref ?? '' }}" @if(!in_array('dich_vu_ref', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Dịch vụ ref:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="dich_vu_ref" name="dich_vu_ref" value="{{ $customer->dich_vu_ref ?? '' }}" @if(!in_array('dich_vu_ref', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Ref] Giá trị</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="gia_tri_ref" placeholder="[Ref] Giá trị" name="gia_tri_ref" value="{{ $customer->gia_tri_ref ?? '' }}" @if(!in_array('gia_tri_ref', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Giá trị ref:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="gia_tri_ref" name="gia_tri_ref" value="{{ $customer->gia_tri_ref ?? '' }}" @if(!in_array('gia_tri_ref', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -535,108 +517,100 @@
                                                 <span class="fs-12 fw-normal text-muted text-truncate-1-line">[Tele] Gọi điện</span>
                                             </h5>
                                         </div>
-                                        {{-- Chưa fix --}}
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Show] Chuyên viên tư vấn:</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">CV tư vấn:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" data-select2-selector="chuyen_vien_tu_van">
+                                                            <option value="" disabled selected>Chọn chuyên viên</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" data-select2-selector="chuyen_vien_tu_van">
-                                                    <option value="" disabled selected>Chọn chuyên viên tư vấn</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
-                                        </div>
-                                        {{-- Chưa fix --}}
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Tele] Bệnh lý: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Bệnh lý:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" id="benh_ly" name="benh_ly" data-select2-selector="benh_ly" @if(!in_array('benh_ly', $editableFields)) disabled @endif>
+                                                            <option value="58" {{ $customer->benh_ly == '58' ? 'selected' : '' }}>Tim mạch – Huyết áp</option>
+                                                            <option value="59" {{ $customer->benh_ly == '59' ? 'selected' : '' }}>Tiểu đường – Chuyển hoá</option>
+                                                            <option value="60" {{ $customer->benh_ly == '60' ? 'selected' : '' }}>Gan – Thận – Tiêu hoá</option>
+                                                            <option value="61" {{ $customer->benh_ly == '61' ? 'selected' : '' }}>Cơ xương khớp – Vận động</option>
+                                                            <option value="62" {{ $customer->benh_ly == '62' ? 'selected' : '' }}>Nội tiết – Nam - Nữ</option>
+                                                            <option value="63" {{ $customer->benh_ly == '63' ? 'selected' : '' }}>Thần kinh – Giấc ngủ – Căng thẳng</option>
+                                                            <option value="64" {{ $customer->benh_ly == '64' ? 'selected' : '' }}>Miễn dịch – Tự Miễn – Ung thư</option>
+                                                            <option value="65" {{ $customer->benh_ly == '65' ? 'selected' : '' }}>Lão hoá – Trì trệ</option>
+                                                            <option value="66" {{ $customer->benh_ly == '66' ? 'selected' : '' }}>Tổng hợp nhiều bệnh lý</option>
+                                                            <option value="67" {{ $customer->benh_ly == '67' ? 'selected' : '' }}>Bệnh lý đặc biệt khác</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" id="benh_ly" name="benh_ly" data-select2-selector="benh_ly" @if(!in_array('benh_ly', $editableFields)) disabled @endif>
-                                                    <option value="58" {{ $customer->benh_ly == '58' ? 'selected' : '' }}>Tim mạch – Huyết áp</option>
-                                                    <option value="59" {{ $customer->benh_ly == '59' ? 'selected' : '' }}>Tiểu đường – Chuyển hoá</option>
-                                                    <option value="60" {{ $customer->benh_ly == '60' ? 'selected' : '' }}>Gan – Thận – Tiêu hoá</option>
-                                                    <option value="61" {{ $customer->benh_ly == '61' ? 'selected' : '' }}>Cơ xương khớp – Vận động</option>
-                                                    <option value="62" {{ $customer->benh_ly == '62' ? 'selected' : '' }}>Nội tiết – Nam - Nữ</option>
-                                                    <option value="63" {{ $customer->benh_ly == '63' ? 'selected' : '' }}>Thần kinh – Giấc ngủ – Căng thẳng</option>
-                                                    <option value="64" {{ $customer->benh_ly == '64' ? 'selected' : '' }}>Miễn dịch – Tự Miễn – Ung thư</option>
-                                                    <option value="65" {{ $customer->benh_ly == '65' ? 'selected' : '' }}>Lão hoá – Trì trệ</option>
-                                                    <option value="66" {{ $customer->benh_ly == '66' ? 'selected' : '' }}>Tổng hợp nhiều bệnh lý</option>
-                                                    <option value="67" {{ $customer->benh_ly == '67' ? 'selected' : '' }}>Bệnh lý đặc biệt khác</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Tele] Dịch vụ quan tâm</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="dich_vu_quan_tam" placeholder="[Tele] Dịch vụ quan tâm" name="dich_vu_quan_tam" value="{{ $customer->dich_vu_quan_tam ?? '' }}" @if(!in_array('dich_vu_quan_tam', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">DV quan tâm:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="dich_vu_quan_tam" name="dich_vu_quan_tam" value="{{ $customer->dich_vu_quan_tam ?? '' }}" @if(!in_array('dich_vu_quan_tam', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Tele] Tài chính: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Tài chính:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="tai_chinh" data-select2-selector="tai_chinh" @if(!in_array('tai_chinh', $editableFields)) disabled @endif>
+                                                            <option value="Tốt" {{ $customer->tai_chinh == 'Tốt' ? 'selected' : '' }}>Tốt</option>
+                                                            <option value="Bình thường" {{ $customer->tai_chinh == 'Bình thường' ? 'selected' : '' }}>Bình thường</option>
+                                                            <option value="Yếu" {{ $customer->tai_chinh == 'Yếu' ? 'selected' : '' }}>Yếu</option>
+                                                            <option value="Không xác định" {{ $customer->tai_chinh == 'Không xác định' ? 'selected' : '' }}>Không xác định</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="tai_chinh" data-select2-selector="tai_chinh" @if(!in_array('tai_chinh', $editableFields)) disabled @endif>
-                                                    <option value="Tốt" {{ $customer->tai_chinh == 'Tốt' ? 'selected' : '' }}>Tốt</option>
-                                                    <option value="Bình thường" {{ $customer->tai_chinh == 'Bình thường' ? 'selected' : '' }}>Bình thường</option>
-                                                    <option value="Yếu" {{ $customer->tai_chinh == 'Yếu' ? 'selected' : '' }}>Yếu</option>
-                                                    <option value="Không xác định" {{ $customer->tai_chinh == 'Không xác định' ? 'selected' : '' }}>Không xác định</option>
-                                                </select>
-                                            </div>
-                                        </div>
-          
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="ngay_booking_du_kien" class="fw-semibold">[Tele] Ngày booking dự kiến: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Ngày BK DK:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-select form-control max-select" data-select2-selector="tag" name="ngay_booking_du_kien" @if(!in_array('ngay_booking_du_kien', $editableFields)) disabled @endif>
+                                                            <option value="" disabled selected>Chọn</option>
+                                                            <option value="145" {{ $customer->ngay_booking_du_kien == '145' ? 'selected' : '' }}>Lên đúng lịch</option>
+                                                            <option value="146" {{ $customer->ngay_booking_du_kien == '146' ? 'selected' : '' }}>Dời lịch</option>
+                                                            <option value="147" {{ $customer->ngay_booking_du_kien == '147' ? 'selected' : '' }}>Hủy lịch</option>
+                                                            <option value="148" {{ $customer->ngay_booking_du_kien == '148' ? 'selected' : '' }}>Chốt nóng</option>
+                                                            <option value="149" {{ $customer->ngay_booking_du_kien == '149' ? 'selected' : '' }}>Không đặt được lịch</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <select class="form-select form-control max-select" data-select2-selector="tag" name="ngay_booking_du_kien" @if(!in_array('ngay_booking_du_kien', $editableFields)) disabled @endif>
-                                                        <option value="" disabled selected>Chọn ngày booking dự kiến</option>
-                                                        <option value="145" {{ $customer->ngay_booking_du_kien == '145' ? 'selected' : '' }}>Lên đúng lịch</option>
-                                                        <option value="146" {{ $customer->ngay_booking_du_kien == '146' ? 'selected' : '' }}>Dời lịch</option>
-                                                        <option value="147" {{ $customer->ngay_booking_du_kien == '147' ? 'selected' : '' }}>Hủy lịch</option>
-                                                        <option value="148" {{ $customer->ngay_booking_du_kien == '148' ? 'selected' : '' }}>Chốt nóng</option>
-                                                        <option value="149" {{ $customer->ngay_booking_du_kien == '149' ? 'selected' : '' }}>Không đặt được lịch</option>
-                                                    </select>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Booking:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="booking" data-select2-selector="booking" @if(!in_array('booking', $editableFields)) disabled @endif>
+                                                            <option value="" disabled selected>Chọn</option>
+                                                            <option value="72" {{ $customer->booking == '72' ? 'selected' : '' }}>Lên đúng lịch</option>
+                                                            <option value="73" {{ $customer->booking == '73' ? 'selected' : '' }}>Dời lịch</option>
+                                                            <option value="74" {{ $customer->booking == '74' ? 'selected' : '' }}>Hủy lịch</option>
+                                                            <option value="75" {{ $customer->booking == '75' ? 'selected' : '' }}>Chốt nóng</option>
+                                                            <option value="76" {{ $customer->booking == '76' ? 'selected' : '' }}>Không đặt được lịch</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Tele] Booking </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="booking" data-select2-selector="booking" @if(!in_array('booking', $editableFields)) disabled @endif>
-                                                    <option value="" disabled selected>Chọn ngày booking</option>
-                                                    <option value="72" {{ $customer->booking == '72' ? 'selected' : '' }}>Lên đúng lịch</option>
-                                                    <option value="73" {{ $customer->booking == '73' ? 'selected' : '' }}>Dời lịch</option>
-                                                    <option value="74" {{ $customer->booking == '74' ? 'selected' : '' }}>Hủy lịch</option>
-                                                    <option value="75" {{ $customer->booking == '75' ? 'selected' : '' }}>Chốt nóng</option>
-                                                    <option value="76" {{ $customer->booking == '76' ? 'selected' : '' }}>Không đặt được lịch</option>
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">Chấm điểm </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="cham_diem" placeholder="Chấm điểm" name="cham_diem" value="{{ $customer->cham_diem ?? '' }}" @if(!in_array('cham_diem', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Chấm điểm:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="cham_diem" name="cham_diem" value="{{ $customer->cham_diem ?? '' }}" @if(!in_array('cham_diem', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-4"></div>
                                         </div>
                                     </div>
                                     <hr class="my-0">
@@ -648,67 +622,69 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Show]Dịch vụ thực hiện: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="dich_vu_thuc_hien" data-select2-selector="dich_vu_thuc_hien" @if(!in_array('dich_vu_thuc_hien', $editableFields)) disabled @endif>
-                                                    <option value="STC Japan" {{ $customer->dich_vu_thuc_hien == 'STC Japan' ? 'selected' : '' }}>STC Japan</option>
-                                                    <option value="NK" {{ $customer->dich_vu_thuc_hien == 'NK' ? 'selected' : '' }}>NK</option>
-                                                    <option value="Lọc máu" {{ $customer->dich_vu_thuc_hien == 'Lọc máu' ? 'selected' : '' }}>Lọc máu</option>
-                                                    <option value="Ningen Dock Premium" {{ $customer->dich_vu_thuc_hien == 'Ningen Dock Premium' ? 'selected' : '' }}>Ningen Dock Premium</option>
-                                                    <option value="Recells" {{ $customer->dich_vu_thuc_hien == 'Recells' ? 'selected' : '' }}>Recells</option>
-                                                    <option value="Xsome" {{ $customer->dich_vu_thuc_hien == 'Xsome' ? 'selected' : '' }}>Xsome</option>
-                                                    <option value="BJR" {{ $customer->dich_vu_thuc_hien == 'BJR' ? 'selected' : '' }}>BJR</option>
-                                                    <option value="MesoF" {{ $customer->dich_vu_thuc_hien == 'MesoF' ? 'selected' : '' }}>MesoF</option>
-                                                    <option value="NMN IV" {{ $customer->dich_vu_thuc_hien == 'NMN IV' ? 'selected' : '' }}>NMN IV</option>
-                                                    <option value="NMN Cap" {{ $customer->dich_vu_thuc_hien == 'NMN Cap' ? 'selected' : '' }}>NMN Cap</option>
-                                                    <option value="Thải độc" {{ $customer->dich_vu_thuc_hien == 'Thải độc' ? 'selected' : '' }}>Thải độc</option>
-                                                    <option value="Miễn dịch" {{ $customer->dich_vu_thuc_hien == 'Miễn dịch' ? 'selected' : '' }}>Miễn dịch</option>
-                                                    <option value="Gói khám VVIP nam" {{ $customer->dich_vu_thuc_hien == 'Gói khám VVIP nam' ? 'selected' : '' }}>Gói khám VVIP nam</option>
-                                                    <option value="Gói khám VVIP nữ" {{ $customer->dich_vu_thuc_hien == 'Gói khám VVIP nữ' ? 'selected' : '' }}>Gói khám VVIP nữ</option>
-                                                    <option value="Gói khám cơ bản" {{ $customer->dich_vu_thuc_hien == 'Gói khám cơ bản' ? 'selected' : '' }}>Gói khám cơ bản</option>
-                                                    <option value="Gói khám tổng quát" {{ $customer->dich_vu_thuc_hien == 'Gói khám tổng quát' ? 'selected' : '' }}>Gói khám tổng quát</option>
-                                                    <option value="Chăm sóc da" {{ $customer->dich_vu_thuc_hien == 'Chăm sóc da' ? 'selected' : '' }}>Chăm sóc da</option>
-                                                    <option value="Y học phương đông (AP)" {{ $customer->dich_vu_thuc_hien == 'Y học phương đông (AP)' ? 'selected' : '' }}>Y học phương đông (AP)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">[Show] Bác sĩ tư vấn: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="bac_si_tu_van" data-select2-selector="bac_si_tu_van" @if(!in_array('bac_si_tu_van', $editableFields)) disabled @endif>
-                                                    <option value="Lê Tuyên Hồng Dương" {{ $customer->bac_si_tu_van == 'Lê Tuyên Hồng Dương' ? 'selected' : '' }}>Lê Tuyên Hồng Dương</option>
-                                                    <option value="Nguyễn Tiến Dũng" {{ $customer->bac_si_tu_van == 'Nguyễn Tiến Dũng' ? 'selected' : '' }}>Nguyễn Tiến Dũng</option>
-                                                    <option value="Ngọc Bình" {{ $customer->bac_si_tu_van == 'Ngọc Bình' ? 'selected' : '' }}>Ngọc Bình</option>
-                                                    <option value="Phan Thị Thanh Vân" {{ $customer->bac_si_tu_van == 'Phan Thị Thanh Vân' ? 'selected' : '' }}>Phan Thị Thanh Vân</option>
-                                                    <option value="Hoàng Văn Đông" {{ $customer->bac_si_tu_van == 'Hoàng Văn Đông' ? 'selected' : '' }}>Hoàng Văn Đông</option>
-                                                    <option value="Dương Đức Việt" {{ $customer->bac_si_tu_van == 'Dương Đức Việt' ? 'selected' : '' }}>Dương Đức Việt</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">[Show] Phân loại show: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="phan_loai_show" data-select2-selector="phan_loai_show" @if(!in_array('phan_loai_show', $editableFields)) disabled @endif>
-                                                    <option value="82" {{ $customer->phan_loai_show == '82' ? 'selected' : '' }}>Member log</option>
-                                                    <option value="83" {{ $customer->phan_loai_show == '83' ? 'selected' : '' }}>Follow</option>
-                                                    <option value="84" {{ $customer->phan_loai_show == '84' ? 'selected' : '' }}>Miss sale log</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Show] Lịch sử tư vấn</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="lich_su_tu_van" placeholder="[Show] Lịch sử tư vấn" name="lich_su_tu_van" value="{{ $customer->lich_su_tu_van ?? '' }}" @if(!in_array('lich_su_tu_van', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">DV thực hiện:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="dich_vu_thuc_hien" data-select2-selector="dich_vu_thuc_hien" @if(!in_array('dich_vu_thuc_hien', $editableFields)) disabled @endif>
+                                                            <option value="STC Japan" {{ $customer->dich_vu_thuc_hien == 'STC Japan' ? 'selected' : '' }}>STC Japan</option>
+                                                            <option value="NK" {{ $customer->dich_vu_thuc_hien == 'NK' ? 'selected' : '' }}>NK</option>
+                                                            <option value="Lọc máu" {{ $customer->dich_vu_thuc_hien == 'Lọc máu' ? 'selected' : '' }}>Lọc máu</option>
+                                                            <option value="Ningen Dock Premium" {{ $customer->dich_vu_thuc_hien == 'Ningen Dock Premium' ? 'selected' : '' }}>Ningen Dock Premium</option>
+                                                            <option value="Recells" {{ $customer->dich_vu_thuc_hien == 'Recells' ? 'selected' : '' }}>Recells</option>
+                                                            <option value="Xsome" {{ $customer->dich_vu_thuc_hien == 'Xsome' ? 'selected' : '' }}>Xsome</option>
+                                                            <option value="BJR" {{ $customer->dich_vu_thuc_hien == 'BJR' ? 'selected' : '' }}>BJR</option>
+                                                            <option value="MesoF" {{ $customer->dich_vu_thuc_hien == 'MesoF' ? 'selected' : '' }}>MesoF</option>
+                                                            <option value="NMN IV" {{ $customer->dich_vu_thuc_hien == 'NMN IV' ? 'selected' : '' }}>NMN IV</option>
+                                                            <option value="NMN Cap" {{ $customer->dich_vu_thuc_hien == 'NMN Cap' ? 'selected' : '' }}>NMN Cap</option>
+                                                            <option value="Thải độc" {{ $customer->dich_vu_thuc_hien == 'Thải độc' ? 'selected' : '' }}>Thải độc</option>
+                                                            <option value="Miễn dịch" {{ $customer->dich_vu_thuc_hien == 'Miễn dịch' ? 'selected' : '' }}>Miễn dịch</option>
+                                                            <option value="Gói khám VVIP nam" {{ $customer->dich_vu_thuc_hien == 'Gói khám VVIP nam' ? 'selected' : '' }}>Gói khám VVIP nam</option>
+                                                            <option value="Gói khám VVIP nữ" {{ $customer->dich_vu_thuc_hien == 'Gói khám VVIP nữ' ? 'selected' : '' }}>Gói khám VVIP nữ</option>
+                                                            <option value="Gói khám cơ bản" {{ $customer->dich_vu_thuc_hien == 'Gói khám cơ bản' ? 'selected' : '' }}>Gói khám cơ bản</option>
+                                                            <option value="Gói khám tổng quát" {{ $customer->dich_vu_thuc_hien == 'Gói khám tổng quát' ? 'selected' : '' }}>Gói khám tổng quát</option>
+                                                            <option value="Chăm sóc da" {{ $customer->dich_vu_thuc_hien == 'Chăm sóc da' ? 'selected' : '' }}>Chăm sóc da</option>
+                                                            <option value="Y học phương đông (AP)" {{ $customer->dich_vu_thuc_hien == 'Y học phương đông (AP)' ? 'selected' : '' }}>Y học phương đông (AP)</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">BS tư vấn:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="bac_si_tu_van" data-select2-selector="bac_si_tu_van" @if(!in_array('bac_si_tu_van', $editableFields)) disabled @endif>
+                                                            <option value="Lê Tuyên Hồng Dương" {{ $customer->bac_si_tu_van == 'Lê Tuyên Hồng Dương' ? 'selected' : '' }}>Lê Tuyên Hồng Dương</option>
+                                                            <option value="Nguyễn Tiến Dũng" {{ $customer->bac_si_tu_van == 'Nguyễn Tiến Dũng' ? 'selected' : '' }}>Nguyễn Tiến Dũng</option>
+                                                            <option value="Ngọc Bình" {{ $customer->bac_si_tu_van == 'Ngọc Bình' ? 'selected' : '' }}>Ngọc Bình</option>
+                                                            <option value="Phan Thị Thanh Vân" {{ $customer->bac_si_tu_van == 'Phan Thị Thanh Vân' ? 'selected' : '' }}>Phan Thị Thanh Vân</option>
+                                                            <option value="Hoàng Văn Đông" {{ $customer->bac_si_tu_van == 'Hoàng Văn Đông' ? 'selected' : '' }}>Hoàng Văn Đông</option>
+                                                            <option value="Dương Đức Việt" {{ $customer->bac_si_tu_van == 'Dương Đức Việt' ? 'selected' : '' }}>Dương Đức Việt</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">PL show:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="phan_loai_show" data-select2-selector="phan_loai_show" @if(!in_array('phan_loai_show', $editableFields)) disabled @endif>
+                                                            <option value="82" {{ $customer->phan_loai_show == '82' ? 'selected' : '' }}>Member log</option>
+                                                            <option value="83" {{ $customer->phan_loai_show == '83' ? 'selected' : '' }}>Follow</option>
+                                                            <option value="84" {{ $customer->phan_loai_show == '84' ? 'selected' : '' }}>Miss sale log</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row mb-4 align-items-center">
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">LS tư vấn:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="lich_su_tu_van" name="lich_su_tu_van" value="{{ $customer->lich_su_tu_van ?? '' }}" @if(!in_array('lich_su_tu_van', $editableFields)) disabled @endif></div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-4"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -722,106 +698,79 @@
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Show] Hợp đồng</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Hợp đồng:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="hop_dong" name="hop_dong" value="{{ $customer->hop_dong ?? '' }}" @if(!in_array('hop_dong', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="hop_dong" placeholder="Hợp đồng" name="hop_dong" value="{{ $customer->hop_dong ?? '' }}" @if(!in_array('hop_dong', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Dịch vụ:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="dich_vu" data-select2-selector="dich_vu" @if(!in_array('dich_vu', $editableFields)) disabled @endif>
+                                                            <option value="STC Japan" {{ $customer->dich_vu == 'STC Japan' ? 'selected' : '' }}>STC Japan</option>
+                                                            <option value="NK" {{ $customer->dich_vu == 'NK' ? 'selected' : '' }}>NK</option>
+                                                            <option value="Lọc máu" {{ $customer->dich_vu == 'Lọc máu' ? 'selected' : '' }}>Lọc máu</option>
+                                                            <option value="Ningen Dock Premium" {{ $customer->dich_vu == 'Ningen Dock Premium' ? 'selected' : '' }}>Ningen Dock Premium</option>
+                                                            <option value="Recells" {{ $customer->dich_vu == 'Recells' ? 'selected' : '' }}>Recells</option>
+                                                            <option value="Xsome" {{ $customer->dich_vu == 'Xsome' ? 'selected' : '' }}>Xsome</option>
+                                                            <option value="BJR" {{ $customer->dich_vu == 'BJR' ? 'selected' : '' }}>BJR</option>
+                                                            <option value="MesoF" {{ $customer->dich_vu == 'MesoF' ? 'selected' : '' }}>MesoF</option>
+                                                            <option value="NMN IV" {{ $customer->dich_vu == 'NMN IV' ? 'selected' : '' }}>NMN IV</option>
+                                                            <option value="NMN Cap" {{ $customer->dich_vu == 'NMN Cap' ? 'selected' : '' }}>NMN Cap</option>
+                                                            <option value="Thải độc" {{ $customer->dich_vu == 'Thải độc' ? 'selected' : '' }}>Thải độc</option>
+                                                            <option value="Miễn dịch" {{ $customer->dich_vu == 'Miễn dịch' ? 'selected' : '' }}>Miễn dịch</option>
+                                                            <option value="Gói khám VVIP nam" {{ $customer->dich_vu == 'Gói khám VVIP nam' ? 'selected' : '' }}>Gói khám VVIP nam</option>
+                                                            <option value="Gói khám VVIP nữ" {{ $customer->dich_vu == 'Gói khám VVIP nữ' ? 'selected' : '' }}>Gói khám VVIP nữ</option>
+                                                            <option value="Gói khám cơ bản" {{ $customer->dich_vu == 'Gói khám cơ bản' ? 'selected' : '' }}>Gói khám cơ bản</option>
+                                                            <option value="Gói khám tổng quát" {{ $customer->dich_vu == 'Gói khám tổng quát' ? 'selected' : '' }}>Gói khám tổng quát</option>
+                                                            <option value="Chăm sóc da" {{ $customer->dich_vu == 'Chăm sóc da' ? 'selected' : '' }}>Chăm sóc da</option>
+                                                            <option value="Y học phương đông (AP)" {{ $customer->dich_vu == 'Y học phương đông (AP)' ? 'selected' : '' }}>Y học phương đông (AP)</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Tổng giá trị:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="tong_gia_tri" name="tong_gia_tri" value="{{ $customer->tong_gia_tri ?? '' }}" @if(!in_array('tong_gia_tri', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[DD] Dịch vụ: </label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Công nợ:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="cong_no" name="cong_no" value="{{ $customer->cong_no ?? '' }}" @if(!in_array('cong_no', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="dich_vu" data-select2-selector="dich_vu" @if(!in_array('dich_vu', $editableFields)) disabled @endif>
-                                                    <option value="STC Japan" {{ $customer->dich_vu == 'STC Japan' ? 'selected' : '' }}>STC Japan</option>
-                                                    <option value="NK" {{ $customer->dich_vu == 'NK' ? 'selected' : '' }}>NK</option>
-                                                    <option value="Lọc máu" {{ $customer->dich_vu == 'Lọc máu' ? 'selected' : '' }}>Lọc máu</option>
-                                                    <option value="Ningen Dock Premium" {{ $customer->dich_vu == 'Ningen Dock Premium' ? 'selected' : '' }}>Ningen Dock Premium</option>
-                                                    <option value="Recells" {{ $customer->dich_vu == 'Recells' ? 'selected' : '' }}>Recells</option>
-                                                    <option value="Xsome" {{ $customer->dich_vu == 'Xsome' ? 'selected' : '' }}>Xsome</option>
-                                                    <option value="BJR" {{ $customer->dich_vu == 'BJR' ? 'selected' : '' }}>BJR</option>
-                                                    <option value="MesoF" {{ $customer->dich_vu == 'MesoF' ? 'selected' : '' }}>MesoF</option>
-                                                    <option value="NMN IV" {{ $customer->dich_vu == 'NMN IV' ? 'selected' : '' }}>NMN IV</option>
-                                                    <option value="NMN Cap" {{ $customer->dich_vu == 'NMN Cap' ? 'selected' : '' }}>NMN Cap</option>
-                                                    <option value="Thải độc" {{ $customer->dich_vu == 'Thải độc' ? 'selected' : '' }}>Thải độc</option>
-                                                    <option value="Miễn dịch" {{ $customer->dich_vu == 'Miễn dịch' ? 'selected' : '' }}>Miễn dịch</option>
-                                                    <option value="Gói khám VVIP nam" {{ $customer->dich_vu == 'Gói khám VVIP nam' ? 'selected' : '' }}>Gói khám VVIP nam</option>
-                                                    <option value="Gói khám VVIP nữ" {{ $customer->dich_vu == 'Gói khám VVIP nữ' ? 'selected' : '' }}>Gói khám VVIP nữ</option>
-                                                    <option value="Gói khám cơ bản" {{ $customer->dich_vu == 'Gói khám cơ bản' ? 'selected' : '' }}>Gói khám cơ bản</option>
-                                                    <option value="Gói khám tổng quát" {{ $customer->dich_vu == 'Gói khám tổng quát' ? 'selected' : '' }}>Gói khám tổng quát</option>
-                                                    <option value="Chăm sóc da" {{ $customer->dich_vu == 'Chăm sóc da' ? 'selected' : '' }}>Chăm sóc da</option>
-                                                    <option value="Y học phương đông (AP)" {{ $customer->dich_vu == 'Y học phương đông (AP)' ? 'selected' : '' }}>Y học phương đông (AP)</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[DD] Tổng giá trị</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Ngày thu DK:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="ngay_thu_du_kien" name="ngay_thu_du_kien" value="{{ $customer->ngay_thu_du_kien ?? '' }}" @if(!in_array('ngay_thu_du_kien', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="tong_gia_tri" placeholder="Tổng giá trị" name="tong_gia_tri" value="{{ $customer->tong_gia_tri ?? '' }}" @if(!in_array('tong_gia_tri', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Tiền thu DK:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="tien_thu_du_kien" name="tien_thu_du_kien" value="{{ $customer->tien_thu_du_kien ?? '' }}" @if(!in_array('tien_thu_du_kien', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[DD] Công nợ</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="cong_no" placeholder="Công nợ" name="cong_no" value="{{ $customer->cong_no ?? '' }}" @if(!in_array('cong_no', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Ngày thu TT:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="ngay_thu_thuc_te" name="ngay_thu_thuc_te" value="{{ $customer->ngay_thu_thuc_te ?? '' }}" @if(!in_array('ngay_thu_thuc_te', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[DD] Ngày thu dự kiến</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="ngay_thu_du_kien" placeholder="Ngày thu dự kiến" name="ngay_thu_du_kien" value="{{ $customer->ngay_thu_du_kien ?? '' }}" @if(!in_array('ngay_thu_du_kien', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Tiền thu TT:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="tien_thu_thuc_te" name="tien_thu_thuc_te" value="{{ $customer->tien_thu_thuc_te ?? '' }}" @if(!in_array('tien_thu_thuc_te', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[DD] Tiền thu dự kiến</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="tien_thu_du_kien" placeholder="Tiền thu dự kiến" name="tien_thu_du_kien" value="{{ $customer->tien_thu_du_kien ?? '' }}" @if(!in_array('tien_thu_du_kien', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[DD] Ngày thu thực tế</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="ngay_thu_thuc_te" placeholder="Ngày thu thực tế" name="ngay_thu_thuc_te" value="{{ $customer->ngay_thu_thuc_te ?? '' }}" @if(!in_array('ngay_thu_thuc_te', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[DD] Tiền thu thực tế</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="tien_thu_thuc_te" placeholder="Tiền thu thực tế" name="tien_thu_thuc_te" value="{{ $customer->tien_thu_thuc_te ?? '' }}" @if(!in_array('tien_thu_thuc_te', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
+                                            <div class="col-lg-4"></div>
                                         </div>
                                     </div>
                                     <hr class="my-0">
@@ -835,37 +784,29 @@
                                         
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[AF] Phân loại</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="phan_loai" data-select2-selector="phan_loai">
-                                                    <option value="New" {{ $customer->phan_loai == 'New' ? 'selected' : '' }}>New</option>
-                                                    <option value="Ex-new" {{ $customer->phan_loai == 'Ex-new' ? 'selected' : '' }}>Ex-new</option>
-                                                    <option value="Upgrade" {{ $customer->phan_loai == 'Upgrade' ? 'selected' : '' }}>Upgrade</option>
-                                                    <option value="Cross - sale" {{ $customer->phan_loai == 'Cross - sale' ? 'selected' : '' }}>Cross - sale</option>
-                                                    <option value="Not-yet" {{ $customer->phan_loai == 'Not-yet' ? 'selected' : '' }}>Not-yet</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[AF] Dịch vụ</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="dich_vu_af" placeholder="[AF] Dịch vụ" name="dich_vu_af" value="{{ $customer->dich_vu_af ?? '' }}" @if(!in_array('dich_vu_af', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Phân loại:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="phan_loai" data-select2-selector="phan_loai">
+                                                            <option value="New" {{ $customer->phan_loai == 'New' ? 'selected' : '' }}>New</option>
+                                                            <option value="Ex-new" {{ $customer->phan_loai == 'Ex-new' ? 'selected' : '' }}>Ex-new</option>
+                                                            <option value="Upgrade" {{ $customer->phan_loai == 'Upgrade' ? 'selected' : '' }}>Upgrade</option>
+                                                            <option value="Cross - sale" {{ $customer->phan_loai == 'Cross - sale' ? 'selected' : '' }}>Cross - sale</option>
+                                                            <option value="Not-yet" {{ $customer->phan_loai == 'Not-yet' ? 'selected' : '' }}>Not-yet</option>
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[AF] Lịch sử tư vấn</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">DV AF:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="dich_vu_af" name="dich_vu_af" value="{{ $customer->dich_vu_af ?? '' }}" @if(!in_array('dich_vu_af', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="lich_su_tu_van_af" placeholder="[AF] Lịch sử tư vấn" name="lich_su_tu_van_af" value="{{ $customer->lich_su_tu_van_af ?? '' }}" @if(!in_array('lich_su_tu_van_af', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">LS tư vấn AF:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="lich_su_tu_van_af" name="lich_su_tu_van_af" value="{{ $customer->lich_su_tu_van_af ?? '' }}" @if(!in_array('lich_su_tu_van_af', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -893,86 +834,67 @@
                                         
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label class="fw-semibold">[Booking] Booking thăm khám</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">BK thăm khám:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="dich_vu_booking" data-select2-selector="dich_vu_booking" @if(!in_array('dich_vu_booking', $editableFields)) disabled @endif>
+                                                            <option value="Tư vấn thăm khám" {{ $customer->dich_vu_booking == 'Tư vấn thăm khám' ? 'selected' : '' }}>Tư vấn thăm khám</option>
+                                                            <option value="Siêu âm" {{ $customer->dich_vu_booking == 'Siêu âm' ? 'selected' : '' }}>Siêu âm</option>
+                                                            <option value="Xét nghiệm máu" {{ $customer->dich_vu_booking == 'Xét nghiệm máu' ? 'selected' : '' }}>Xét nghiệm máu</option>
+                                                            <option value="Siêu âm và xét nghiệm" {{ $customer->dich_vu_booking == 'Siêu âm và xét nghiệm' ? 'selected' : '' }}>Siêu âm và xét nghiệm</option>
+                                                            <option value="Đọc kết quả" {{ $customer->dich_vu_booking == 'Đọc kết quả' ? 'selected' : '' }}>Đọc kết quả</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="dich_vu_booking" placeholder="[Booking] Booking thăm khám" data-select2-selector="dich_vu_booking" @if(!in_array('dich_vu_booking', $editableFields)) disabled @endif>
-                                                    <option value="Tư vấn thăm khám" {{ $customer->dich_vu_booking == 'Tư vấn thăm khám' ? 'selected' : '' }}>Tư vấn thăm khám</option>
-                                                    <option value="Siêu âm" {{ $customer->dich_vu_booking == 'Siêu âm' ? 'selected' : '' }}>Siêu âm</option>
-                                                    <option value="Xét nghiệm máu" {{ $customer->dich_vu_booking == 'Xét nghiệm máu' ? 'selected' : '' }}>Xét nghiệm máu</option>
-                                                    <option value="Siêu âm và xét nghiệm" {{ $customer->dich_vu_booking == 'Siêu âm và xét nghiệm' ? 'selected' : '' }}>Siêu âm và xét nghiệm</option>
-                                                    <option value="Đọc kết quả" {{ $customer->dich_vu_booking == 'Đọc kết quả' ? 'selected' : '' }}>Đọc kết quả</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Booking] Số lượng</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Số lượng:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="so_luong_booking" name="so_luong_booking" value="{{ $customer->so_luong_booking ?? '' }}" @if(!in_array('so_luong_booking', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="so_luong_booking" placeholder="[Booking] Số lượng" name="so_luong_booking" value="{{ $customer->so_luong_booking ?? '' }}" @if(!in_array('so_luong_booking', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Ngày DK SD:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="ngay_du_kien_su_dung" name="ngay_du_kien_su_dung" value="{{ $customer->ngay_du_kien_su_dung ?? '' }}" @if(!in_array('ngay_du_kien_su_dung', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Booking] Ngày dự kiến sử dụng</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Ngày TT SD:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="ngay_thuc_te_su_dung" name="ngay_thuc_te_su_dung" value="{{ $customer->ngay_thuc_te_su_dung ?? '' }}" @if(!in_array('ngay_thuc_te_su_dung', $editableFields)) disabled @endif></div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="ngay_du_kien_su_dung" placeholder="[Booking] Ngày dự kiến sử dụng" name="ngay_du_kien_su_dung" value="{{ $customer->ngay_du_kien_su_dung ?? '' }}" @if(!in_array('ngay_du_kien_su_dung', $editableFields)) disabled @endif>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Địa điểm:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-control" name="dia_diem_su_dung" data-select2-selector="dia_diem_su_dung" @if(!in_array('dia_diem_su_dung', $editableFields)) disabled @endif>
+                                                            <option value="21 Thái Phiên" {{ $customer->dia_diem_su_dung == '21 Thái Phiên' ? 'selected' : '' }}>21 Thái Phiên</option>
+                                                            <option value="59 Ngô Thì Nhậm" {{ $customer->dia_diem_su_dung == '59 Ngô Thì Nhậm' ? 'selected' : '' }}>59 Ngô Thì Nhậm</option>
+                                                            <option value="207 Nguyễn Văn Thủ" {{ $customer->dia_diem_su_dung == '207 Nguyễn Văn Thủ' ? 'selected' : '' }}>207 Nguyễn Văn Thủ</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Người TH:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="nguoi_thuc_hien" name="nguoi_thuc_hien" value="{{ $customer->nguoi_thuc_hien ?? '' }}" @if(!in_array('nguoi_thuc_hien', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
                                         </div>
-
-                                        
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Booking] Ngày thực tế sử dụng</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="ngay_thuc_te_su_dung" placeholder="[Booking] Ngày thực tế sử dụng" name="ngay_thuc_te_su_dung" value="{{ $customer->ngay_thuc_te_su_dung ?? '' }}" @if(!in_array('ngay_thuc_te_su_dung', $editableFields)) disabled @endif>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Feedback BK:</label></div>
+                                                    <div class="col-8"><input type="text" class="form-control" id="feedback_booking" name="feedback_booking" value="{{ $customer->feedback_booking ?? '' }}" @if(!in_array('feedback_booking', $editableFields)) disabled @endif></div>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">[Booking] Địa điểm sử dụng: </label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-control" name="dia_diem_su_dung" placeholder="[Booking] Địa điểm sử dụng" data-select2-selector="dia_diem_su_dung" @if(!in_array('dia_diem_su_dung', $editableFields)) disabled @endif>
-                                                    <option value="21 Thái Phiên" {{ $customer->dia_diem_su_dung == '21 Thái Phiên' ? 'selected' : '' }}>21 Thái Phiên</option>
-                                                    <option value="59 Ngô Thì Nhậm" {{ $customer->dia_diem_su_dung == '59 Ngô Thì Nhậm' ? 'selected' : '' }}>59 Ngô Thì Nhậm</option>
-                                                    <option value="207 Nguyễn Văn Thủ" {{ $customer->dia_diem_su_dung == '207 Nguyễn Văn Thủ' ? 'selected' : '' }}>207 Nguyễn Văn Thủ</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Booking] Người thực hiện</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="nguoi_thuc_hien" placeholder="[Booking] Người thực hiện" name="nguoi_thuc_hien" value="{{ $customer->nguoi_thuc_hien ?? '' }}" @if(!in_array('nguoi_thuc_hien', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="mailInput" class="fw-semibold">[Booking] Feedback booking</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <input type="text" class="form-control" id="feedback_booking" placeholder="[Booking] Feedback booking" name="feedback_booking" value="{{ $customer->feedback_booking ?? '' }}" @if(!in_array('feedback_booking', $editableFields)) disabled @endif>
-                                                </div>
-                                            </div>
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-4"></div>
                                         </div>
                                         
                                     </div>
@@ -987,73 +909,59 @@
                                             </h5>
                                         </div>
                                         
-                                        <div class="row mb-4 align-items-center">
+                                        <div class="row mb-4">
                                             <div class="col-lg-4">
-                                                <label for="aboutInput" class="fw-semibold">Thông tin chung: </label>
+                                                <div class="row">
+                                                    <div class="col-4"><label class="fw-semibold">Thông tin chung:</label></div>
+                                                    <div class="col-8">
+                                                        <textarea class="form-control" id="aboutInput" cols="30" rows="4" name="thong_tin_chung" @if(!in_array('thong_tin_chung', $editableFields)) disabled @endif>{{ $customer->thong_tin_chung ?? '' }}</textarea>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <div class="input-group">
-                                                    <div class="input-group-text"><i class="feather-type"></i></div>
-                                                    <textarea class="form-control" id="aboutInput" cols="30" rows="5" placeholder="Thông tin chung" name="thong_tin_chung" @if(!in_array('thong_tin_chung', $editableFields)) disabled @endif>{{ $customer->thong_tin_chung ?? '' }}</textarea>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Người GT:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id" disabled @if(!in_array('referrer_id', $editableFields)) disabled @endif>
+                                                            <option value="" disabled selected>Chọn người giới thiệu</option>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Người PT:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-select form-control max-select" data-select2-selector="tag" name="account_manager" @if(!in_array('account_manager', $editableFields)) disabled @endif>
+                                                            <option value="{{ auth()->user()->getfly_id }}" selected>{{ auth()->user()->name }}</option>
+                                                            @if(in_array('account_manager', $editableFields))
+                                                                @foreach ($users as $user)
+                                                                    @if($user->id !== auth()->id())
+                                                                        <option value="{{ $user->id }}">{{ $user->name }}</option>
+                                                                    @endif
+                                                                @endforeach
+                                                            @endif
+                                                        </select>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                        
                                         <div class="row mb-4 align-items-center">
                                             <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">[Ref] Người giới thiệu:</label>
+                                                <div class="row align-items-center">
+                                                    <div class="col-4"><label class="fw-semibold">Truy cập:</label></div>
+                                                    <div class="col-8">
+                                                        <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple disabled>
+                                                            <option value="1" selected>Admin</option>
+                                                            @foreach ($users as $user)
+                                                                <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div>
                                             </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="a.referrer_id" disabled @if(!in_array('referrer_id', $editableFields)) disabled @endif>
-                                                    <option value="" disabled selected>Chọn người giới thiệu</option>
-                                                    {{-- @foreach ($users as $user)
-                                                        <option value="{{ $user->id }}" class="{{ $customer->id }}" {{ $user->getfly_id && $customer->referrer_id == $user->getfly_id ? 'selected' : '' }} data-getfly_id="{{ $user->getfly_id }}">{{ $user->name }}</option>
-                                                    @endforeach --}}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label class="fw-semibold">Người phụ trách khách hàng</label>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-select form-control max-select"
-                                                        data-select2-selector="tag"
-                                                        name="account_manager"
-                                                        @if(!in_array('account_manager', $editableFields)) disabled @endif>
-                                            
-                                                    {{-- option mặc định: user hiện tại --}}
-                                                    <option value="{{ auth()->user()->getfly_id }}" selected>
-                                                        {{ auth()->user()->name }}
-                                                    </option>
-
-                                                    {{-- nếu có quyền thì thêm các user khác --}}
-                                                    @if(in_array('account_manager', $editableFields))
-                                                        @foreach ($users as $user)
-                                                            @if($user->id !== auth()->id())
-                                                                <option value="{{ $user->id }}">{{ $user->name }}</option>
-                                                            @endif
-                                                        @endforeach
-                                                    @endif
-                                            
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-4 align-items-center">
-                                            <div class="col-lg-4">
-                                                <label for="Input" class="fw-semibold">Người được phép truy cập khách này</label>
-                                                <span class="fs-12 fw-normal text-muted text-truncate-1-line">Getfly hãm cành cạch không cho sửa.</span>
-                                            </div>
-                                            <div class="col-lg-8">
-                                                <select class="form-select form-control max-select" data-select2-selector="tag" name="accessible_user_ids" multiple disabled>
-                                                    <option value="1" selected>Admin</option>
-                                                    @foreach ($users as $user)
-                                                        <option value="{{ $user->getfly_id }}">{{ $user->name }}</option>
-                                                    @endforeach
-                                                </select>
-                                            </div>
+                                            <div class="col-lg-4"></div>
+                                            <div class="col-lg-4"></div>
                                         </div>
                                     </div>
                                 </div>

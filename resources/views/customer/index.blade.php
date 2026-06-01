@@ -143,6 +143,8 @@
                                                         </div>
                                                     </div>
                                                 </th>
+                                                <th>Getfly ID</th>
+                                                <th>Mã KH</th>
                                                 <th>Customer Name</th>
                                                 <th>Email</th>
                                                 <th>Phone</th>
@@ -159,6 +161,12 @@
                                                             <label class="custom-control-label" for="checkBox_{{ $customer->id }}"></label>
                                                         </div>
                                                     </div>
+                                                </td>
+                                                <td>
+                                                    <span class="badge bg-soft-primary text-primary">{{ $customer->getfly_id ?? 'N/A' }}</span>
+                                                </td>
+                                                <td>
+                                                    <span>{{ $customer->account_code ?? 'N/A' }}</span>
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('customer.view', $customer->id)}}" class="hstack gap-3">
@@ -253,12 +261,14 @@
                                             </tr>
                                             @empty
                                             <tr class="single-item">
-                                                <td colspan="5" class="text-center py-4">
+                                                <td colspan="7" class="text-center py-4">
                                                     <div class="text-muted">
                                                         <i class="feather-users fs-1 mb-3"></i>
                                                         <p class="mb-0">No customers found</p>
                                                     </div>
                                                 </td>
+                                                <td style="display: none;"></td>
+                                                <td style="display: none;"></td>
                                                 <td style="display: none;"></td>
                                                 <td style="display: none;"></td>
                                                 <td style="display: none;"></td>

@@ -47,6 +47,22 @@
                         <h2 class="fs-20 fw-bolder mb-4">Login</h2>
                         <h4 class="fs-13 fw-bold mb-2">Login to your account</h4>
                         <p class="fs-12 fw-medium text-muted">Thank you for access Meijibio S - Made by Lucif</p>
+                        @if(session('error'))
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="feather-alert-circle me-2"></i>
+                                {{ session('error') }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+                        @if($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <i class="feather-alert-circle me-2"></i>
+                                @foreach($errors->all() as $err)
+                                    <div>{{ $err }}</div>
+                                @endforeach
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
                         <form action="{{ route('login.check') }}" method="post" class="w-100 mt-4 pt-2">
                             @csrf
                             <div class="mb-4">

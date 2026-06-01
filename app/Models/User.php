@@ -22,6 +22,16 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'username',
+        'role',
+        'getfly_id',
+        'area',
+        'code',
+        'title',
+        'department',
+        'team',
+        'phone',
+        'status',
     ];
 
     /**
